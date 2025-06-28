@@ -72,6 +72,16 @@
         }
       }
 
+      h2 {
+        font-size: 2.5em;
+        margin-bottom: 0.1em;
+      }
+
+      h3 {
+        font-size: 1.5em;
+        margin-bottom: 0;
+      }
+
       p {
         text-align: justify;
       }
@@ -79,6 +89,7 @@
       a {
         color: #758CFF;
         text-decoration: underline;
+        padding-bottom: 0;
       }
 
       a:hover {
@@ -121,6 +132,13 @@
           width: auto;
           margin-right: 2em;
           border-radius: 8px;
+        }
+      }
+
+      @media (orientation: landscape) {
+        .ctp-video {
+          padding-right: 72px;
+          padding-left: 72px;
         }
       }
 
@@ -249,7 +267,7 @@
         </div>
         <div>
           <h3>Nongünz</h3>
-          <p class="italic">Brainwash Gang &ndash; Sindicate</p>
+          <p class="italic">Brainwash Gang &ndash; Sindicate (Commission)</p>
           <a href="https://store.steampowered.com/app/1304780/Nongunz_Doppelganger_Edition/" target="_blank">Steam</a><br />
           <a href="https://www.youtube.com/watch?v=CQUNLsY01FE" target="_blank">YouTube Trailer</a>
           <p>An alternative shooting game featuring clicker mechanics and great visual style.</p>
@@ -369,12 +387,12 @@
       </article>
 
       <article>
-        <div>
+        <div class="ctp-video">
           <video src="./images/screenshots/ctp.webm" autoplay loop muted alt="Video of Capture the Pixel #lowrezjam2016"></video>
         </div>
         <div>
           <h3>Capture the Pixel #lowrezjam2016</h3>
-          <p class="italic">Commission project</p>
+          <p class="italic">Jumble Devs</p>
           <a href="https://jumbledevs.itch.io/capture-the-pixel" target="_blank">Itch.io</a><br />
           <a href="https://github.com/cegonse/capture-the-pixel" target="_blank">Source code</a><br />
           <p>A very low resolution (128x128 pixels) multiplayer shooting arena game, where two teams must get hold of the Pixel before the time runs out.</p>
