@@ -1,0 +1,293 @@
+<html lang="en">
+  <head>
+    <meta property="og:title" content="César González Segura - Article title">
+    <meta property="og:description" content="Article description">
+    <meta property="og:image" content="https://cesargonzalez.dev/photo.webp">
+    <meta property="og:url" content="https://cesargonzalez.dev">
+    <meta name="description" content="César González Segura Personal - Website">
+    <meta charset="utf-8"/>
+    <title>César González</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>
+      html {
+        color: rgb(236, 233, 230);
+        background-color: #1b2733;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        width: 100%;
+      }
+
+      @media (orientation: landscape) {
+        body {
+          margin-left: 20%;
+          margin-right: 20%;
+        }
+      }
+
+      @media (orientation: portrait) {
+        body {
+          margin-left: 5%;
+          margin-right: 5%;
+        }
+      }
+
+      header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      @media (orientation: landscape) {
+        header img {
+          height: 2em;
+          width: 2em;
+          border-radius: 50%;
+          margin-right: 1em;
+        }
+      }
+
+      @media (orientation: portrait) {
+        header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        header img {
+          height: 5em;
+          width: 5em;
+          border-radius: 50%;
+        }
+      }
+
+      h2 {
+        font-size: 2.5em;
+        margin-bottom: 0.1em;
+      }
+
+      h3 {
+        font-size: 1.5em;
+        margin-bottom: 0;
+      }
+
+      p {
+        text-align: justify;
+      }
+
+      a {
+        color: #758CFF;
+        text-decoration: underline;
+        padding-bottom: 0;
+      }
+
+      a:hover {
+        color: #4D6AFF;
+        text-decoration: underline;
+      }
+
+      .image {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+          border-radius: 8px;
+          object-fit: contain;
+          width: 100%;
+          height: auto;
+          margin-top: 1em;
+        }
+
+        span {
+          margin-top: 1em;
+          margin-bottom: 2em;
+          font-style: italic;
+        }
+      }
+
+      article > a {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        display: inline-block;
+      }
+
+      article > h2 {
+        font-size: 2em;
+      }
+
+      pre > code {
+        border-radius: 8px;
+      }
+
+      code + span {
+        font-style: italic;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+
+      @media (orientation: landscape) {
+        article > pre {
+          margin-left: 20%;
+          margin-right: 20%;
+          margin-top: 2em;
+          margin-bottom: 2em;
+        }
+      }
+      @media (orientation: portrait) {
+        article > pre {
+          margin-top: 2em;
+          margin-bottom: 2em;
+        }
+      }
+
+      article > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      article > div > span {
+        margin-top: 2em;
+      }
+
+      article > div > table {
+        text-align: center;
+        border-collapse: separate;
+        border-spacing: 2em 0;
+      }
+
+      table + span {
+        font-style: italic;
+        margin-bottom: 2em;
+      }
+
+      .italic {
+        font-style: italic;
+      }
+
+      .contact {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .contact img {
+        height: 2em;
+        margin-right: 1em;
+      }
+
+      .contact a:hover {
+        transform: scale(1.05);
+        filter: brightness(0.8)
+      }
+
+      @media (orientation: portrait) {
+        .contact {
+          justify-content: space-around;
+        }
+
+        .contact img {
+          height: 48px;
+        }
+      }
+
+      footer {
+        width: 100%;
+        height: 3em;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: #263748;
+        border-radius: 8px;
+        margin-top: 4em;
+        margin-bottom: 1em;
+      }
+
+      @media (orientation: portrait) {
+        footer {
+          font-size: 1.5em;
+          border-radius: 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="/assets/photo-BYC_QCE8.webp" alt="My Picture" />
+      <h1>César González Segura</h1>
+    </header>
+
+    <div class="contact">
+      <a aria-label="Telegram Contact" href="https://t.me/cegonse"><img src="data:image/webp;base64,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" alt="Telegram Logo"></a>
+      <a aria-label="LinkedIn Profile" href="https://www.linkedin.com/in/cesar-gonzalez-segura/"><img src="data:image/webp;base64,UklGRrQEAABXRUJQVlA4WAoAAAAwAAAAYwAAYwAASUNDUKACAAAAAAKgbGNtcwQwAABtbnRyUkdCIFhZWiAH6AALAAQADQA5ADdhY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1kZXNjAAABIAAAAEBjcHJ0AAABYAAAADZ3dHB0AAABmAAAABRjaGFkAAABrAAAACxyWFlaAAAB2AAAABRiWFlaAAAB7AAAABRnWFlaAAACAAAAABRyVFJDAAACFAAAACBnVFJDAAACFAAAACBiVFJDAAACFAAAACBjaHJtAAACNAAAACRkbW5kAAACWAAAACRkbWRkAAACfAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACQAAAAcAEcASQBNAFAAIABiAHUAaQBsAHQALQBpAG4AIABzAFIARwBCbWx1YwAAAAAAAAABAAAADGVuVVMAAAAaAAAAHABQAHUAYgBsAGkAYwAgAEQAbwBtAGEAaQBuAABYWVogAAAAAAAA9tYAAQAAAADTLXNmMzIAAAAAAAEMQgAABd7///MlAAAHkwAA/ZD///uh///9ogAAA9wAAMBuWFlaIAAAAAAAAG+gAAA49QAAA5BYWVogAAAAAAAAJJ8AAA+EAAC2xFhZWiAAAAAAAABilwAAt4cAABjZcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltjaHJtAAAAAAADAAAAAKPXAABUfAAATM0AAJmaAAAmZwAAD1xtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAEcASQBNAFBtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJBTFBIfQEAAAGQc9u2qUnnM8r+A67KjMi2K7VdFVauZmS7O3WnRmbbtvVO8r5zb4/a7e4xImIC6O9KZ/OWC294zr+5sKXJ+Q3qrzLMK7W6bPMZ6qxVz3wGO6OlnuHWaHBewXPNqdbMgBvVtiLapHYJ0QW114heqzHkPxPO9sZ4PLEDl6AtcZKpewOwfRbyaTuGK4eEVbj8JSG4giRBuMokJbiO2HxZ9+PiLV4z1yoGxtdGk7zehP6LDA3jnwgkNiOx2elF1UlRtojEwukTqIwtmSSNX/cV0ckMUs2+gWeNm9TDjqNZbCGdQWfAWElv9Bss2ke+C87r3wOaAOR1qUV8AZO1/Tkbd1YkKdAhLJNf2fRjv8IUlFb2bbTIGpAEPxXww0BRMpIeFneJIpHslO0QeZHckt0SWZB8kL0XERJW/D8ayl87rxG9VLuI6LzaZkQb1JoQNag5LuO56lSjWjhGFemcRTNFWq0zUIxpqx6imss4LlWTfkfjpvOv597rcxsbHPR3JQBWUDggaAAAANAHAJ0BKmQAZAA+LRCGQqGhDWIADAFiWkAFSAAtWsu5CEINnWQ2gC3FDYNgfQPhkmg2cmVZsiaa44Ni1MKg+iZH7V0pSbIAAP7/Gct//OmBEf4x6Ah//53KO3/87lAAAAAlv8CBAAAA" alt="LinkedIn Logo"></a>
+      <a aria-label="Email Contact" href="mailto:contact@cesargonzalez.dev"><img src="data:image/webp;base64,UklGRnoFAABXRUJQVlA4WAoAAAAwAAAAYwAAYwAASUNDUKACAAAAAAKgbGNtcwQwAABtbnRyUkdCIFhZWiAH6AALAAQADQA5ADdhY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1kZXNjAAABIAAAAEBjcHJ0AAABYAAAADZ3dHB0AAABmAAAABRjaGFkAAABrAAAACxyWFlaAAAB2AAAABRiWFlaAAAB7AAAABRnWFlaAAACAAAAABRyVFJDAAACFAAAACBnVFJDAAACFAAAACBiVFJDAAACFAAAACBjaHJtAAACNAAAACRkbW5kAAACWAAAACRkbWRkAAACfAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACQAAAAcAEcASQBNAFAAIABiAHUAaQBsAHQALQBpAG4AIABzAFIARwBCbWx1YwAAAAAAAAABAAAADGVuVVMAAAAaAAAAHABQAHUAYgBsAGkAYwAgAEQAbwBtAGEAaQBuAABYWVogAAAAAAAA9tYAAQAAAADTLXNmMzIAAAAAAAEMQgAABd7///MlAAAHkwAA/ZD///uh///9ogAAA9wAAMBuWFlaIAAAAAAAAG+gAAA49QAAA5BYWVogAAAAAAAAJJ8AAA+EAAC2xFhZWiAAAAAAAABilwAAt4cAABjZcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltjaHJtAAAAAAADAAAAAKPXAABUfAAATM0AAJmaAAAmZwAAD1xtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAEcASQBNAFBtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJBTFBIWwIAAAGQA9u2aUvz4bdt27Zt23b6wpN2eKNGaNu2bdu23f2wg/N47mmjImIC+Gu3/JL/8E2ocfMbMJ9cm20XVIBHha32oBFRu7622L6CQDqASlesNdEPsL8gQPa1dno/AL2rPGgE4FFhC12tCuBRYZGgQu/00jrrcgDk2iRR52UEKHPOLhHHC1DjhsQ8URwgy1KbPG+PPviDxPmsNYAnELTGyZIAfkfiDyr05k8sMTcTQOGDkvDCTABFj9rgcwC96SNJ4qmSABlmuu9eA/RxXyWpz9uij/vqst35AbIskWSHlAegySM3RSb7AcqekxQuzgxQ+JB73vZB7/JKUnqpAkD6qW65XBnANz4sKX7THX3YR1eszg6Qe4ukPuJ4AWrfMS+kPAA1b4qR67ID5N1h2rM26EM/iqFXKgH4HbOOFwdIP1nMfdsbffAHg6akAyhySEyOOF6AGjdN+TQavfljMXxjToDcW824UxfAE/gqxl+rCuBzIgZszAWQdZm48V1f9P7vUxVxvADlzos7I5P9ABUupeZNT/Rur8W1u/MBZFuVitOlAXxORFx8ty6AR4WTtiAzQJ5t4u5PI9C7vEpOUKHXuiWun5IGUPZ8Mh40Qh/2USy4twBA1uWJ7SsIkH6a2PF+fQCPCiUwJQ2g6BGx5ecx6B1exvNxOHqLJ2LRKekASp+NdbUqgEeFxKr7CwJkmB1tXQ6ArMvFtg8aoY/7KhJxvAAVLop9g0qj2ePn7dEHvBcrT08PULw4gH+C2PpEcWLm3S72ftY6Wp07YvOg0sZ9EcvPL1x4vvw3Jn/tBgBWUDggUAAAADAGAJ0BKmQAZAA+MRSJQyIhIRY0ACADBLS3boAT3SgfZlHpQ8N2KT+yAHiXLzsvEPuj9mOQuH3EYIAA/pwf//9qcQAADYxk///9qIgAAAAA" alt="Email Symbol"></a>
+      <a aria-label="GitHub Profile" href="https://github.com/cegonse"><img src="data:image/webp;base64,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" alt="GitHub Logo"></a>
+    </div>
+
+    <h2>Article Title</h2>
+    <p class="italic">Posted July 6th 2025</p>
+    <p class="italic">Follow the conversation on <a>LinkedIn</a></p>
+    <article>
+      <h2>Subtitle</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </article>
+    <article>
+      <h2>Section with contents</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div class="image">
+        <img src="/assets/toe_editor-FYfNNK5n.png" alt="ToE Editor" />
+        <span>Image description as text</span>
+      </div>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <pre>
+        <code class="language-cpp">
+void Whatever::function(int value) {
+  int *a = malloc(4);
+  *a = 123;
+  // This is a very long function line. Text should not go outside of the boundaries and have a scrollbar instead
+}
+        </code>
+        <span>Code snippet description as text</span>
+      </pre>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div>
+        <table>
+          <tr>
+            <th>Column A</th>
+            <th>Column B</th>
+            <th>Column C</th>
+          </tr>
+          <tr>
+            <td>First value</td>
+            <td>First value</td>
+            <td>First value</td>
+          </tr>
+          <tr>
+            <td>Second value</td>
+            <td>Second value</td>
+            <td>Second value</td>
+          </tr>
+        </table>
+        <span>Table description as text</span>
+      </div>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </article>
+    <article>
+      <h2>Other section</h2>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </article>
+
+    <footer><a href="./index.html">Home</a></footer>
+
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>
