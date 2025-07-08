@@ -74,6 +74,7 @@
 
       p {
         text-align: justify;
+        font-size: 1.2em;
       }
 
       a {
@@ -102,14 +103,12 @@
 
         span {
           margin-top: 1em;
-          margin-bottom: 2em;
+          margin-bottom: 0.5em;
           font-style: italic;
         }
       }
 
       article > a {
-        padding-top: 8px;
-        padding-bottom: 8px;
         display: inline-block;
       }
 
@@ -121,15 +120,20 @@
         border-radius: 8px;
       }
 
-      code + span {
+      pre {
+        width: 100%;
+      }
+
+      pre + span {
+        margin-bottom: 0.5em;
         font-style: italic;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       }
 
       @media (orientation: landscape) {
         article > pre {
-          margin-left: 20%;
-          margin-right: 20%;
+          margin-left: 10%;
+          margin-right: 10%;
           margin-top: 2em;
           margin-bottom: 2em;
         }
@@ -147,10 +151,6 @@
         align-items: center;
       }
 
-      article > div > span {
-        margin-top: 2em;
-      }
-
       article > div > table {
         text-align: center;
         border-collapse: separate;
@@ -159,7 +159,8 @@
 
       table + span {
         font-style: italic;
-        margin-bottom: 2em;
+        margin-top: 1em;
+        margin-bottom: 1em;
       }
 
       .italic {
@@ -235,7 +236,7 @@
     </article>
     <article>
       <h2>Section with contents</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit, sed do eiusmod</a> tempor incididunt ut labore et dolore magna aliqua.</p>
       <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       <div class="image">
         <img src="images/screenshots/toe_editor.png" alt="ToE Editor" />
@@ -245,16 +246,16 @@
       <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <pre>
-        <code class="language-cpp">
+      <div>
+      <pre><code class="language-cpp">
 void Whatever::function(int value) {
   int *a = malloc(4);
   *a = 123;
   // This is a very long function line. Text should not go outside of the boundaries and have a scrollbar instead
 }
-        </code>
+        </code></pre>
         <span>Code snippet description as text</span>
-      </pre>
+      </div>
       <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       <div>
