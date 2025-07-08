@@ -1,7 +1,7 @@
 export default {
   build: {
-    rollupOptions: {
-      input: {
+    mpa: {
+      entry: {
         main: 'index.html',
         template: 'template.html'
       }
