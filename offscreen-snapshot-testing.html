@@ -1,0 +1,335 @@
+<html lang="en">
+  <head>
+    <meta property="og:title" content="César González Segura - Applying snapshot testing to game development and 3D graphics">
+    <meta property="og:description" content="Explore how to combine off-screen rendering and software rendering to build snapshot tests for complex 3D visualizations">
+    <meta property="og:image" content="https://cesargonzalez.dev/photo.webp">
+    <meta property="og:url" content="https://cesargonzalez.dev">
+    <meta name="description" content="César González Segura - Applying snapshot testing to game development and 3D graphics">
+    <meta charset="utf-8"/>
+    <title>César González</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>
+      html {
+        color: rgb(236, 233, 230);
+        background-color: #1b2733;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        width: 100%;
+      }
+
+      @media (orientation: landscape) {
+        body {
+          margin-left: 20%;
+          margin-right: 20%;
+        }
+      }
+
+      @media (orientation: portrait) {
+        body {
+          margin-left: 5%;
+          margin-right: 5%;
+        }
+      }
+
+      header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      @media (orientation: landscape) {
+        header img {
+          height: 2em;
+          width: 2em;
+          border-radius: 50%;
+          margin-right: 1em;
+        }
+      }
+
+      @media (orientation: portrait) {
+        header {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        header img {
+          height: 5em;
+          width: 5em;
+          border-radius: 50%;
+        }
+      }
+
+      h2 {
+        font-size: 2.5em;
+        margin-bottom: 0.1em;
+      }
+
+      h3 {
+        font-size: 1.5em;
+        margin-bottom: 0;
+      }
+
+      p {
+        text-align: justify;
+        font-size: 1.2em;
+      }
+
+      a {
+        color: #758CFF;
+        text-decoration: underline;
+        padding-bottom: 0;
+      }
+
+      a:hover {
+        color: #4D6AFF;
+        text-decoration: underline;
+      }
+
+      .image {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+          border-radius: 8px;
+          object-fit: contain;
+          width: 100%;
+          height: auto;
+          margin-top: 1em;
+        }
+
+        span {
+          margin-top: 1em;
+          margin-bottom: 0.5em;
+          font-style: italic;
+        }
+      }
+
+      article > p:first-child {
+        margin-top: 2em;
+      }
+
+      article > a {
+        display: inline-block;
+      }
+
+      article > h2 {
+        font-size: 2em;
+      }
+
+      pre > code {
+        border-radius: 8px;
+      }
+
+      pre {
+        width: 100%;
+      }
+
+      pre + span {
+        margin-bottom: 0.5em;
+        font-style: italic;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+
+      @media (orientation: landscape) {
+        article > pre {
+          margin-left: 10%;
+          margin-right: 10%;
+          margin-top: 2em;
+          margin-bottom: 2em;
+        }
+      }
+      @media (orientation: portrait) {
+        article > pre {
+          margin-top: 2em;
+          margin-bottom: 2em;
+        }
+      }
+
+      article > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      article > div > table {
+        text-align: center;
+        border-collapse: separate;
+        border-spacing: 2em 0;
+        font-size: 1.2em;
+      }
+
+      table + span {
+        font-style: italic;
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
+
+      .italic {
+        font-style: italic;
+      }
+
+      .contact {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .contact img {
+        height: 2em;
+        margin-right: 1em;
+      }
+
+      .contact a:hover {
+        transform: scale(1.05);
+        filter: brightness(0.8)
+      }
+
+      @media (orientation: portrait) {
+        .contact {
+          justify-content: space-around;
+        }
+
+        .contact img {
+          height: 48px;
+        }
+      }
+
+      footer {
+        width: 100%;
+        height: 3em;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: #263748;
+        border-radius: 8px;
+        margin-top: 4em;
+        margin-bottom: 1em;
+      }
+
+      @media (orientation: portrait) {
+        footer {
+          font-size: 1.5em;
+          border-radius: 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="images/photo.webp" alt="My Picture" />
+      <h1>César González Segura</h1>
+    </header>
+
+    <div class="contact">
+      <a aria-label="Telegram Contact" href="https://t.me/cegonse"><img src="images/telegram.webp" alt="Telegram Logo"></a>
+      <a aria-label="LinkedIn Profile" href="https://www.linkedin.com/in/cesar-gonzalez-segura/"><img src="images/linkedin.webp" alt="LinkedIn Logo"></a>
+      <a aria-label="Email Contact" href="mailto:contact@cesargonzalez.dev"><img src="images/email.webp" alt="Email Symbol"></a>
+      <a aria-label="GitHub Profile" href="https://github.com/cegonse"><img src="images/github.webp" alt="GitHub Logo"></a>
+    </div>
+
+    <h2>Applying snapshot testing to game development and 3D graphics</h2>
+    <p class="italic">Posted July _th 2025</p>
+    <p class="italic">Did you like this article? Follow the conversation on <a>LinkedIn</a></p>
+    <article>
+      <h2>Testing and game development</h2>
+      <p>
+        Since I first started learning about automated testing, I began wondering how could it be effectively
+        applied to game development. If you have ever developed a videogame, you will have experienced first-hand
+        the sheer complexity of game development.
+      </p>
+      <p>
+        Combining game logic, usually featuring infinitely complex as soon you go beyond the simplest of games,
+        combined with graphics rendering to showcase it all, makes getting a game to feel, look and play right
+        extremely hard.
+      </p>
+      <p>
+        Funnily enough, the environment I've seen less automated testing through my career is game development.
+        I've only worked mostly on small games with one exception (what the industry calls
+        <a href="https://en.wikipedia.org/wiki/AAA_(video_game_industry)#III"><i>Triple-I</i></a> games),
+        so probably I've missed out on how big studios handle testing.
+      </p>
+      <p>
+        Reading from sites like <a href="https://www.gamedeveloper.com/">GameDeveloper</a> and through conversations with
+        people working on established studios, I learned that many rely on automated QA tests based on macros. These tests
+        auto-play portions of the game from recorded controller inputs and bespoke markers detect whether a goal
+        has been reached or not.  
+      </p>
+      <p>
+        This method however requires launching the full game, and as all QA acceptance tests are costly to implement, prone
+        to breaking upon changes, costly to maintain once done, and require powerful hardware to run (as powerful as
+        the hardware required to run the game itself).
+      </p>
+      <p>
+        I believe QA acceptance tests are very useful and should always be present in any product's testing pyramid. But, could
+        we reduce the cost (both building, maintaining and running) of these tests running smaller integration tests of only
+        a subset of the full game? And if possible, avoiding running it on retail hardware? For example, running them directly
+        in GitHub Actions CI runners. 
+      </p>
+      <p>
+        In this article, you'll find out what I've learned from exploring how to apply snapshot testing to game and 3D graphics.
+        I've found there're a lot of possibilities to make our games and 3D graphics applications more robust, all without having
+        to rely on heavy acceptance tests.
+      </p>
+    </article>
+    <article>
+      <h2>Defining concepts</h2>
+      <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit, sed do eiusmod</a> tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div class="image">
+        <img src="images/screenshots/toe_editor.png" alt="ToE Editor" />
+        <span>Image description as text</span>
+      </div>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div>
+      <pre><code class="language-cpp">
+void Whatever::function(int value) {
+  int *a = malloc(4);
+  *a = 123;
+  // This is a very long function line. Text should not go outside of the boundaries and have a scrollbar instead
+}
+        </code></pre>
+        <span>Code snippet description as text</span>
+      </div>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div>
+        <table>
+          <tr>
+            <th>Column A</th>
+            <th>Column B</th>
+            <th>Column C</th>
+          </tr>
+          <tr>
+            <td>First value</td>
+            <td>First value</td>
+            <td>First value</td>
+          </tr>
+          <tr>
+            <td>Second value</td>
+            <td>Second value</td>
+            <td>Second value</td>
+          </tr>
+        </table>
+        <span>Table description as text</span>
+      </div>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </article>
+    <article>
+      <h2>Other section</h2>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </article>
+
+    <footer><a href="./index.html">Home</a></footer>
+
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>
