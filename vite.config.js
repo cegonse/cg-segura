@@ -3,7 +3,8 @@ export default {
     mpa: {
       entry: {
         main: 'index.html',
-        template: 'template.html'
+        template: 'template.html',
+        offscreen: 'offscreen-snapshot-testing.html'
       }
     }
   }
