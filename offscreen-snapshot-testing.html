@@ -77,6 +77,11 @@
         font-size: 1.2em;
       }
 
+      li {
+        font-size: 1.2em;
+        margin-bottom: 0.5em;
+      }
+
       a {
         color: #758CFF;
         text-decoration: underline;
@@ -113,6 +118,13 @@
           margin-top: 1em;
           margin-bottom: 0.5em;
           font-style: italic;
+        }
+      }
+
+      @media (orientation: landscape) {
+        .fit-20 {
+          margin-left: 20%;
+          margin-right: 20%;
         }
       }
 
@@ -395,16 +407,56 @@ describe("Post-processing Camera Shaders", []() {
 });
         </code></pre>
       </div>
-      <p>Asd</p>
-      <div class="image">
+      <p>
+        Tests are very simple, and in fact, it could be simplified even further by parametrizing the shader location. The two main parts are:
+      </p>
+      <ul>
+        <li><b>Rendering</b> → Renders the scene with a sample mesh and applying the full-screen shader passed as an argument.</li>
+        <li><b>Verifying</b> → Compares the rendered image with the stored snapshot, and throws an assertion error when the images are different, causing the test to fail.</li>
+      </ul>
+      <p>
+        The interesting part lies in the <b>verification</b> part of the test. The steps it takes to check the currently rendered image against
+        the snapshot are, roughly (if interested, check the details in GitHub)
+      </p>
+      <ul>
+        <li>Take a screenshot of the current image. This will be the generated image to compare against the snapshot.</li>
+        <li>If an snapshot image does not exist, create one. This will only be the case the <b>first time</b> the test is run. In this first execution, the
+        snapshot would be committed as the reference for next runs.</li>
+        <li>Compare the current image to the generated image. In this test, ImageMagick's MagickWand API was used to calculate the difference between
+          both images.
+        </li>
+        <li>If the current image is different from the snapshot, it means the scene has been modified → fail the test. For convenience, store the snapshot
+          result so it can be reviewed later. Imgur API can be used to upload images and videos very easily (if privacy isn't a concern!).
+        </li>
+      </ul>
+      <p>
+        Take this example where the grayscale shader has been purposely modified to look like an unintended change. Instead of rendering a black and white image,
+        it tints the result with a blue hue. As expected, the test fails since the rendering differs from the snapshot, and we get back the link to the result
+        in the CI test execution:
+      </p>
+      <div class="image fit-20">
         <img src="./images/offscreen-article/shader-output.png" />
       </div>
       <p>
-        Asd
+        And when checking the results, both the expected result and the actual result can be compared side by side, giving quick feedback of what has gone wrong.
       </p>
-      <div class="image">
+      <div class="image fit-20">
         <img src="./images/offscreen-article/shader-image.png" />
       </div>
+      <p>
+        Without applying snapshot testing, the most probable way this unintended change would have been discovered would have been when trying out the game.
+        Perhaps by sheer coincidence, when another feature was being tested out and someone noticed the change and raised the bug. Depending on the nature of
+        the change, it might would not have been ever noticed, and released in the final product.
+      </p>
+      <p>
+        It must be noted that this example scene is extremely simple and does not take into account variability in the rendered image, such as shaders changing
+        with time or other inputs. Also, it assumes rendering is deterministic, otherwise every render would be slightly different when compared to the snapshot,
+        making the comparison impossible.
+      </p>
+      <p>
+        In any case, I'm quite sure this can be quite valuable when testing out shaders. Maybe testing full scenes is not feasible as complexity increases,
+        but avoiding introducing changes to shaders by mistake already feels like a big improvement.
+      </p>
     </article>
 
     <article>
@@ -412,7 +464,7 @@ describe("Post-processing Camera Shaders", []() {
       <p>
         Asd
       </p>
-      <div class="image">
+      <div class="image fit-20">
         <video src="./images/offscreen-article/video_game.mp4" autoplay loop controls></video>
         <span>Simple enough but it will let us put the concepts to test</span>
       </div>
@@ -444,7 +496,7 @@ describe("JumpingGame", []() {
       <p>
         Asd asd asd asd asd asd
       </p>
-      <div class="image">
+      <div class="image fit-20">
         <video src="./images/offscreen-article/video_1.mp4" autoplay loop controls></video>
         <span>The end result pulled right from the CI pipeline</span>
       </div>
