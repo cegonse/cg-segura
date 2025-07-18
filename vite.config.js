@@ -1,11 +1,18 @@
-export default {
+
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { defineConfig } from 'vite'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+export default defineConfig({
   build: {
-    mpa: {
-      entry: {
-        main: 'index.html',
-        template: 'template.html',
-        offscreen: 'offscreen-snapshot-testing.html'
-      }
-    }
-  }
-}
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        offscreen: resolve(__dirname, 'offscreen-snapshot-testing.html'),
+        template: resolve(__dirname, 'template.html'),
+      },
+    },
+  },
+})
