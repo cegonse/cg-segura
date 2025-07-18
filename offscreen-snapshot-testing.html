@@ -101,6 +101,14 @@
           margin-top: 1em;
         }
 
+        video {
+          border-radius: 8px;
+          object-fit: contain;
+          width: 100%;
+          height: auto;
+          margin-top: 1em;
+        }
+
         span {
           margin-top: 1em;
           margin-bottom: 0.5em;
@@ -129,6 +137,17 @@
       }
 
       iframe + span {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        font-style: italic;
+        text-align: center;
+      }
+
+      video {
+        border-radius: 8px;
+      }
+
+      video + span {
         margin-top: 0.5em;
         margin-bottom: 0.5em;
         font-style: italic;
@@ -225,6 +244,13 @@
           border-radius: 32px;
         }
       }
+
+      .info {
+        background-color: #42586e;
+        border-radius: 8px;
+        padding: 1em;
+        display: block !important;
+      }
     </style>
   </head>
   <body>
@@ -244,6 +270,7 @@
     <p class="italic">Posted July _th 2025</p>
     <p class="italic">Did you enjoy this article? Follow the conversation on <a>LinkedIn</a></p>
     <article>
+      <div class="info">ℹ️ All code used to prepare this article is available in GitHub at <a href="https://github.com/cegonse/offscreen-rendering-tests">cegonse/offscreen-rendering-tests</a></div>
       <p>
         Getting a game to feel, look and play as intended is hard. There's a delicate balance that must be kept in
         check, and any seemingly tiny change could have enormous consequences on how a game feels.
@@ -308,13 +335,46 @@
     </article>
 
     <article>
+      <h2>Laying out the concepts</h2>
+      <p>Asd</p>
+    </article>
+
+    <article>
       <h2>Shader and scene snapshot tests</h2>
+      <div class="info">ℹ️ Find code for shader testing at the <a href="https://github.com/cegonse/offscreen-rendering-tests/tree/main/testing-shaders">testing-shaders</a> directory</div>
       <p>
-        Asd
+        Shaders are difficult to build and get right. Depending on the models themselves, desired effects, and how
+        it can be hard to combine them with each other. Also, many times the artistic intent we want to convey through
+        shaders is achieved by combining many shaders, applying to different meshes, full-screen shaders and others.
+      </p>
+      <p>
+        There are options to unit test shaders like <a href="https://github.com/cezbloch/shaderator">Shaderator by Cezary Bloch</a>,
+        and although tools like this are perfect to iteratively build complex kernels such as compute shaders or
+        complex visual shaders, it might not be the best fit when the important outcome is the visual cohesion of the scene,
+        rather than the calculations done by the shader.
+      </p>
+      <p>
+        Also, many times shaders might are built in visual scripting and node-based tools, which in turn generate
+        source code that can be used by game engines. In these cases, unit testing wouldn't be easy or maybe possible at all.
+      </p>
+      <p>
+        Snapshot testing looks like a great fit for this scenario. Let's lay out how could it be carried out.
+      </p>
+      <p>
+        Let's try to replicate what would be done when building a complete scene with different meshes, particle effects,
+        full screen shaders to do tone-mapping, lens correction, and so on.
+      </p>
+      <p>
+        In this case, technical artists would tweak all the parameters as desired until getting it right.
+        Storing a snapshot of the scene and testing it in the CI would help ensure the scene hasn't been unwillingly changed,
+        for example when re-using the same shaders in another scene and tweaking them for it.
+      </p>
+      <p>
+        I will keep the focus on the test code. Shaders themselves are example shaders available from Raylib, <a href="https://github.com/raysan5/raylib/blob/master/examples/shaders/resources/shaders/glsl330/bloom.fs">bloom</a> and <a href="https://github.com/raysan5/raylib/blob/master/examples/shaders/resources/shaders/glsl330/grayscale.fs">grayscale</a>
+        full screen shaders.
       </p>
       <div>
-        <pre><code>
-#include &lt;cest&gt;
+        <pre><code>#include &lt;cest&gt;
 #include &lt;render.h&gt;
 #include &lt;verify.h&gt;
 
@@ -352,9 +412,15 @@ describe("Post-processing Camera Shaders", []() {
       <p>
         Asd
       </p>
+      <div class="image">
+        <video src="./images/offscreen-article/video_game.mp4" autoplay loop controls></video>
+        <span>Simple enough but it will let us put the concepts to test</span>
+      </div>
+      <p>
+        Asd
+      </p>
       <div>
-        <pre><code>
-#include <cest>
+        <pre><code>#include &lt;cest&gt;
 #include &lt;game.h&gt;
 #include &lt;platform-test.h&gt;
 #include &lt;test-helper.h&gt;
@@ -373,6 +439,14 @@ describe("JumpingGame", []() {
   });
 });
         </code></pre>
+        <span>We'll review the parts of the game's acceptance test next</span>
+      </div>
+      <p>
+        Asd asd asd asd asd asd
+      </p>
+      <div class="image">
+        <video src="./images/offscreen-article/video_1.mp4" autoplay loop controls></video>
+        <span>The end result pulled right from the CI pipeline</span>
       </div>
     </article>
 
