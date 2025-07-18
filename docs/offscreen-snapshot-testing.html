@@ -1,10 +1,10 @@
 <html lang="en">
   <head>
-    <meta property="og:title" content="César González Segura - Article title">
-    <meta property="og:description" content="Article description">
+    <meta property="og:title" content="César González Segura - Applying snapshot testing to game development and 3D graphics">
+    <meta property="og:description" content="Explore how to combine off-screen rendering and software rendering to build snapshot tests for complex 3D visualizations">
     <meta property="og:image" content="https://cesargonzalez.dev/photo.webp">
     <meta property="og:url" content="https://cesargonzalez.dev">
-    <meta name="description" content="César González Segura Personal - Website">
+    <meta name="description" content="César González Segura - Applying snapshot testing to game development and 3D graphics">
     <meta charset="utf-8"/>
     <title>César González</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
@@ -77,6 +77,11 @@
         font-size: 1.2em;
       }
 
+      li {
+        font-size: 1.2em;
+        margin-bottom: 0.5em;
+      }
+
       a {
         color: #758CFF;
         text-decoration: underline;
@@ -101,10 +106,25 @@
           margin-top: 1em;
         }
 
+        video {
+          border-radius: 8px;
+          object-fit: contain;
+          width: 100%;
+          height: auto;
+          margin-top: 1em;
+        }
+
         span {
           margin-top: 1em;
           margin-bottom: 0.5em;
           font-style: italic;
+        }
+      }
+
+      @media (orientation: landscape) {
+        .fit-20 {
+          margin-left: 20%;
+          margin-right: 20%;
         }
       }
 
@@ -129,6 +149,17 @@
       }
 
       iframe + span {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        font-style: italic;
+        text-align: center;
+      }
+
+      video {
+        border-radius: 8px;
+      }
+
+      video + span {
         margin-top: 0.5em;
         margin-bottom: 0.5em;
         font-style: italic;
@@ -225,6 +256,13 @@
           border-radius: 32px;
         }
       }
+
+      .info {
+        background-color: #42586e;
+        border-radius: 8px;
+        padding: 1em;
+        display: block !important;
+      }
     </style>
   </head>
   <body>
@@ -240,65 +278,257 @@
       <a aria-label="GitHub Profile" href="https://github.com/cegonse"><img src="data:image/webp;base64,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" alt="GitHub Logo"></a>
     </div>
 
-    <h2>Article Title</h2>
-    <p class="italic">Posted July 6th 2025</p>
+    <h2>Applying snapshot testing to game development</h2>
+    <p class="italic">Posted July _th 2025</p>
     <p class="italic">Did you enjoy this article? Follow the conversation on <a>LinkedIn</a></p>
     <article>
-      <h2>Subtitle</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div class="info">ℹ️ All code used to prepare this article is available in GitHub at <a href="https://github.com/cegonse/offscreen-rendering-tests">cegonse/offscreen-rendering-tests</a></div>
+      <p>
+        Getting a game to feel, look and play as intended is hard. There's a delicate balance that must be kept in
+        check, and any seemingly tiny change could have enormous consequences on how a game feels.
+      </p>
+      <p>
+        Applying testing techniques to games as if they were any software product does not always cut it. There are nuances in
+        how a game <i>feels</i> that are hard to capture with unit tests. Systems are so complex and interconnected that it becomes
+        really hard to keep track of how changes to shared modules might affect the whole game.
+      </p>
+      <p>
+        Manual testing the whole game everytime a change is done to core mechanics or graphics doesn't cut it except for very small
+        games. Playing the game can be automated too, but it still relies on running the whole game which is time consuming and prone
+        to breaking.
+      </p>
+      <p>
+        I wanted to explore a lightweight way to test full sub-sets of the game, without having to rely on playing the <i>actual</i> game.
+        Can we run small segments of the game and compare the results with stored <i>snapshots</i>, and find out if anything relevant has
+        changed?
+      </p>
+      <p>
+        In this article, I've explored how to apply <b>snapshot testing</b> to reduce unintended changes when building games. There are many
+        scenarios where snapshot testing can be quite useful, without having to rely on heavy acceptance tests. But it also comes with a great
+        number of caveats, so it won't be applicable in all cases.
+      </p>
     </article>
     <article>
-      <h2>Section with contents</h2>
-      <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit, sed do eiusmod</a> tempor incididunt ut labore et dolore magna aliqua.</p>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <div class="image">
-        <img src="/assets/toe_editor-FYfNNK5n.png" alt="ToE Editor" />
-        <span>Image description as text</span>
-      </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <h2>Testing and game development</h2>
+      <p>
+        Since I first started learning about software automated testing, I began thinking about how could it be
+        effectively applied to game development. If you have ever developed a videogame, you will have experienced
+        first-hand how complex game development can be.
+      </p>
+      <p>
+        Funnily enough, the environment where I've seen less automated testing through my career is game development.
+        I've mostly worked on small games, with one exception (what the industry calls
+        <a href="https://en.wikipedia.org/wiki/AAA_(video_game_industry)#III"><i>Triple-I</i></a> games),
+        so probably I've missed out on how big studios handle testing.
+      </p>
+      <p>
+        Reading from sites like <a href="https://www.gamedeveloper.com/">GameDeveloper</a> and remembering conversations with
+        people working on established studios, I learned that many rely on automated QA tests based on macros. These tests
+        auto-play portions of the game from recorded controller inputs and bespoke markers detect whether a goal has been reached
+        or not.
+      </p>
+      <p>
+        This method however requires launching the full game, and as with all QA acceptance tests, are costly to implement, prone
+        to breaking upon change, costly to maintain once working, and require powerful hardware to run (as powerful as the hardware
+        required to run the game itself).
+      </p>
+      <p>
+        QA acceptance tests are necessary and must always be present in any product's testing pyramid. But, how can we reduce the
+        cost (both building, maintaining and running) of these tests?
+      </p>
+      <p>
+        What about running smaller integration tests of only a subset of the full game? And if possible, avoiding running it on
+        retail hardware? For example, directly in GitHub Actions CI runners.
+      </p>
       <div>
-      <pre><code class="language-cpp">
-void Whatever::function(int value) {
-  int *a = malloc(4);
-  *a = 123;
-  // This is a very long function line. Text should not go outside of the boundaries and have a scrollbar instead
-}
+        <iframe width="auto" height="auto" src="https://www.youtube.com/embed/CgMV2dFFdFE" title="Factorio: Space Age - Graphics mode tests" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <span><a href="https://store.steampowered.com/app/427520/Factorio">Factorio's</a> testing mode resembles what I wanted to achieve</span>
+      </div>
+    </article>
+
+    <article>
+      <h2>Laying out the concepts</h2>
+      <p>Asd</p>
+    </article>
+
+    <article>
+      <h2>Shader and scene snapshot tests</h2>
+      <div class="info">ℹ️ Find code for shader testing at the <a href="https://github.com/cegonse/offscreen-rendering-tests/tree/main/testing-shaders">testing-shaders</a> directory</div>
+      <p>
+        Shaders are difficult to build and get right. Depending on the models themselves, desired effects, and how
+        it can be hard to combine them with each other. Also, many times the artistic intent we want to convey through
+        shaders is achieved by combining many shaders, applying to different meshes, full-screen shaders and others.
+      </p>
+      <p>
+        There are options to unit test shaders like <a href="https://github.com/cezbloch/shaderator">Shaderator by Cezary Bloch</a>,
+        and although tools like this are perfect to iteratively build complex kernels such as compute shaders or
+        complex visual shaders, it might not be the best fit when the important outcome is the visual cohesion of the scene,
+        rather than the calculations done by the shader.
+      </p>
+      <p>
+        Also, many times shaders might are built in visual scripting and node-based tools, which in turn generate
+        source code that can be used by game engines. In these cases, unit testing wouldn't be easy or maybe possible at all.
+      </p>
+      <p>
+        Snapshot testing looks like a great fit for this scenario. Let's lay out how could it be carried out.
+      </p>
+      <p>
+        Let's try to replicate what would be done when building a complete scene with different meshes, particle effects,
+        full screen shaders to do tone-mapping, lens correction, and so on.
+      </p>
+      <p>
+        In this case, technical artists would tweak all the parameters as desired until getting it right.
+        Storing a snapshot of the scene and testing it in the CI would help ensure the scene hasn't been unwillingly changed,
+        for example when re-using the same shaders in another scene and tweaking them for it.
+      </p>
+      <p>
+        I will keep the focus on the test code. Shaders themselves are example shaders available from Raylib, <a href="https://github.com/raysan5/raylib/blob/master/examples/shaders/resources/shaders/glsl330/bloom.fs">bloom</a> and <a href="https://github.com/raysan5/raylib/blob/master/examples/shaders/resources/shaders/glsl330/grayscale.fs">grayscale</a>
+        full screen shaders.
+      </p>
+      <div>
+        <pre><code>#include &lt;cest&gt;
+#include &lt;render.h&gt;
+#include &lt;verify.h&gt;
+
+describe("Post-processing Camera Shaders", []() {
+  it("renders all pixels with bloom effect", []() {
+    RenderWithShader("common/bloom.fs");
+    Verify();
+  });
+
+  it("renders all pixels in B&W", []() {
+    RenderWithShader("common/grayscale.fs");
+    Verify();
+  });
+
+  afterEach([]() {
+    CleanUp();
+  });
+});
         </code></pre>
-        <span>Code snippet description as text</span>
       </div>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <div>
-        <table>
-          <tr>
-            <th>Column A</th>
-            <th>Column B</th>
-            <th>Column C</th>
-          </tr>
-          <tr>
-            <td>First value</td>
-            <td>First value</td>
-            <td>First value</td>
-          </tr>
-          <tr>
-            <td>Second value</td>
-            <td>Second value</td>
-            <td>Second value</td>
-          </tr>
-        </table>
-        <span>Table description as text</span>
+      <p>
+        Tests are very simple, and in fact, it could be simplified even further by parametrizing the shader location. The two main parts are:
+      </p>
+      <ul>
+        <li><b>Rendering</b> → Renders the scene with a sample mesh and applying the full-screen shader passed as an argument.</li>
+        <li><b>Verifying</b> → Compares the rendered image with the stored snapshot, and throws an assertion error when the images are different, causing the test to fail.</li>
+      </ul>
+      <p>
+        The interesting part lies in the <b>verification</b> part of the test. The steps it takes to check the currently rendered image against
+        the snapshot are, roughly (if interested, check the details in GitHub)
+      </p>
+      <ul>
+        <li>Take a screenshot of the current image. This will be the generated image to compare against the snapshot.</li>
+        <li>If an snapshot image does not exist, create one. This will only be the case the <b>first time</b> the test is run. In this first execution, the
+        snapshot would be committed as the reference for next runs.</li>
+        <li>Compare the current image to the generated image. In this test, ImageMagick's MagickWand API was used to calculate the difference between
+          both images.
+        </li>
+        <li>If the current image is different from the snapshot, it means the scene has been modified → fail the test. For convenience, store the snapshot
+          result so it can be reviewed later. Imgur API can be used to upload images and videos very easily (if privacy isn't a concern!).
+        </li>
+      </ul>
+      <p>
+        Take this example where the grayscale shader has been purposely modified to look like an unintended change. Instead of rendering a black and white image,
+        it tints the result with a blue hue. As expected, the test fails since the rendering differs from the snapshot, and we get back the link to the result
+        in the CI test execution:
+      </p>
+      <div class="image fit-20">
+        <img src="/assets/shader-output-By3QiDX0.png" />
       </div>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>
+        And when checking the results, both the expected result and the actual result can be compared side by side, giving quick feedback of what has gone wrong.
+      </p>
+      <div class="image fit-20">
+        <img src="/assets/shader-image-CY2wdLLK.png" />
+      </div>
+      <p>
+        Without applying snapshot testing, the most probable way this unintended change would have been discovered would have been when trying out the game.
+        Perhaps by sheer coincidence, when another feature was being tested out and someone noticed the change and raised the bug. Depending on the nature of
+        the change, it might would not have been ever noticed, and released in the final product.
+      </p>
+      <p>
+        It must be noted that this example scene is extremely simple and does not take into account variability in the rendered image, such as shaders changing
+        with time or other inputs. Also, it assumes rendering is deterministic, otherwise every render would be slightly different when compared to the snapshot,
+        making the comparison impossible.
+      </p>
+      <p>
+        In any case, I'm quite sure this can be quite valuable when testing out shaders. Maybe testing full scenes is not feasible as complexity increases,
+        but avoiding introducing changes to shaders by mistake already feels like a big improvement.
+      </p>
     </article>
+
     <article>
-      <h2>Other section</h2>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <h2>Game snapshot tests</h2>
+      <p>
+        Asd
+      </p>
+      <div class="image fit-20">
+        <video src="/assets/video_game-DqXuoZai.mp4" autoplay loop controls></video>
+        <span>Simple enough but it will let us put the concepts to test</span>
+      </div>
+      <p>
+        Asd
+      </p>
+      <div>
+        <pre><code>#include &lt;cest&gt;
+#include &lt;game.h&gt;
+#include &lt;platform-test.h&gt;
+#include &lt;test-helper.h&gt;
+
+describe("JumpingGame", []() {
+  it("builds up to 2 points after traversing several columns", []() {
+    auto headless_mode = true;
+    Game game(headless_mode);
+
+    onEveryNthFrame(6, [](int _) { Platform::ForceJumpKey(); });
+    onEveryNthFrame(HEADLESS_MODE_FRAMESKIP, [](int frame) { Screenshot(frame); });
+    runFrames(NUM_FRAMES_TO_RENDER, [&]() { game.DoFrame(); });
+
+    auto assertion = [&]() { expect(game.Score()).toBeGreaterThan(2); };
+    Verify(assertion);
+  });
+});
+        </code></pre>
+        <span>We'll review the parts of the game's acceptance test next</span>
+      </div>
+      <p>
+        Asd asd asd asd asd asd
+      </p>
+      <div class="image fit-20">
+        <video src="/assets/video_1-B4apfQOt.mp4" autoplay loop controls></video>
+        <span>The end result pulled right from the CI pipeline</span>
+      </div>
+    </article>
+
+    <article>
+      <h2>Closing thoughts</h2>
+      <p>
+        Asd
+      </p>
+      <p>
+        What is it useful for
+      </p>
+      <ul>
+        <li>Asd</li>
+        <li>Asd</li>
+        <li>Asd</li>
+      </ul>
+      <p>What are the main challenges</p>
+      <ul>
+        <li>Asd</li>
+        <li>Asd</li>
+        <li>Asd</li>
+      </ul>
+      <p>
+        What is not going to work
+      </p>
+      <ul>
+        <li>Asd</li>
+        <li>Asd</li>
+        <li>Asd</li>
+      </ul>
     </article>
 
     <footer><a href="./index.html">Home</a></footer>
