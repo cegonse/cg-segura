@@ -78,8 +78,9 @@
       }
 
       li {
-        font-size: 1.2em;
-        margin-bottom: 0.5em;
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
       }
 
       a {
@@ -126,6 +127,11 @@
           margin-left: 20%;
           margin-right: 20%;
         }
+      }
+
+      article {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
       }
 
       article > p:first-child {
@@ -262,6 +268,8 @@
         border-radius: 8px;
         padding: 1em;
         display: block !important;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
       }
     </style>
   </head>
@@ -284,91 +292,118 @@
     <article>
       <div class="info">ℹ️ All code used to prepare this article is available in GitHub at <a href="https://github.com/cegonse/offscreen-rendering-tests">cegonse/offscreen-rendering-tests</a></div>
       <p>
-        Getting a game to feel, look and play as intended is hard. There's a delicate balance that must be kept in
-        check, and any seemingly tiny change could have enormous consequences on how a game feels.
+        Getting a game to feel, look and play as intended is hard. There's a delicate balance that must be taken care of at all times.
+        Any seemingly tiny change could have enormous consequences on how a game looks and feels.
       </p>
       <p>
-        Applying testing techniques to games as if they were any software product does not always cut it. There are nuances in
-        how a game <i>feels</i> that are hard to capture with unit tests. Systems are so complex and interconnected that it becomes
-        really hard to keep track of how changes to shared modules might affect the whole game.
+        Applying testing techniques to games as if they were any software product does not always cut it.There are nuances in how a game
+        <i>feels</i> that are hard to capture with unit tests.
       </p>
       <p>
-        Manual testing the whole game everytime a change is done to core mechanics or graphics doesn't cut it except for very small
-        games. Playing the game can be automated too, but it still relies on running the whole game which is time consuming and prone
-        to breaking.
+        Systems are so complex and interconnected that it becomes really hard to keep track of how changes to shared modules might
+        affect the whole game.
+      </p>
+      <p>
+        Manual testing the whole game everytime a change is done to core mechanics or graphics isn't feasible, except for very small
+        games.
+      </p>
+      <p>
+        Those manual tests could be automated too, but as with all heavy weight full-app tests, building and maintaining them is time consuming
+        and prone to breaking.
       </p>
       <p>
         I wanted to explore a lightweight way to test full sub-sets of the game, without having to rely on playing the <i>actual</i> game.
+      </p>
+      <p>
         Can we run small segments of the game and compare the results with stored <i>snapshots</i>, and find out if anything relevant has
         changed?
       </p>
       <p>
-        In this article, I've explored how to apply <b>snapshot testing</b> to reduce unintended changes when building games. There are many
-        scenarios where snapshot testing can be quite useful, without having to rely on heavy acceptance tests. But it also comes with a great
-        number of caveats, so it won't be applicable in all cases.
+        In this article, I've explored how to apply <b>snapshot testing</b> to reduce unintended changes when building games.
+      </p>
+      <p>
+        There are many scenarios where snapshot testing can be quite useful, giving us a break on writing heavy acceptance tests. But it also comes
+        with a number of caveats, so it won't be applicable in all cases.
       </p>
     </article>
     <article>
       <h2>Testing and game development</h2>
       <p>
         Since I first started learning about software automated testing, I began thinking about how could it be
-        effectively applied to game development. If you have ever developed a videogame, you will have experienced
-        first-hand how complex game development can be.
+        effectively applied to game development.
       </p>
       <p>
-        Funnily enough, the environment where I've seen less automated testing through my career is game development.
-        I've mostly worked on small games, with one exception (what the industry calls
-        <a href="https://en.wikipedia.org/wiki/AAA_(video_game_industry)#III"><i>Triple-I</i></a> games),
+        If you have ever developed a videogame, you will have experienced first-hand how complex game development can be.
+        Coindidentally, the environment where I've seen less automated testing through my career is game development.
+      </p>
+      <p>
+        I've mostly worked on very small games, with one exception being what the industry calls
+        <a href="https://en.wikipedia.org/wiki/AAA_(video_game_industry)#III"><i>Triple-I</i></a> games,
         so probably I've missed out on how big studios handle testing.
       </p>
       <p>
         Reading from sites like <a href="https://www.gamedeveloper.com/">GameDeveloper</a> and remembering conversations with
-        people working on established studios, I learned that many rely on automated QA tests based on macros. These tests
-        auto-play portions of the game from recorded controller inputs and bespoke markers detect whether a goal has been reached
-        or not.
+        people working on established studios, I learned that many rely on automated QA tests based on macros.
       </p>
       <p>
-        This method however requires launching the full game, and as with all QA acceptance tests, are costly to implement, prone
-        to breaking upon change, costly to maintain once working, and require powerful hardware to run (as powerful as the hardware
-        required to run the game itself).
+        These tests auto-play portions of the game from recorded controller inputs and bespoke markers detect whether a goal has
+        been reached or not. This requires launching the full game, and as with all QA acceptance tests, are
+      </p>
+      <ul>
+        <li>Expensive to implement.</li>
+        <li>Prone to breaking upon change.</li>
+        <li>Expensive to maintain to keep them working.</li>
+        <li>Require powerful hardware to run (as powerful as the hardware required to run the game itself).</li>
+      </ul>
+      <p>
+        QA acceptance tests are of course necessary and must always be present in any product's testing pyramid. But,
+        how could we reduce the cost (both building, maintaining and running) of all our test suite?
       </p>
       <p>
-        QA acceptance tests are necessary and must always be present in any product's testing pyramid. But, how can we reduce the
-        cost (both building, maintaining and running) of these tests?
-      </p>
-      <p>
-        What about running smaller integration tests of only a subset of the full game? And if possible, avoiding running it on
-        retail hardware? For example, directly in GitHub Actions CI runners.
+        A friend of mine introduced me to how <a href="https://store.steampowered.com/app/427520/Factorio">Factorio</a> tests its vast number of mechanics, and it rang a bell.
       </p>
       <div>
         <iframe width="auto" height="auto" src="https://www.youtube.com/embed/CgMV2dFFdFE" title="Factorio: Space Age - Graphics mode tests" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         <span><a href="https://store.steampowered.com/app/427520/Factorio">Factorio's</a> testing mode resembles what I wanted to achieve</span>
       </div>
+      <p>
+        What about running smaller integration tests of only a subset of the full game? And all this while avoiding running them on retail hardware?
+        For example, directly in GitHub Actions CI runners.
+      </p>
+      <p>
+        The idea I came up with was combining a couple technical concepts to achieve this, <b>snapshot testing</b> and <b>off-screen rendering</b>.
+      </p>
     </article>
 
     <article>
-      <h2>Laying out the concepts</h2>
+      <h2>Understanding the concepts</h2>
       <p>Asd</p>
     </article>
 
     <article>
       <h2>Shader and scene snapshot tests</h2>
-      <div class="info">ℹ️ Find code for shader testing at the <a href="https://github.com/cegonse/offscreen-rendering-tests/tree/main/testing-shaders">testing-shaders</a> directory</div>
+      <div class="info">ℹ️ Find shader testing code at <a href="https://github.com/cegonse/offscreen-rendering-tests/tree/main/testing-shaders">testing-shaders</a></div>
       <p>
-        Shaders are difficult to build and get right. Depending on the models themselves, desired effects, and how
-        it can be hard to combine them with each other. Also, many times the artistic intent we want to convey through
-        shaders is achieved by combining many shaders, applying to different meshes, full-screen shaders and others.
+        Shaders are difficult to build and get right. Depending on the models and the desired effects, it can be hard
+        to combine them and get everything right.
       </p>
       <p>
-        There are options to unit test shaders like <a href="https://github.com/cezbloch/shaderator">Shaderator by Cezary Bloch</a>,
-        and although tools like this are perfect to iteratively build complex kernels such as compute shaders or
-        complex visual shaders, it might not be the best fit when the important outcome is the visual cohesion of the scene,
-        rather than the calculations done by the shader.
+        Also, many times the artistic intent we want to convey through shaders is achieved by combining many shaders,
+        applying them to different meshes, full-screen shaders and others.
+      </p>
+      <p>
+        There are options to unit test shaders like <a href="https://github.com/cezbloch/shaderator">Shaderator by Cezary Bloch</a>.
+        Tools like this are perfect to iteratively build complex kernels like compute shaders or complex visual shaders,
+        but it might not be the best fit when the important outcome is the visual cohesion of the scene.
       </p>
       <p>
         Also, many times shaders might are built in visual scripting and node-based tools, which in turn generate
         source code that can be used by game engines. In these cases, unit testing wouldn't be easy or maybe possible at all.
       </p>
+      <div class="image fit-20">
+        <img src="./images/offscreen-article/godot-shader-nodes.png" />
+        <span>When working with node based shader editors, code-based unit testing is out of the question. (<a href="https://stackoverflow.com/questions/65799797/godot-visual-shader-copy-code-from-fragment-to-vertex">Source</a>)</span>
+      </div>
       <p>
         Snapshot testing looks like a great fit for this scenario. Let's lay out how could it be carried out.
       </p>
@@ -378,6 +413,8 @@
       </p>
       <p>
         In this case, technical artists would tweak all the parameters as desired until getting it right.
+      </p>
+      <p>
         Storing a snapshot of the scene and testing it in the CI would help ensure the scene hasn't been unwillingly changed,
         for example when re-using the same shaders in another scene and tweaking them for it.
       </p>
@@ -408,7 +445,7 @@ describe("Post-processing Camera Shaders", []() {
         </code></pre>
       </div>
       <p>
-        Tests are very simple, and in fact, it could be simplified even further by parametrizing the shader location. The two main parts are:
+        These tests are very simple, and in fact, it could be simplified even further by parametrizing the shader location. The interesting parts are:
       </p>
       <ul>
         <li><b>Rendering</b> → Renders the scene with a sample mesh and applying the full-screen shader passed as an argument.</li>
@@ -419,19 +456,33 @@ describe("Post-processing Camera Shaders", []() {
         the snapshot are, roughly (if interested, check the details in GitHub)
       </p>
       <ul>
-        <li>Take a screenshot of the current image. This will be the generated image to compare against the snapshot.</li>
-        <li>If an snapshot image does not exist, create one. This will only be the case the <b>first time</b> the test is run. In this first execution, the
-        snapshot would be committed as the reference for next runs.</li>
-        <li>Compare the current image to the generated image. In this test, ImageMagick's MagickWand API was used to calculate the difference between
-          both images.
+        <li>
+          Take a screenshot of the current image.
+          <ul><li>This will be the generated image to compare against the snapshot.</li></ul>
         </li>
-        <li>If the current image is different from the snapshot, it means the scene has been modified → fail the test. For convenience, store the snapshot
-          result so it can be reviewed later. Imgur API can be used to upload images and videos very easily (if privacy isn't a concern!).
+        <li>
+          If an snapshot image does not exist, create one.
+          <ul>
+            <li>This will only be the case the <b>first time</b> the test is run.</li>
+            <li>In this first execution, the snapshot would be committed as the reference for next runs.</li>
+          </ul>
+        </li>
+        <li>Compare the current image to the generated image.
+          <ul><li>ImageMagick's <a href="https://imagemagick.org/script/magick-wand.php">MagickWand API</a> was used to calculate th
+            difference between both images.</li></ul>
+        </li>
+        <li>If the current image is different from the snapshot → <b>fail the test</b>.</li>
+        <li>
+          For convenience, store the test results so it can be reviewed later.
+          <ul><li>Imgur API can be used to upload images and videos very easily (if privacy isn't a concern!).</li></ul>
         </li>
       </ul>
       <p>
-        Take this example where the grayscale shader has been purposely modified to look like an unintended change. Instead of rendering a black and white image,
-        it tints the result with a blue hue. As expected, the test fails since the rendering differs from the snapshot, and we get back the link to the result
+        Take this example where the grayscale shader has been purposely modified to look like an unintended change.
+      </p>
+      <p>
+        Instead of rendering a black and white image, it tints the result with a blue hue. As expected, the test fails since the
+        rendering differs from the snapshot, and we get back the link to the result
         in the CI test execution:
       </p>
       <div class="image fit-20">
@@ -442,25 +493,41 @@ describe("Post-processing Camera Shaders", []() {
       </p>
       <div class="image fit-20">
         <img src="./images/offscreen-article/shader-image.png" />
+        <span>Left, expected result. Right, received result.</span>
       </div>
       <p>
         Without applying snapshot testing, the most probable way this unintended change would have been discovered would have been when trying out the game.
-        Perhaps by sheer coincidence, when another feature was being tested out and someone noticed the change and raised the bug. Depending on the nature of
-        the change, it might would not have been ever noticed, and released in the final product.
       </p>
       <p>
-        It must be noted that this example scene is extremely simple and does not take into account variability in the rendered image, such as shaders changing
-        with time or other inputs. Also, it assumes rendering is deterministic, otherwise every render would be slightly different when compared to the snapshot,
-        making the comparison impossible.
+        Perhaps by sheer coincidence, when another feature was being tested out and someone noticed the change and raised the bug.
       </p>
       <p>
-        In any case, I'm quite sure this can be quite valuable when testing out shaders. Maybe testing full scenes is not feasible as complexity increases,
-        but avoiding introducing changes to shaders by mistake already feels like a big improvement.
+        Depending on the nature of the change, it might would not have been ever noticed, and released in the final product.
+      </p>
+      <h2>Disclaimer on shader snapshot testing</h2>
+      <p>
+        Would this approach work on <b>every</b> type of scene and shader? Probably not.
+      </p>
+      <p>
+        The fact that this example scene is extremely simple and does not take into account variability in the rendered image, such as shaders changing
+        with time or other inputs cannot be overlooked.
+      </p>
+      <p>
+        It assumes rendering is deterministic, otherwise every render would be slightly different when compared to the snapshot, making the comparison
+        impossible.
+      </p>
+      <p>
+        In any case, I believe this approach can be very valuable as a way to avoid changing how shaders look and feel by mistake.
+      </p>
+      <p>
+        Maybe testing full scenes is not feasible as complexity increases, but this step already feels like a big improvement over having to manually noticed
+        changes.
       </p>
     </article>
 
     <article>
-      <h2>Game snapshot tests</h2>
+      <h2>Game integration tests</h2>
+      <div class="info">ℹ️ Find the relevant code at <a href="https://github.com/cegonse/offscreen-rendering-tests/tree/main/integration-testing">integration-testing</a></div>
       <p>
         Asd
       </p>
@@ -500,6 +567,7 @@ describe("JumpingGame", []() {
         <video src="./images/offscreen-article/video_1.mp4" autoplay loop controls></video>
         <span>The end result pulled right from the CI pipeline</span>
       </div>
+      <p>Asd asd asd asd as dasd</p>
     </article>
 
     <article>
