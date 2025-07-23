@@ -271,6 +271,15 @@
         margin-top: 1rem;
         margin-bottom: 1rem;
       }
+
+      .inline-code {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.8em;
+        background-color: #27292b;
+        color: #ffa826;
+        border-radius: 4px;
+        padding: 2px;
+      }
     </style>
   </head>
   <body>
@@ -337,8 +346,8 @@
         Coindidentally, the environment where I've seen less automated testing through my career is game development.
       </p>
       <p>
-        I've mostly worked on very small games, with one exception being what the industry calls
-        <a href="https://en.wikipedia.org/wiki/AAA_(video_game_industry)#III"><i>Triple-I</i></a> games,
+        I've mostly worked on very small games, with one exception being what the industry calls a
+        <a href="https://en.wikipedia.org/wiki/AAA_(video_game_industry)#III"><i>Triple-I</i></a> game,
         so probably I've missed out on how big studios handle testing.
       </p>
       <p>
@@ -352,7 +361,7 @@
       <ul>
         <li>Expensive to implement.</li>
         <li>Prone to breaking upon change.</li>
-        <li>Expensive to maintain to keep them working.</li>
+        <li>Expensive to maintain and to keep them working.</li>
         <li>Require powerful hardware to run (as powerful as the hardware required to run the game itself).</li>
       </ul>
       <p>
@@ -377,6 +386,11 @@
 
     <article>
       <h2>Understanding the concepts</h2>
+      <p>Asd</p>
+    </article>
+
+    <article>
+      <h2>Tooling and frameworks</h2>
       <p>Asd</p>
     </article>
 
@@ -422,7 +436,7 @@
         I will keep the focus on the test code. Shaders themselves are example shaders available from Raylib, <a href="https://github.com/raysan5/raylib/blob/master/examples/shaders/resources/shaders/glsl330/bloom.fs">bloom</a> and <a href="https://github.com/raysan5/raylib/blob/master/examples/shaders/resources/shaders/glsl330/grayscale.fs">grayscale</a>
         full screen shaders.
       </p>
-      <div>
+      <div class="fit-20">
         <pre><code>#include &lt;cest&gt;
 #include &lt;render.h&gt;
 #include &lt;verify.h&gt;
@@ -529,16 +543,87 @@ describe("Post-processing Camera Shaders", []() {
       <h2>Game integration tests</h2>
       <div class="info">ℹ️ Find the relevant code at <a href="https://github.com/cegonse/offscreen-rendering-tests/tree/main/integration-testing">integration-testing</a></div>
       <p>
-        Asd
+        We have seen snapshot testing shaders works and could be a good way to prevent accidental changes. How
+        else could snapshot testing be applied to games?
+      </p>
+      <p>
+        Another idea I had in mind is recording footage of game integration test, and comparing the results
+        with a stored snapshot.
+      </p>
+      <p>
+        When the integration test fails, the CI pipeline would report a video of the expected footage (the
+        snapshot), along with what really happened.
+      </p>
+      <p>
+        To put this concept to test, I have built a very simple Flappy Bird clone:
+      </p>
+      <ul>
+        <li>The pink square continuously advances to the right, scoring a point each time a column is traversed.</li>
+        <li>The square falls down by gravity, and jumps back by pressing the space key.</li>
+        <li>If a column is touched, or the player goes out of canvas, the player loses.</li>
+      </ul>
+      <p>
+        The game is as simple as it gets, but has what is needed to test it: a starting condition and a goal.
       </p>
       <div class="image fit-20">
         <video src="./images/offscreen-article/video_game.mp4" autoplay loop controls></video>
         <span>Simple enough but it will let us put the concepts to test</span>
       </div>
       <p>
-        Asd
+        In this snapshot test, the player will be set at the start and has zero points, and must have reached
+        a goal after a while (scored several points).
       </p>
-      <div>
+      <h2>Making the game testable</h2>
+      <p>
+        In order to be able to test the game in an integration test, there are some design decisions
+        that must be taken beforehand.
+      </p>
+      <p>
+        Parts of the game that prevent the game from being testable are put behind an interface, with
+        the real implementation, and a mock that is only used by tests, handling:
+      </p>
+      <ul>
+        <li><b>Input</b> → The only way to win the game is by pressing the space bar, but of course
+        this isn't possible from an automated test.
+        <ul>
+          <li>This can be fixed by simulating inputs when needed, so the player will automatically
+            jump when needed.
+          </li>
+          <li>Again, this works thanks to the game being extremely simple.</li>
+        </ul>
+        </li>
+        <li><b>Randomness</b> → The game generates obstacles at random heights, making the result
+        impossible to predict against a stored snapshot.
+        <ul>
+          <li>To get around this, the game under test has a controlled random number generation.</li>
+          <li>This ensures the randomly generated map stays the same across executions.</li>
+        </ul>
+        </li>
+      </ul>
+      <p>
+        These among many other design decisions must be taken beforehand to ensure the game is testable.
+        Think about it like trying to add online play mid-development.
+      </p>
+      <p>
+        As with any other complex software project, making it testable when it has not been designed towards
+        testability will be a nightmare.
+      </p>
+      <p>
+        Most times, we will be dealing with a much more complex game. An approach I have tried out for
+        these cases is building an AI that is capable of achieving the game's main goals without supervision.
+      </p>
+      <p>
+        Then, the integation test can be run against the AI and if something is changed by mistake,
+        the test fails.
+      </p>
+      <p>
+        That is out of scope for this article though, but I might write about it in detail in the future.
+      </p>
+      <h2>The integration test</h2>
+      <p>
+        Now that the game is testable, let's take a look at the actual integration test code:
+      </p>
+      <div class="fit-20">
         <pre><code>#include &lt;cest&gt;
 #include &lt;game.h&gt;
 #include &lt;platform-test.h&gt;
@@ -558,45 +643,144 @@ describe("JumpingGame", []() {
   });
 });
         </code></pre>
-        <span>We'll review the parts of the game's acceptance test next</span>
       </div>
       <p>
-        Asd asd asd asd asd asd
+        In this case, the integration test works like as a harness to run the game loop.
+        Dividing the test in three core sections, it consists of:
+      </p>
+      <ul>
+        <li><b>Arrangement</b> → Set up the game and configures it to run in headless mode.
+          <ul><li>Thanks to using the patched Raylib version, the game runs with full graphics
+          without needing GPU or a windowing environment.</li></ul>
+        </li>
+        <li><b>Action</b> → Run the game for a number of frames, and perform actions when required.
+          <ul><li>In this case, every 6 frames the mocked spacebar is pressed to jump, and a screenshot is taken every 10th frame.</li></ul>
+        </li>
+        <li><b>Assertion</b> → After running the game, verify it did as expected.
+          <ul><li>Given a designated number of frames, the score must be at least 2 points.</li></ul>
+        </li>
+      </ul>
+      <p>
+        The test harness stores the callbacks passed to <span class="inline-code">onEveryNthFrame()</span>,
+        and executes them when <span class="inline-code">runFrames()</span> reaches the expected frame.
+      </p>
+      <p>
+        The <span class="inline-code">Verify()</span> function forces the test to fail when the passed lambda expression fails to evaluate,
+        records a new video combining the stored snapshot with the received result, and uploads it to Imgur
+        to allow checking it out if the CI fails.
+      </p>
+      <p>
+        Let's try simulate an example where game logic might get mistakenly broken, and force a CI failure. In this
+        example, the jumping code has been commented out, thus disabling the jumping mechanic.
+      </p>
+      <p>
+        In this case, the score will never become greater than two, as you must jump in order to pass the first
+        column, and thus increase the score.
+      </p>
+      <div class="image fit-20">
+        <img src="./images/offscreen-article/game-test-output.png" />
+        <span>CI output, with the link to the video recording the test failure.</span>
+      </div>
+      <p>
+        When opening the video, the results can be checked side-by-side. While the stored snapshot manages
+        to get to the third column, the current code cannot get past the first one.
       </p>
       <div class="image fit-20">
         <video src="./images/offscreen-article/video_1.mp4" autoplay loop controls></video>
-        <span>The end result pulled right from the CI pipeline</span>
+        <span>Left, expected result. Right, received result.</span>
       </div>
-      <p>Asd asd asd asd as dasd</p>
+      <h2>Performance problems with software rendering</h2>
+      <p>
+        In the previous video, you will have noticed that the footage looks really bad. It looks like
+        if the player was floating around, nothing like what can be seen in the first video.
+      </p>
+      <p>
+        The truth is software rendering is <b>extremely slow</b>, even for such a simple scene as this
+        one. I expected it to perform badly, but not <i>that badly</i>.
+      </p>
+      <p>
+        The test snapshots are recorded at 1/10th of the real framerate, as otherwise the rendering
+        code won't be able to keep up.
+      </p>
+      <p>
+        Also, depending on the raw power of the CPU running the test, framerate varies greatly. Shared
+        GitHub Actions runners are much, much slower than what you get from your development machine.
+      </p>
+      <p>
+        This makes me think software rendering is not a good option for this kind of tests. Resorting to
+        a discrete GPU in a dedicated runner will allow for good quality footage of failures.
+      </p>
+      <p>
+        And when something fails, we want to get the best possible feedback, so we can fix it as quickly as
+        possible.
+      </p>
     </article>
 
     <article>
       <h2>Closing thoughts</h2>
       <p>
-        Asd
+        After going through these two concepts, playing around with the possibilities, I feel like there
+        are some good points but with their caveats.
       </p>
       <p>
-        What is it useful for
+        Snapshot testing shaders seems like a great idea, and I genuinely regret not having done
+        it before in other projects.
       </p>
       <ul>
-        <li>Asd</li>
-        <li>Asd</li>
-        <li>Asd</li>
+        <li>Breaking shaders between scenes is <b>really</b> easy, and gets worse with their complexity.</li>
+        <li>Having to test shaders in a shader editor does not always cut it, as there are game specific settings
+          besides the shader code itself.
+        </li>
+        <li>And resorting to doing a playthrough to do a final check shouldn't be the only way to verify them.</li>
       </ul>
-      <p>What are the main challenges</p>
+      <p>However, there are challenges that might make getting this to work in a real scenario quite more complicated.</p>
       <ul>
-        <li>Asd</li>
-        <li>Asd</li>
-        <li>Asd</li>
+        <li>
+          Getting these techniques to work with commercial engines might get really cumbersome.
+          <ul>
+            <li>For example, I can see ways of doing all of this with Unity, but integrating it all
+              in a CI would be a challenge.
+            </li>
+          </ul>
+        </li>
+        <li>
+          Unless the game runs on OpenGL, there is no way to use libosmesa to do software rendering.
+          <ul>
+            <li>There are software rendering alternatives for Vulkan, but...</li>
+            <li>In most cases, using a discrete GPU probably will be much simpler.</li>
+          </ul>
+        </li>
       </ul>
       <p>
-        What is not going to work
+        And finally, regarding integration testing, using libosmesa to avoid GPU rendering probably isn't
+        a good idea at all.
       </p>
       <ul>
-        <li>Asd</li>
-        <li>Asd</li>
-        <li>Asd</li>
+        <li>Software offscreen rendering with libosmesa is <b>very</b> slow</li>
+          <ul>
+            <li>Shader testing is doable, but rendering full animated scenes is out of the question.</li>
+          </ul>
+        </li>
+        <li>Any engines or games using other libraries different from OpenGL won't work with libosmesa.</li>
+        <li>
+          It makes much more sense to run game integration tests with a real GPU.
+          <ul>
+            <li>There is no other way to get quality footage of the results.</li>
+            <li>CI runners will need a dedicated GPU and specific configuration.</li>
+          </ul>
+        </li>
       </ul>
+    </article>
+    <hr />
+    <article>
+      <p>
+        If you've made it this far, thank you <b>so much</b> for reading!
+      </p>
+      <p>
+        If you have any comment, suggestion or want to discuss about any of the topics in this article,
+        feel free to reach out through any of the channels in the <a href="./index.html">home page</a>
+        or in the <a>LinkedIn</a> post!
+      </p>
     </article>
 
     <footer><a href="./index.html">Home</a></footer>
@@ -618,8 +802,17 @@ describe("JumpingGame", []() {
       });
     };
 
+    const makeResourcesClickable = () => {
+      document.querySelectorAll("img").forEach((node) => {
+        node.addEventListener("click", () => {
+          window.open(node.src);
+        });
+      });
+    };
+
     window.addEventListener("resize", resizeIframes);
     resizeIframes();
+    makeResourcesClickable();
     </script>
   </body>
 </html>
