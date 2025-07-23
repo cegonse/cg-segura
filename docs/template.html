@@ -77,6 +77,12 @@
         font-size: 1.2em;
       }
 
+      li {
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
       a {
         color: #758CFF;
         text-decoration: underline;
@@ -101,11 +107,31 @@
           margin-top: 1em;
         }
 
+        video {
+          border-radius: 8px;
+          object-fit: contain;
+          width: 100%;
+          height: auto;
+          margin-top: 1em;
+        }
+
         span {
           margin-top: 1em;
           margin-bottom: 0.5em;
           font-style: italic;
         }
+      }
+
+      @media (orientation: landscape) {
+        .fit-20 {
+          margin-left: 20%;
+          margin-right: 20%;
+        }
+      }
+
+      article {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
       }
 
       article > p:first-child {
@@ -129,6 +155,17 @@
       }
 
       iframe + span {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        font-style: italic;
+        text-align: center;
+      }
+
+      video {
+        border-radius: 8px;
+      }
+
+      video + span {
         margin-top: 0.5em;
         margin-bottom: 0.5em;
         font-style: italic;
@@ -225,6 +262,15 @@
           border-radius: 32px;
         }
       }
+
+      .info {
+        background-color: #42586e;
+        border-radius: 8px;
+        padding: 1em;
+        display: block !important;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
     </style>
   </head>
   <body>
@@ -245,6 +291,7 @@
     <p class="italic">Did you enjoy this article? Follow the conversation on <a>LinkedIn</a></p>
     <article>
       <h2>Subtitle</h2>
+      <div class="info">ℹ️ An information element</div>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     </article>
@@ -320,8 +367,17 @@ void Whatever::function(int value) {
       });
     };
 
+    const makeResourcesClickable = () => {
+      document.querySelectorAll("img").forEach((node) => {
+        node.addEventListener("click", () => {
+          window.open(node.src);
+        });
+      });
+    };
+
     window.addEventListener("resize", resizeIframes);
     resizeIframes();
+    makeResourcesClickable();
     </script>
   </body>
 </html>
