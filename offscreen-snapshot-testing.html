@@ -280,6 +280,67 @@
         border-radius: 4px;
         padding: 2px;
       }
+
+      @media print {
+        p {
+          color: black;
+        }
+
+        h1 {
+          color: black;
+        }
+
+        h2 {
+          color: black;
+        }
+
+        li {
+          color: black;
+        }
+
+        a {
+          color: black;
+          text-decoration: none;
+        }
+
+        footer {
+          display: none;
+        }
+
+        .info {
+          color: black;
+        }
+
+        iframe {
+          display: none;
+        }
+
+        pre + span {
+          color: black;
+        }
+
+        iframe + span {
+          display: none;
+        }
+
+        video + span {
+          display: none;
+        }
+
+        video {
+          display: none;
+        }
+
+        .contact {
+          display: none;
+        }
+
+        .image {
+          span {
+            color: black;
+          }
+        }
+      }
     </style>
   </head>
   <body>
@@ -328,10 +389,10 @@
         changed?
       </p>
       <p>
-        In this article, I've explored how to apply <b>snapshot testing</b> to reduce unintended changes when building games.
+        In this article, I've explored how to apply <b>snapshot testing</b> to reduce unintended graphics regressions when building games.
       </p>
       <p>
-        There are many scenarios where snapshot testing can be quite useful, giving us a break on writing heavy acceptance tests. But it also comes
+        There are many scenarios where snapshot testing can be useful, giving us a break on writing heavy acceptance tests. But it also comes
         with a number of caveats, so it won't be applicable in all cases.
       </p>
     </article>
@@ -343,12 +404,7 @@
       </p>
       <p>
         If you have ever developed a videogame, you will have experienced first-hand how complex game development can be.
-        Coindidentally, the environment where I've seen less automated testing through my career is game development.
-      </p>
-      <p>
-        I've mostly worked on very small games, with one exception being what the industry calls a
-        <a href="https://en.wikipedia.org/wiki/AAA_(video_game_industry)#III"><i>Triple-I</i></a> game,
-        so probably I've missed out on how big studios handle testing.
+        Coincidentally, the environment where I've seen less automated testing through my career is game development.
       </p>
       <p>
         Reading from sites like <a href="https://www.gamedeveloper.com/">GameDeveloper</a> and remembering conversations with
@@ -356,7 +412,7 @@
       </p>
       <p>
         These tests auto-play portions of the game from recorded controller inputs and bespoke markers detect whether a goal has
-        been reached or not. This requires launching the full game, and as with all QA acceptance tests, are
+        been reached or not. This requires launching the full game, and as with all QA acceptance tests, are:
       </p>
       <ul>
         <li>Expensive to implement.</li>
@@ -366,10 +422,11 @@
       </ul>
       <p>
         QA acceptance tests are of course necessary and must always be present in any product's testing pyramid. But,
-        how could we reduce the cost (both building, maintaining and running) of all our test suite?
+        how could the cost (both building, maintaining and running) of a game's test suite be reduced?
       </p>
       <p>
-        A friend of mine introduced me to how <a href="https://store.steampowered.com/app/427520/Factorio">Factorio</a> tests its vast number of mechanics, and it rang a bell.
+        A friend of mine introduced me to how <a href="https://store.steampowered.com/app/427520/Factorio">Factorio</a> tests its vast
+        number of mechanics, and it rang a bell.
       </p>
       <div>
         <iframe width="auto" height="auto" src="https://www.youtube.com/embed/CgMV2dFFdFE" title="Factorio: Space Age - Graphics mode tests" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -386,7 +443,9 @@
 
     <article>
       <h2>Understanding the concepts</h2>
-      <p>Asd</p>
+      <p>
+
+      </p>
     </article>
 
     <article>
@@ -483,7 +542,7 @@
         but it might not be the best fit when the important outcome is the visual cohesion of the scene.
       </p>
       <p>
-        Also, many times shaders might are built in visual scripting and node-based tools, which in turn generate
+        Also, many times shaders are often built in visual scripting and node-based tools, which in turn generate
         source code that can be used by game engines. In these cases, unit testing wouldn't be easy or maybe possible at all.
       </p>
       <div class="image fit-20">
@@ -588,7 +647,7 @@ describe("Post-processing Camera Shaders", []() {
         Perhaps by sheer coincidence, when another feature was being tested out and someone noticed the change and raised the bug.
       </p>
       <p>
-        Depending on the nature of the change, it might would not have been ever noticed, and released in the final product.
+        Depending on the nature of the change, it might end up completely unnoticed, and released in the final product.
       </p>
       <h2>Disclaimer on shader snapshot testing</h2>
       <p>
@@ -812,9 +871,7 @@ describe("JumpingGame", []() {
         <li>
           Getting these techniques to work with commercial engines might get really cumbersome.
           <ul>
-            <li>For example, I can see ways of doing all of this with Unity, but integrating it all
-              in a CI would be a challenge.
-            </li>
+            <li>For example, getting this techniques to work with engines like Unity might be very difficult.</li>
           </ul>
         </li>
         <li>
