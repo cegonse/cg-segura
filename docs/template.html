@@ -271,6 +271,76 @@
         margin-top: 1rem;
         margin-bottom: 1rem;
       }
+
+      .inline-code {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.8em;
+        background-color: #27292b;
+        color: #ffa826;
+        border-radius: 4px;
+        padding: 2px;
+      }
+
+      @media print {
+        p {
+          color: black;
+        }
+
+        h1 {
+          color: black;
+        }
+
+        h2 {
+          color: black;
+        }
+
+        li {
+          color: black;
+        }
+
+        a {
+          color: black;
+          text-decoration: none;
+        }
+
+        footer {
+          display: none;
+        }
+
+        .info {
+          color: black;
+        }
+
+        iframe {
+          display: none;
+        }
+
+        pre + span {
+          color: black;
+        }
+
+        iframe + span {
+          display: none;
+        }
+
+        video + span {
+          display: none;
+        }
+
+        video {
+          display: none;
+        }
+
+        .contact {
+          display: none;
+        }
+
+        .image {
+          span {
+            color: black;
+          }
+        }
+      }
     </style>
   </head>
   <body>
