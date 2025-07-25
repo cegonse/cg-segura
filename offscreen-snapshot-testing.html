@@ -391,11 +391,83 @@
 
     <article>
       <h2>Tooling and frameworks</h2>
-      <p>Asd</p>
+      <p>
+        I wanted to focus on evaluating snapshot testing as a technique, so avoiding having to fight to get the tooling to work as I wanted was key.
+      </p>
+      <p>
+        In this case, I've selected options that give me enough flexibility to adapt the development environment, rendering backend (to add offscreen rendering
+        support) and test code.
+      </p>
+      <p>
+        I finally decided to use C++17 with this stack:
+      </p>
+      <ul>
+        <li>
+          <b>Rendering Backend</b>
+          <ul>
+            <li><a href="https://www.raylib.com/">Raylib</a></li>
+            <li><a href="https://www.opengl.org/">OpenGL</a></li>
+            <li><a href="https://www.glfw.org/">GLFW</a></li>
+            <li><a href="https://gallium.readthedocs.io/en/latest/osmesa.html">libosmesa</a></li>
+          </ul>
+        </li>
+        <li>
+          <b>Testing Environment</b>
+          <ul>
+            <li><a href="https://cestframework.com/">Cest Framework</a></li>
+            <li><a href="https://ffmpeg.org/">ffmpeg</a></li>
+            <li><a href="https://imagemagick.org/script/magick-wand.php">ImageMagick's MagickWand</a></li>
+            <li><a href="https://imgur.com/">Imgur</a></li>
+          </ul>
+        </li>
+      </ul>
+      <p>
+        Let's dive a bit deeper on the selection of these tools.
+      </p>
+      <h2>Rendering Backend</h2>
+      <p>
+        I wanted to use something that was easy to set-up, open source to avoid any issues getting off-screen rendering to work, and flexible
+        enough that would run in CI runners without too much hassle.
+      </p>
+      <p>
+        Ramon Santamaría's <a href="https://www.raylib.com/">Raylib</a> is a fantastic open source, super easy to use graphics library. It supports
+        both 2D and 3D rendering, input, shaders... With a very clean C API and <a href="https://www.opengl.org/">OpenGL</a> backend.
+      </p>
+      <p>
+        I was able to create a simple game and scenes with shaders to evaluate snapshot testing with it in a breeze. It doesn't support off-screen
+        rendering out-of-the-box, but adding support was <a href="https://github.com/cegonse/offscreen-rendering-tests/blob/main/raylib-a5639bb-offscreen.patch">very straightforward</a>.
+      </p>
+      <p>
+        Raylib supports using <a href="https://www.glfw.org/">GLFW</a> or <a href="https://www.libsdl.org/">SDL</a> as platform management backend libraries.
+        GLFW comes with off-screen rendering support with <a href="https://gallium.readthedocs.io/en/latest/osmesa.html">libosmesa</a>, and with some patching I got it working with Raylib.
+      </p>
+      <p>
+        <a href="https://gallium.readthedocs.io/en/latest/osmesa.html">libosmesa</a> is a C API to Gallium's software 3D renderer. Basically, a software
+        implementation of the OpenGL spec, enabling applications to run graphics without a 3D accelerator. Neat!
+      </p>
+      <h2>Testing Environment</h2>
+      <p>
+        As with the rendering backend, I wanted to use tools that were easy to integrate, modify if required, and as hassle free as possible so I could
+        focus on the important bits.
+      </p>
+      <p>
+        Using <a href="https://cestframework.com/">Cest Framework</a> for testing was a no-brainer, as its my own testing framework and I have full flexibility
+        to adapt it to my needs.
+      </p>
+      <p>
+        <a href="https://ffmpeg.org/">ffmpeg</a> and <a href="https://imagemagick.org/script/magick-wand.php">ImageMagick's MagickWand</a> were useful choices to
+        generate snapshot test outputs, both in video and picture formats.
+      </p>
+      <p>
+        Their APIs allow to stitch pictures, create videos and many other changes programatically, which would be required for the expected-actual comparisons.
+      </p>
+      <p>
+        And finally, <a href="https://imgur.com/">Imgur</a> is a convenient service to store pictures and videos with a simple public API. And free for public uploads!
+      </p>
     </article>
 
     <article>
-      <h2>Shader and scene snapshot tests</h2>
+      <h2>Shader snapshot tests</h2>
       <div class="info">ℹ️ Find shader testing code at <a href="https://github.com/cegonse/offscreen-rendering-tests/tree/main/testing-shaders">testing-shaders</a></div>
       <p>
         Shaders are difficult to build and get right. Depending on the models and the desired effects, it can be hard
@@ -433,7 +505,7 @@
         for example when re-using the same shaders in another scene and tweaking them for it.
       </p>
       <p>
-        I will keep the focus on the test code. Shaders themselves are example shaders available from Raylib, <a href="https://github.com/raysan5/raylib/blob/master/examples/shaders/resources/shaders/glsl330/bloom.fs">bloom</a> and <a href="https://github.com/raysan5/raylib/blob/master/examples/shaders/resources/shaders/glsl330/grayscale.fs">grayscale</a>
+        I will keep the focus on the test code. Shaders themselves are example shaders included with Raylib, <a href="https://github.com/raysan5/raylib/blob/master/examples/shaders/resources/shaders/glsl330/bloom.fs">bloom</a> and <a href="https://github.com/raysan5/raylib/blob/master/examples/shaders/resources/shaders/glsl330/grayscale.fs">grayscale</a>
         full screen shaders.
       </p>
       <div class="fit-20">
@@ -691,27 +763,27 @@ describe("JumpingGame", []() {
       </div>
       <h2>Performance problems with software rendering</h2>
       <p>
-        In the previous video, you will have noticed that the footage looks really bad. It looks like
-        if the player was floating around, nothing like what can be seen in the first video.
+        In the previous video, you will have noticed that the footage looks weird. It looks like
+        the player is floating around, nothing like what can be seen in the first video.
       </p>
       <p>
-        The truth is software rendering is <b>extremely slow</b>, even for such a simple scene as this
-        one. I expected it to perform badly, but not <i>that badly</i>.
+        The truth is software rendering is <b>very slow</b>, even for such a simple scene as this
+        one. I expected it to perform badly, but not <i>this badly</i>.
       </p>
       <p>
         The test snapshots are recorded at 1/10th of the real framerate, as otherwise the rendering
-        code won't be able to keep up.
+        code won't be able to keep up. It barely gets above 15 FPS on an AMD 3700X.
       </p>
       <p>
-        Also, depending on the raw power of the CPU running the test, framerate varies greatly. Shared
-        GitHub Actions runners are much, much slower than what you get from your development machine.
+        Also, framerate varies greatly depending on raw CPU power. Shared GitHub Actions runners are much,
+        much slower than what you get from your development machine.
       </p>
       <p>
         This makes me think software rendering is not a good option for this kind of tests. Resorting to
-        a discrete GPU in a dedicated runner will allow for good quality footage of failures.
+        a discrete GPU in a dedicated runner will allow for good quality footage of test failures.
       </p>
       <p>
-        And when something fails, we want to get the best possible feedback, so we can fix it as quickly as
+        When something fails, its best to get good quality feedback, so it can be fixed as quickly as
         possible.
       </p>
     </article>
@@ -723,17 +795,19 @@ describe("JumpingGame", []() {
         are some good points but with their caveats.
       </p>
       <p>
-        Snapshot testing shaders seems like a great idea, and I genuinely regret not having done
+        ✅ Snapshot testing shaders seems like a great idea, and I genuinely regret not having done
         it before in other projects.
       </p>
       <ul>
-        <li>Breaking shaders between scenes is <b>really</b> easy, and gets worse with their complexity.</li>
-        <li>Having to test shaders in a shader editor does not always cut it, as there are game specific settings
+        <li>Breaking shaders between scenes is <b>really</b> easy, and gets worse with the complexity of the code base.</li>
+        <li>Testing shaders in a shader editor isn't always enough, as there could game specific settings
           besides the shader code itself.
         </li>
-        <li>And resorting to doing a playthrough to do a final check shouldn't be the only way to verify them.</li>
+        <li>Resorting to doing a playthrough to do a final check shouldn't be the only way to verify their correctness.</li>
       </ul>
-      <p>However, there are challenges that might make getting this to work in a real scenario quite more complicated.</p>
+      <p>
+        ⚠️ However, there are challenges that might make getting this to work in a real scenario quite more complicated.
+      </p>
       <ul>
         <li>
           Getting these techniques to work with commercial engines might get really cumbersome.
@@ -752,7 +826,7 @@ describe("JumpingGame", []() {
         </li>
       </ul>
       <p>
-        And finally, regarding integration testing, using libosmesa to avoid GPU rendering probably isn't
+        ❌ And finally, regarding integration testing, using libosmesa to avoid GPU rendering probably isn't
         a good idea at all.
       </p>
       <ul>
