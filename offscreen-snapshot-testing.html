@@ -360,29 +360,29 @@
     <p class="italic">Posted July _th 2025</p>
     <p class="italic">Did you enjoy this article? Follow the conversation on <a>LinkedIn</a></p>
     <article>
-      <div class="info">ℹ️ All code used to prepare this article is available in GitHub at <a href="https://github.com/cegonse/offscreen-rendering-tests">cegonse/offscreen-rendering-tests</a></div>
+      <div class="info">ℹ️ All code used to prepare this article is available on GitHub at <a href="https://github.com/cegonse/offscreen-rendering-tests">cegonse/offscreen-rendering-tests</a></div>
       <p>
         Getting a game to feel, look and play as intended is hard. There's a delicate balance that must be taken care of at all times.
         Any seemingly tiny change could have enormous consequences on how a game looks and feels.
       </p>
       <p>
-        Applying testing techniques to games as if they were any software product does not always cut it.There are nuances in how a game
+        Applying testing techniques to games as if they were any software product does not always cut it. There are nuances in how a game
         <i>feels</i> that are hard to capture with unit tests.
       </p>
       <p>
-        Systems are so complex and interconnected that it becomes really hard to keep track of how changes to shared modules might
-        affect the whole game.
+        Systems are so complex and interconnected that it gets tough to keep track of how changes to shared modules might
+        impact the entire game.
       </p>
       <p>
-        Manual testing the whole game everytime a change is done to core mechanics or graphics isn't feasible, except for very small
+        Manual testing the whole game every time a change is made to the core mechanics or graphics isn't feasible, except for tiny
         games.
       </p>
       <p>
-        Those manual tests could be automated too, but as with all heavy weight full-app tests, building and maintaining them is time consuming
+        Those manual tests could be automated too, but as with all heavy-weight full-app tests, building and maintaining them is time-consuming
         and prone to breaking.
       </p>
       <p>
-        I wanted to explore a lightweight way to test full sub-sets of the game, without having to rely on playing the <i>actual</i> game.
+        I wanted to explore a lightweight way to test full subsets of the game, without having to rely on playing the <i>actual</i> game.
       </p>
       <p>
         Can we run small segments of the game and compare the results with stored <i>snapshots</i>, and find out if anything relevant has
@@ -392,14 +392,14 @@
         In this article, I've explored how to apply <b>snapshot testing</b> to reduce unintended graphics regressions when building games.
       </p>
       <p>
-        There are many scenarios where snapshot testing can be useful, giving us a break on writing heavy acceptance tests. But it also comes
-        with a number of caveats, so it won't be applicable in all cases.
+        There are many scenarios where snapshot testing can be useful, giving us a break from writing heavy acceptance tests. But it also comes
+        with several caveats, so it won't be applicable in all cases.
       </p>
     </article>
     <article>
       <h2>Testing and game development</h2>
       <p>
-        Since I first started learning about software automated testing, I began thinking about how could it be
+        Since I first started learning about software automated testing, I began thinking about how it could be
         effectively applied to game development.
       </p>
       <p>
@@ -412,7 +412,7 @@
       </p>
       <p>
         These tests auto-play portions of the game from recorded controller inputs and bespoke markers detect whether a goal has
-        been reached or not. This requires launching the full game, and as with all QA acceptance tests, are:
+        been reached or not. This requires launching the full game, and as with all QA acceptance tests, they are:
       </p>
       <ul>
         <li>Expensive to implement.</li>
@@ -434,17 +434,17 @@
       </div>
       <p>
         What about running smaller integration tests of only a subset of the full game? And all this while avoiding running them on retail hardware?
-        For example, directly in GitHub Actions CI runners.
+        For example, directly on GitHub Actions CI runners.
       </p>
       <p>
-        The idea I came up with was combining a couple technical concepts to achieve this, <b>snapshot testing</b> and <b>off-screen rendering</b>.
+        The idea I came up with was combining a couple of technical concepts to achieve this, <b>snapshot testing</b> and <b>off-screen rendering</b>.
       </p>
     </article>
 
     <article>
       <h2>Understanding the concepts</h2>
       <p>
-        Before getting started with the details, let's define first what are snapshot testing and off-screen rendering.
+        Before getting started with the details, let's first define what are snapshot testing and off-screen rendering.
       </p>
       <h2>Snapshot Testing</h2>
       <p>
@@ -480,7 +480,7 @@
         <li>Generate a stable result in every execution, so runs can be compared with the stored snapshot.</li>
       </ul>
       <p>
-        The later point is a challenge in many rendering engines, but depending on the control you have over the rendering
+        The latter point is a challenge in many rendering engines, but depending on the control you have over the rendering
         process it can be tuned to be deterministic between runs.
       </p>
       <p>
@@ -493,23 +493,23 @@
         inside a window on the screen.
       </p>
       <p>
-        But as you will probably know, that is not the only way to render graphics. In fact, the graphics stack doesn't care about
-        where does the image end up. It only renders the GPU state into a buffer.
+        But as you will probably know, that is not the only way to render graphics. The graphics stack doesn't care about
+        where the image ends up. It only renders the GPU state into a buffer.
       </p>
       <p>
-        One of these buffers (the framebuffer), is used to show the game's rendering in the screen. Additional buffers are used
+        One of these buffers (the framebuffer) is used to show the game's rendering on the screen. Additional buffers are used
         to perform multi-pass rendering, full-screen effects, or rendering to textures in the scene itself.
       </p>
       <p>
-        If you want a reference of real world libraries, check Unity's <a href="https://docs.unity3d.com/es/530/Manual/class-RenderTexture.html">RenderTexture</a>
+        If you want a reference of real-world libraries, check Unity's <a href="https://docs.unity3d.com/es/530/Manual/class-RenderTexture.html">RenderTexture</a>
         or OpenGL's <a href="https://www.khronos.org/opengl/wiki/Framebuffer_Object">Frame Buffer Objects</a>.
       </p>
       <p>
-        In order to get the snapshot tests to work, the game's tests will have to be tuned to only draw in <b>off-screen buffers</b>,
+        To get the snapshot tests to work, the game's tests will have to be tuned to only draw in <b>off-screen buffers</b>,
         ensuring it works in headless environments (without a windowing system).
       </p>
       <p>
-        Getting the game to run in headless mode would be enough to get it to run in our local machine, or in a specialized CI
+        Getting the game to run in headless mode would be enough to get it to run on our local machine, or on a specialized CI
         runner with a GPU.
       </p>
       <p>
@@ -521,7 +521,7 @@
         stacks like <a href="https://mesa3d.org/">Mesa</a>'s implementations of OpenGL and Vulkan.
       </p>
       <p>
-        Forcing our game to run with a software rendering backend, instead of the real GPU driver, would let the snapshot tests to
+        Forcing our game to run with a software rendering backend, instead of the real GPU driver, would let the snapshot tests
         run on any environment.
       </p>
       <p>
@@ -563,11 +563,11 @@
         </li>
       </ul>
       <p>
-        Let's dive a bit deeper on the selection of these tools.
+        Let's dive a bit deeper into the selection of these tools.
       </p>
       <h2>Rendering Backend</h2>
       <p>
-        I wanted to use something that was easy to set-up, open source to avoid any issues getting off-screen rendering to work, and flexible
+        I wanted to use something easy to setup, open source to avoid any issues getting off-screen rendering to work, and flexible
         enough that would run in CI runners without too much hassle.
       </p>
       <p>
@@ -583,16 +583,16 @@
         GLFW comes with off-screen rendering support with <a href="https://gallium.readthedocs.io/en/latest/osmesa.html">libosmesa</a>, and with some patching I got it working with Raylib.
       </p>
       <p>
-        <a href="https://gallium.readthedocs.io/en/latest/osmesa.html">libosmesa</a> is a C API to Gallium's software 3D renderer. Basically, a software
+        <a href="https://gallium.readthedocs.io/en/latest/osmesa.html">libosmesa</a> is a C API to Gallium's software 3D renderer. A software
         implementation of the OpenGL spec, enabling applications to run graphics without a 3D accelerator. Neat!
       </p>
       <h2>Testing Environment</h2>
       <p>
-        As with the rendering backend, I wanted to use tools that were easy to integrate, modify if required, and as hassle free as possible so I could
+        As with the rendering backend, I wanted to use tools that were easy to integrate, modify if required, and as hassle-free as possible so I could
         focus on the important bits.
       </p>
       <p>
-        Using <a href="https://cestframework.com/">Cest Framework</a> for testing was a no-brainer, as its my own testing framework and I have full flexibility
+        Using <a href="https://cestframework.com/">Cest Framework</a> for testing was a no-brainer, as it's my testing framework and I have full flexibility
         to adapt it to my needs.
       </p>
       <p>
@@ -600,7 +600,7 @@
         generate snapshot test outputs, both in video and picture formats.
       </p>
       <p>
-        Their APIs allow to stitch pictures, create videos and many other changes programatically, which would be required for the expected-actual comparisons.
+        Their APIs allow you to stitch pictures, create videos and many other changes programatically, which would be required for the expected-actual comparisons.
       </p>
       <p>
         And finally, <a href="https://imgur.com/">Imgur</a> is a convenient service to store pictures and videos with a simple public API. And free for public uploads!
@@ -625,11 +625,11 @@
       </p>
       <p>
         Also, many times shaders are often built in visual scripting and node-based tools, which in turn generate
-        source code that can be used by game engines. In these cases, unit testing wouldn't be easy or maybe possible at all.
+        source code that can be used by game engines. In these cases, unit testing wouldn't be easy or maybe even possible at all.
       </p>
       <div class="image fit-20">
         <img src="./images/offscreen-article/godot-shader-nodes.png" />
-        <span>When working with node based shader editors, code-based unit testing is out of the question. (<a href="https://stackoverflow.com/questions/65799797/godot-visual-shader-copy-code-from-fragment-to-vertex">Source</a>)</span>
+        <span>When working with node-based shader editors, code-based unit testing is out of the question. (<a href="https://stackoverflow.com/questions/65799797/godot-visual-shader-copy-code-from-fragment-to-vertex">Source</a>)</span>
       </div>
       <p>
         Snapshot testing looks like a great fit for this scenario. Let's lay out how could it be carried out.
@@ -672,15 +672,15 @@ describe("Post-processing Camera Shaders", []() {
         </code></pre>
       </div>
       <p>
-        These tests are very simple, and in fact, it could be simplified even further by parametrizing the shader location. The interesting parts are:
+        These tests are very simple, and in fact, they could be simplified even further by parametrizing the shader location. The interesting parts are:
       </p>
       <ul>
-        <li><b>Rendering</b> → Renders the scene with a sample mesh and applying the full-screen shader passed as an argument.</li>
+        <li><b>Rendering</b> → Renders the scene with a sample mesh and applies the full-screen shader passed as an argument.</li>
         <li><b>Verifying</b> → Compares the rendered image with the stored snapshot, and throws an assertion error when the images are different, causing the test to fail.</li>
       </ul>
       <p>
         The interesting part lies in the <b>verification</b> part of the test. The steps it takes to check the currently rendered image against
-        the snapshot are, roughly (if interested, check the details in GitHub)
+        the snapshot are, roughly (if interested, check the details on GitHub)
       </p>
       <ul>
         <li>
@@ -688,14 +688,14 @@ describe("Post-processing Camera Shaders", []() {
           <ul><li>This will be the generated image to compare against the snapshot.</li></ul>
         </li>
         <li>
-          If an snapshot image does not exist, create one.
+          If a snapshot image does not exist, create one.
           <ul>
             <li>This will only be the case the <b>first time</b> the test is run.</li>
-            <li>In this first execution, the snapshot would be committed as the reference for next runs.</li>
+            <li>In this first execution, the snapshot would be committed as the reference for the next runs.</li>
           </ul>
         </li>
         <li>Compare the current image to the generated image.
-          <ul><li>ImageMagick's <a href="https://imagemagick.org/script/magick-wand.php">MagickWand API</a> was used to calculate th
+          <ul><li>ImageMagick's <a href="https://imagemagick.org/script/magick-wand.php">MagickWand API</a> was used to calculate the
             difference between both images.</li></ul>
         </li>
         <li>If the current image is different from the snapshot → <b>fail the test</b>.</li>
@@ -716,14 +716,14 @@ describe("Post-processing Camera Shaders", []() {
         <img src="./images/offscreen-article/shader-output.png" />
       </div>
       <p>
-        And when checking the results, both the expected result and the actual result can be compared side by side, giving quick feedback of what has gone wrong.
+        And when checking the results, both the expected result and the actual result can be compared side by side, giving quick feedback on what has gone wrong.
       </p>
       <div class="image fit-20">
         <img src="./images/offscreen-article/shader-image.png" />
         <span>Left, expected result. Right, received result.</span>
       </div>
       <p>
-        Without applying snapshot testing, the most probable way this unintended change would have been discovered would have been when trying out the game.
+        Without applying snapshot testing, the most probable way this unintended change would have been discovered when trying out the game.
       </p>
       <p>
         Perhaps by sheer coincidence, when another feature was being tested out and someone noticed the change and raised the bug.
@@ -768,27 +768,27 @@ describe("Post-processing Camera Shaders", []() {
         snapshot), along with what really happened.
       </p>
       <p>
-        To put this concept to test, I have built a very simple Flappy Bird clone:
+        To put this concept to the test, I have built a very simple Flappy Bird clone:
       </p>
       <ul>
         <li>The pink square continuously advances to the right, scoring a point each time a column is traversed.</li>
-        <li>The square falls down by gravity, and jumps back by pressing the space key.</li>
-        <li>If a column is touched, or the player goes out of canvas, the player loses.</li>
+        <li>The square falls by gravity, and jumps back by pressing the space key.</li>
+        <li>If a column is touched, or the player goes out of the canvas, the player loses.</li>
       </ul>
       <p>
-        The game is as simple as it gets, but has what is needed to test it: a starting condition and a goal.
+        The game is as simple as it gets, but it has what is needed to test it: a starting condition and a goal.
       </p>
       <div class="image fit-20">
         <video src="./images/offscreen-article/video_game.mp4" autoplay loop controls></video>
-        <span>Simple enough but it will let us put the concepts to test</span>
+        <span>Simple enough, but it will let us put the concepts to test</span>
       </div>
       <p>
-        In this snapshot test, the player will be set at the start and has zero points, and must have reached
+        In this snapshot test, the player will be set at the start and have zero points, and must have reached
         a goal after a while (scored several points).
       </p>
       <h2>Making the game testable</h2>
       <p>
-        In order to be able to test the game in an integration test, there are some design decisions
+        To be able to test the game in an integration test, there are some design decisions
         that must be taken beforehand.
       </p>
       <p>
@@ -814,7 +814,7 @@ describe("Post-processing Camera Shaders", []() {
         </li>
       </ul>
       <p>
-        These among many other design decisions must be taken beforehand to ensure the game is testable.
+        These, among many other design decisions, must be taken beforehand to ensure the game is testable.
         Think about it like trying to add online play mid-development.
       </p>
       <p>
@@ -826,7 +826,7 @@ describe("Post-processing Camera Shaders", []() {
         these cases is building an AI that is capable of achieving the game's main goals without supervision.
       </p>
       <p>
-        Then, the integation test can be run against the AI and if something is changed by mistake,
+        Then, the integration test can be run against the AI and if something is changed by mistake,
         the test fails.
       </p>
       <p>
@@ -858,18 +858,18 @@ describe("JumpingGame", []() {
         </code></pre>
       </div>
       <p>
-        In this case, the integration test works like as a harness to run the game loop.
-        Dividing the test in three core sections, it consists of:
+        In this case, the integration test works as a harness to run the game loop.
+        Dividing the test into three core sections, it consists of:
       </p>
       <ul>
-        <li><b>Arrangement</b> → Set up the game and configures it to run in headless mode.
+        <li><b>Arrangement</b> → Set up the game and configure it to run in headless mode.
           <ul><li>Thanks to using the patched Raylib version, the game runs with full graphics
           without needing GPU or a windowing environment.</li></ul>
         </li>
-        <li><b>Action</b> → Run the game for a number of frames, and perform actions when required.
+        <li><b>Action</b> → Run the game for several frames, and perform actions when required.
           <ul><li>In this case, every 6 frames the mocked spacebar is pressed to jump, and a screenshot is taken every 10th frame.</li></ul>
         </li>
-        <li><b>Assertion</b> → After running the game, verify it did as expected.
+        <li><b>Assertion</b> → After running the game, verify that it did as expected.
           <ul><li>Given a designated number of frames, the score must be at least 2 points.</li></ul>
         </li>
       </ul>
@@ -883,16 +883,16 @@ describe("JumpingGame", []() {
         to allow checking it out if the CI fails.
       </p>
       <p>
-        Let's try simulate an example where game logic might get mistakenly broken, and force a CI failure. In this
+        Let's try simulating an example where game logic might get mistakenly broken, and force a CI failure. In this
         example, the jumping code has been commented out, thus disabling the jumping mechanic.
       </p>
       <p>
-        In this case, the score will never become greater than two, as you must jump in order to pass the first
+        In this case, the score will never become greater than two, as you must jump to pass the first
         column, and thus increase the score.
       </p>
       <div class="image fit-20">
         <img src="./images/offscreen-article/game-test-output.png" />
-        <span>CI output, with the link to the video recording the test failure.</span>
+        <span>CI output, with the link to the video recording of the test failure.</span>
       </div>
       <p>
         When opening the video, the results can be checked side-by-side. While the stored snapshot manages
@@ -924,7 +924,7 @@ describe("JumpingGame", []() {
         a discrete GPU in a dedicated runner will allow for good quality footage of test failures.
       </p>
       <p>
-        When something fails, its best to get good quality feedback, so it can be fixed as quickly as
+        When something fails, it's best to get good quality feedback, so it can be fixed as quickly as
         possible.
       </p>
     </article>
@@ -946,7 +946,7 @@ describe("JumpingGame", []() {
         <li>It is a cost-effective way to avoid artistic regressions when modifying shaders.</li>
       </ul>
       <p>
-        ⚠️ However, there are challenges that might make getting this to work in a real scenario harder.
+        ⚠️ However, some changes might make getting this to work in a real scenario hard.
       </p>
       <ul>
         <li>
@@ -964,7 +964,7 @@ describe("JumpingGame", []() {
         </li>
       </ul>
       <p>
-        ❌ And finally, regarding integration testing, using libosmesa to avoid GPU rendering won't work for most cases.
+        ❌ And finally, regarding integration testing, using libosmesa to avoid GPU rendering won't work in most cases.
       </p>
       <ul>
         <li>Software offscreen rendering with libosmesa is <b>very</b> slow</li>
@@ -988,9 +988,9 @@ describe("JumpingGame", []() {
         If you've made it this far, thank you <b>so much</b> for reading!
       </p>
       <p>
-        If you have any comment, suggestion or want to discuss about any of the topics in this article,
-        feel free to reach out through any of the channels in the <a href="./index.html">home page</a>
-        or in the <a>LinkedIn</a> post!
+        If you have any comments, suggestions or want to discuss any of the topics in this article,
+        feel free to reach out through any of the channels in the top of the page
+        or through the <a>LinkedIn</a> post!
       </p>
     </article>
 
