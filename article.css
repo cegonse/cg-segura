@@ -1,0 +1,330 @@
+html {
+  color: rgb(236, 233, 230);
+  background-color: #1b2733;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  width: 100%;
+}
+
+@media (orientation: landscape) {
+  body {
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+}
+
+@media (orientation: portrait) {
+  body {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+@media (orientation: landscape) {
+  header img {
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+    margin-right: 1em;
+  }
+}
+
+@media (orientation: portrait) {
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header img {
+    height: 5em;
+    width: 5em;
+    border-radius: 50%;
+  }
+}
+
+h2 {
+  font-size: 2.5em;
+  margin-bottom: 0.1em;
+}
+
+h3 {
+  font-size: 1.5em;
+  margin-bottom: 0;
+}
+
+p {
+  text-align: justify;
+  font-size: 1.2em;
+}
+
+li {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+a {
+  color: #758CFF;
+  text-decoration: underline;
+  padding-bottom: 0;
+}
+
+a:hover {
+  color: #4D6AFF;
+  text-decoration: underline;
+}
+
+.image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    border-radius: 8px;
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+    margin-top: 1em;
+  }
+
+  video {
+    border-radius: 8px;
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+    margin-top: 1em;
+  }
+
+  span {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-style: italic;
+  }
+}
+
+@media (orientation: landscape) {
+  .fit-20 {
+    margin-left: 20%;
+    margin-right: 20%;
+  }
+}
+
+article {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+article>p:first-child {
+  margin-top: 2em;
+}
+
+article>a {
+  display: inline-block;
+}
+
+article>h2 {
+  font-size: 2em;
+}
+
+pre>code {
+  border-radius: 8px;
+}
+
+pre {
+  width: 100%;
+}
+
+iframe+span {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-style: italic;
+  text-align: center;
+}
+
+video {
+  border-radius: 8px;
+}
+
+video+span {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-style: italic;
+  text-align: center;
+}
+
+pre+span {
+  margin-bottom: 0.5em;
+  font-style: italic;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  text-align: center;
+}
+
+@media (orientation: landscape) {
+  article>pre {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+}
+
+@media (orientation: portrait) {
+  article>pre {
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+}
+
+article>div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+article>div>table {
+  text-align: center;
+  border-collapse: separate;
+  border-spacing: 2em 0;
+  font-size: 1.2em;
+}
+
+table+span {
+  font-style: italic;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.contact {
+  display: flex;
+  flex-direction: row;
+}
+
+.contact img {
+  height: 2em;
+  margin-right: 1em;
+}
+
+.contact a:hover {
+  transform: scale(1.05);
+  filter: brightness(0.8)
+}
+
+@media (orientation: portrait) {
+  .contact {
+    justify-content: space-around;
+  }
+
+  .contact img {
+    height: 48px;
+  }
+}
+
+footer {
+  width: 100%;
+  height: 3em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #263748;
+  border-radius: 8px;
+  margin-top: 4em;
+  margin-bottom: 1em;
+}
+
+@media (orientation: portrait) {
+  footer {
+    font-size: 1.5em;
+    border-radius: 32px;
+  }
+}
+
+.info {
+  background-color: #42586e;
+  border-radius: 8px;
+  padding: 1em;
+  display: block !important;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.inline-code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.8em;
+  background-color: #27292b;
+  color: #ffa826;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+@media print {
+  p {
+    color: black;
+  }
+
+  h1 {
+    color: black;
+  }
+
+  h2 {
+    color: black;
+  }
+
+  li {
+    color: black;
+  }
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  footer {
+    display: none;
+  }
+
+  .info {
+    color: black;
+  }
+
+  iframe {
+    display: none;
+  }
+
+  pre+span {
+    color: black;
+  }
+
+  iframe+span {
+    display: none;
+  }
+
+  video+span {
+    display: none;
+  }
+
+  video {
+    display: none;
+  }
+
+  .contact {
+    display: none;
+  }
+
+  .image {
+    span {
+      color: black;
+    }
+  }
+}
