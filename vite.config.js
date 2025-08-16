@@ -9,10 +9,24 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
-        offscreen: resolve(__dirname, 'offscreen-snapshot-testing.html'),
-        template: resolve(__dirname, 'template.html'),
+        ...files(
+          'index.html',
+          'offscreen-snapshot-testing.html',
+          'template.html',
+          'legacy-service-health.html'
+        )
       },
     },
   },
 })
+
+function files(...paths) {
+  const input = {};
+
+  paths.forEach(p => {
+    const slug = p.split('-')[0];
+    input[slug] = resolve(__dirname, p);
+  });
+
+  return input;
+}
