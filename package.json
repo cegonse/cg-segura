@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "vite": "^7.0.3"
+    "vite": "^7.0.7"
   }
 }
