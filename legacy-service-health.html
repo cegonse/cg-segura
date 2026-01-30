@@ -26,26 +26,114 @@
       <a aria-label="GitHub Profile" href="https://github.com/cegonse"><img src="images/github.webp" alt="GitHub Logo"></a>
     </div>
 
-    <h2>Understanding the health of legacy software components</h2>
-    <p class="italic">Posted August _th 2025</p>
-    <p class="italic">Did you enjoy this article? Follow the conversation on <a>LinkedIn</a></p>
+    <h2>Aligning your teams on where to start reworking legacy services</h2>
+    <p class="italic">Posted February _th 2026</p>
+    <p class="italic">Did you enjoy this article? Follow the conversation on <a>LinkedIn</a> and <a>Blusky</a></p>
     <article>
-      <p></p>
+      <h2>Understanding the team's services</h2>
+      <p>
+        Prepare a workshop to help the team think about the services they are taking care of,
+        and evaluate the health of each one. To do this, you can prepare a 2/3 hour workshop
+        where the team will evaluate different metrics for each service.
+      </p>
+      <p>
+        These metrics can be both <b>quantitative</b> or <b>qualitative</b>. Depending on the context of your
+        team, some metrics will make more sense than others. One of the best ways to identify relevant
+        metrics to measure the health of your team's services is by working together with your team.
+      </p>
+      <p>
+        By preparing the workshop with someone who has been working with these systems for a long time,
+        and had to go through its pains, you will be able to define metrics that the team will find
+        relatable to classify each service.
+      </p>
     </article>
     <article>
-      <h2>Mapping service health</h2>
+      <h2>Quantitative metrics</h2>
       <p>
-        Service technical metrics
+        Quantitative metrics are those that can be measured from objective data. These can be
+        useful to determine how far are your team's services from the goals set by your organization,
+        upcoming regulatory requirements, etc.
+      </p>
+      <p>
+        Here are some examples you can use as a starting point. Some of these metrics can be answered on a 
+        yes/no basis, others require gathering actual numbers:
       </p>
       <ul>
-        <li>Maintainability</li>
-        <li>Testing Quality</li>
-        <li>Security Status</li>
-        <li>Update Status</li>
-        <li>Observability</li>
+        <li>
+          <b>Obsevability</b>
+            <ul>
+              <li>Are our systems observable from the outside?</li>
+              <li>Are there alarms in place to notify the team in case there is a production failure?</li>
+              <li>Is the team able to understand the current state of the system by checking logs and traces?</li>
+              <li>Are performance measurements available for our systems?</li>
+            </ul>
+        </li>
+        <li>
+          <b>Security</b>
+          <ul>
+            <li>Do our systems use libraries or frameworks with known security vulnerabilities?</li>
+            <li>Are we running security scanning processes on our systems?</li>
+            <li>If so, is the team actively patching found security vulnerabilities?
+            <li>Does the team follow security best practices? (masking PII data in logs, properly storing sensitive data and secrets, etc)</li>
+          </ul>
+        </li>
+        <li>
+          <b>Up-to-dateness</b>:
+          <ul>
+            <li>Are any of our systems using frameworks or libraries out of their maintenance window?</li>
+            <li>Are any systems using frameworks that could complicate updating to modern versions if needed? (ex. NET Framework, PHP 5...)</li>
+          </ul>
+        </li>
+        <li>
+          <b>Scalability</b>
+            <ul>
+              <li>Is the team aware of how do our services perform under load?</li>
+              <li>Does the architecture of the systems allow to scale them up when required?</li>
+              <li>Can the team scale them autonomously, or do we need support or permission from other teams?</li>
+              <li>Are there auto-scaling measures in place?</li>
+              <li>Do we perform regular load testing on our services?</li>
+          </ul>
+        </li>
+      </ul>
+    </article>
+    <article>
+      <h2>Qualitative metrics</h2>
+      <p>
+        Qualitative metrics work great to help your team assess how do they "feel" when working with
+        their systems. Discussing metrics without factual data to back them might seem counterproductive,
+        but in some cases trying to express all problems with hard numbers might complicate the debate.
+      </p>
+      <p>
+        The main point when discussing through these metrics is ensuring there's a healthy debate during the
+        workshop, and come to a common understanding of how does it <i>feel</i> to work with these systems.
+      </p>
+      <p>
+        Some qualitative metrics you can use are:
+      </p>
+      <ul>
+        <li>
+          <b>Maintenability</b>:
+        </li>
+        <li>
+          <b>Testing quality</b>:
+        </li>
+        <li>
+          <b>Extendability</b>:
+        </li>
       </ul>
       <p>
-        Ideally these metrics should 
+        Many of these qualitative metrics could be translated into quantitative metrics, but in many
+        cases the debate created around these topics is much more valuable to understand the general
+        "vibe" around working with these services, than hard numbers by themselves.
+      </p>
+      <p>
+        For example, you could assess testing quality quantitatively by measuring the code base's coverage,
+        the number of flaky tests or the time required to execute a full test suite.
+      </p>
+      <p>
+        However, if the architecture supporting these tests makes creating new tests or extending existing
+        tests a chore, the team will have an easier time expressing this pain point from a feelings
+        point of view. Even though from a numbers perspective, everything seems to be okay.
       </p>
     </article>
     <article>
