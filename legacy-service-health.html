@@ -68,7 +68,7 @@
     </article>
 
     <article>
-      <h2>Mapping service health</h2>
+      <h2>Session #1 - Mapping service health</h2>
       <p>
         This workshop session is designed to help the team reflect about the services they take care of,
         and evaluate their health. A 2~3 hour slot should suffice for this step, but you will have to
@@ -199,9 +199,9 @@
         <li>
           <b>Failure Rate</b>
           <ul>
-            <li>How often does the service have critical bugs?</li>
+            <li>How often does the service suffer from critical bugs?</li>
             <li>Does the service go down? If so, how long does its recovery take?</li>
-            <li>Is the service part of the critical path? Can the business operate without it?</li>
+            <li>Is the service part of the critical path? Can the business continue operating during downtime?</li>
           </ul>
         </li>
       </ul>
@@ -256,7 +256,7 @@
     </article>
 
     <article>
-      <h2>Example case study - service health</h2>
+      <h2>Session #1 - example case study</h2>
       <p>
         Let's go back to our example case study, and define which metrics are most relevant for our services, and how
         to measure them.
@@ -286,48 +286,158 @@
           <li>
             <b>Failure Rate</b>: How often does the system fail? How long does it take to recover?
             <ul>
-              <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>)</b> &rarr; Asd asd.</li>
-              <li><b>2 (<span style="color: rgb(252, 164, 0)">▣</span>)</b> &rarr; Asd asd.</li>
-              <li><b>3 (<span style="color: rgb(255, 88, 88)">▣</span>) </b> &rarr; Asd asd.</li>
-              <li><b>4 (<span style="color: rgb(0, 0, 0); -webkit-text-stroke-color: rgb(236, 233, 230); -webkit-text-stroke-width: 0.5px;">▣</span>)</b> &rarr; Asd asd.</li>
+              <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>)</b> &rarr; Less than 5 critical failures in a one year period. Upon failure, full recovery took less than 10 minutes.</li>
+              <li><b>2 (<span style="color: rgb(252, 164, 0)">▣</span>)</b> &rarr; ~10 critical failures YoY. When these happened, full recovery took less than 10 minutes.</li>
+              <li><b>3 (<span style="color: rgb(255, 88, 88)">▣</span>) </b> &rarr; ~10 critical failures YoY. When these happened, full recovery took more than 10 minutes.</li>
+              <li><b>4 (<span style="color: rgb(0, 0, 0); -webkit-text-stroke-color: rgb(236, 233, 230); -webkit-text-stroke-width: 0.5px;">▣</span>)</b> &rarr; ~4 critical failures / week. When these happened, full recovery took more than 10 minutes.</li>
             </ul>
           </li>
           <li>
-            <b>Security & Up-to-Date</b>: Does the service follow security best practices? Are its dependencies up to date?
+            <b>Security & Up-to-Date</b>: Are its dependencies (including frameworks) up to date? Have security vulnerabilities been detected?
             <ul>
-              <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>)</b> &rarr; Asd asd.</li>
-              <li><b>2 (<span style="color: rgb(252, 164, 0)">▣</span>)</b> &rarr; Asd asd.</li>
-              <li><b>3 (<span style="color: rgb(255, 88, 88)">▣</span>) </b> &rarr; Asd asd.</li>
-              <li><b>4 (<span style="color: rgb(0, 0, 0); -webkit-text-stroke-color: rgb(236, 233, 230); -webkit-text-stroke-width: 0.5px;">▣</span>)</b> &rarr; Asd asd.</li>
+              <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>)</b> &rarr; Zero critical security vulnerabilities. Dependencies are updated within 2 weeks after release.</li>
+              <li><b>2 (<span style="color: rgb(252, 164, 0)">▣</span>)</b> &rarr; Zero critical security vulnerabilities. Dependencies are updated within 2 weeks after release.</li>
+              <li><b>3 (<span style="color: rgb(255, 88, 88)">▣</span>) </b> &rarr; Active critical security vulnerabilities present. Dependencies are updated within 4 weeks after release.</li>
+              <li><b>4 (<span style="color: rgb(0, 0, 0); -webkit-text-stroke-color: rgb(236, 233, 230); -webkit-text-stroke-width: 0.5px;">▣</span>)</b> &rarr; Active critical security vulnerabilities present. Dependencies have not been updated for more than 4 weeks.</li>
             </ul>
           </li>
         </ul>
       </p>
+      <p>
+        Now that we have a set of metrics to measure the health of our teams services, we can build the service / metric health matrix
+        and start filling in the score for each metric.
+      </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/case-study-empty-matrix.png" />
-        <span>Start with all your services, and the metrics you have chosen.</span>
+        <span>Empty service health map.</span>
       </div>
       <p>
-        Asd asd asd.
+        If we have been diligent keeping track of our work in the available tracking tools, deciding the score for the quantitative metrics
+        should be straightforward.
+      </p>
+      <p>
+        We can leverage logs, performance metrics, reports from the package manager, security vulnerability analysis tools and post-mortem documentation
+        from previous failures and incidents.
+      </p>
+      <p>
+        On the other hand, extendability and testing quality metrics will involve a deeper discussion between the developers in the team. How was the
+        experience building the latest features in each service? Was it easy, or did we try to avoid it at all costs?
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/case-study-filled-matrix.png" />
-        <span>Start with all your services, and the metrics you have chosen.</span>
+        <span>Completed service health map (numerical score added for clarity).</span>
+      </div>
+      <p>
+        After some healthy discussion in the team, metrics for all services have been evaluated and their scores set. The final score has been calculated
+        following the formula introduced earlier.
+      </p>
+      <p>
+        Now, we have a birds-eye level picture of the health of our services. From what we've gathered, our <b>web-app</b> and <b>search service</b> are in a good
+        enough shape, at an acceptable point for a production app.
+      </p>
+      <p>
+        However, the <b>billing</b> and <b>ratings</b> service are in trouble. Particularly the <b>ratings service</b> has strong ongoing issues, with a very high failure rate, lurking
+        security issues and no useful test base to help us overcome these problems.
+      </p>
+      <p>
+        Should we jump in and plan the work to get these services into shape into next iterations? First, we should ask ourselves: <b>is it worth it?</b>
+      </p>
+    </article>
+
+    <article>
+      <h2>Session #2 prep - Considering bussiness importance</h2>
+      <p>
+        If we only pursued engineering excellence, and were provided with unlimited budget, it would be great to fix all the problems we've found,
+        and leave them in perfect condition.
+      </p>
+      <p>
+        In real world software engineering, with limited time, capacity and rapidly switching objectives, we have to compromise.
+      </p>
+      <p>
+        Before even starting to think about how to fix the issues we've found, first we had to understand if it made sense from a business perspective.
+      </p>
+      <p>
+        To do so, we scheduled a short follow-up session with product and business specialists from our team, and listed the product features that are
+        backed by our team's services.
+      </p>
+      <p>
+        Then, we sorted all features by <b>business importance</b>, using a numerical scale as we did with the technical services.
+      </p>
+      <p>
+        Ranging from 1 (<span style="color: rgb(196, 246, 123)">▣</span>), meaning a feature that's very important for the business, to
+        3 (<span style="color: rgb(255, 88, 88)">▣</span>), meaning it's a nice to have but not really a must have for business continuity.
+      </p>
+      <p>
+        To support this classification, we used a variety of metrics our product experts had in hand. Some of them were:
+        <ul>
+          <li><b>Usage numbers</b>
+            <ul>
+              <li>How many users do actively use the feature? (DAU / MAU)</li>
+              <li>Are the users making use of the feature important for the business? (paying customers, important contracts...)</li>
+            </ul>
+          </li>
+          <li><b>Revenue Generation</b>
+            <ul>
+              <li>What is the impact of the feature in terms of revenue, regardless of usage?</li>
+              <li>What would happen to revenue if we stopped supporting it?</li>
+            </ul>
+          </li>
+          <li><b>Compliance & Strategical Opportunity</b>
+            <ul>
+              <li>Is this feature a regulatory requirement in important markets?</li>
+              <li>Does supporting it keep key users from leaving the platform?</li>
+              <li>Is it a requirement for an important contract with a major customer?</li>
+            </ul>
+          </li>
+        </ul>
+      </p>
+      <p>
+        With the list of features in hand, sorted by their business relevance, we can prepare the next workshop session: matching each
+        product feature with its backing service.
+      </p>
+    </article>
+
+    <article>
+      <h2>Session #2 - Evaluating technical / business health</h2>
+      <p>
+        Asd asd asd.
+      </p>
+      <div class="image fit-20">
+        <img src="./images/legacy-article/business-service-matrix.png" />
+        <span>Completed service health map (numerical score added for clarity).</span>
+      </div>
+      <p>
+        Asd asd asd.
+      </p>
+      <div class="image fit-20">
+        <img src="./images/legacy-article/business-service-all-good.png" />
+        <span>Completed service health map (numerical score added for clarity).</span>
+      </div>
+      <p>
+        Asd asd asd.
+      </p>
+      <div class="image fit-20">
+        <img src="./images/legacy-article/business-service-danger-zone.png" />
+        <span>Completed service health map (numerical score added for clarity).</span>
+      </div>
+      <p>
+        Asd asd asd.
+      </p>
+      <div class="image fit-20">
+        <img src="./images/legacy-article/business-service-reconsider-value.png" />
+        <span>Completed service health map (numerical score added for clarity).</span>
       </div>
     </article>
 
     <article>
-      <h2>Gauging bussiness and product relevance</h2>
+      <h2>Session #2 - Example case study</h2>
       <p>
         Asd asd asd.
       </p>
-    </article>
-
-    <article>
-      <h2>Evaluating the product / technical health matrix</h2>
-      <p>
-        Asd asd asd.
-      </p>
+      <div class="image fit-20">
+        <img src="./images/legacy-article/business-service-case-study.png" />
+        <span>Completed service health map (numerical score added for clarity).</span>
+      </div>
     </article>
 
     <article>
