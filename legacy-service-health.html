@@ -26,7 +26,7 @@
       <a aria-label="GitHub Profile" href="https://github.com/cegonse"><img src="images/github.webp" alt="GitHub Logo"></a>
     </div>
 
-    <h2>A workshop to start revamping your team's legacy services</h2>
+    <h2>A workshop to ensure the health of your team's legacy services</h2>
     <p class="italic">Posted February _th 2026</p>
     <p class="italic">Did you enjoy this article? Follow the conversation on <a>LinkedIn</a> and <a>Blusky</a></p>
 
@@ -400,32 +400,82 @@
     <article>
       <h2>Session #2 - Evaluating technical / business health</h2>
       <p>
-        Asd asd asd.
+        It's time for the second and final session of the workshop. It will take around 1~2 hours to complete.
+      </p>
+      <p>
+        In this session, we will complete link the business relevance of each product feature to services supporting them.
+      </p>
+      <p>
+        To build this mapping, the steps we follow are:
+        <ol>
+          <li>Build a matrix, with all services as rows, and product features as columns.</li>
+          <li>
+            Sort both services and features with <b>descending health and relevance</b> (top left corner for best, bottom right corner for worst).
+            <ul><li>Use the color key to help visualize health and relevance at a glance.</li></ul>
+          </li>
+          <li>
+            Place a <b>pin</b> in each cell where a product feature is backed by a service.
+            <ul><li>In the following example, Feature A is backed by Services 1 and 2.</li></ul>
+          </li>
+        </ol>
+      </p>
+      <p>
+        The resulting matrix will look like this:
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/business-service-matrix.png" />
-        <span>Completed service health map (numerical score added for clarity).</span>
+        <span>Mapping product features against services.</span>
       </div>
       <p>
-        Asd asd asd.
+        With this information at our disposal, its time to start taking decisions on what's worth fixing and what's not.
+      </p>
+      <p>
+        First, we have the best case scenario: features that are very relevant for the business, which are supported by
+        services that are in good shape.
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/business-service-all-good.png" />
-        <span>Completed service health map (numerical score added for clarity).</span>
+        <span>No need to worry about these.</span>
       </div>
       <p>
-        Asd asd asd.
+        This is great! These features are the ones that make our product relevant, and the services backing them are
+        in good condition.
+      </p>
+      <p>
+        We can safely ignore these, and just keep up the good work. If there are any new features, unexpected regulatory changes
+        or required updates, we will be able to handle them without problems.
+      </p>
+      <p>
+        Next, we must focus on the <b>danger zone</b>. These services are a ticking bomb in our hands, and we should be looking
+        forward to fixing the issues we've detected as soon as possible.
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/business-service-danger-zone.png" />
-        <span>Completed service health map (numerical score added for clarity).</span>
+        <span>We could be in trouble if something goes wrong with these.</span>
       </div>
       <p>
-        Asd asd asd.
+        These are product features that are <b>very important</b> for the business, but are backed by services that are in <b>bad health</b>.
+      </p>
+      <p>
+        For example, let's imagine a critical business feature that hasn't changed at all in years. Even if it is in bad shape from a
+        technical point of view, why should we worry?
+      </p>
+      <p>
+        The big issue here is that <b>we are in a bad position</b> if we ever see ourselves in the need of applying changes quickly.
+      </p>
+      <p>
+        What happens if there are regulatory changes to be applied in short notice? Or if signing a new life-changing contract depends
+        on updating this feature, and we can't commit to it?
+      </p>
+      <p>
+        The key takeaway here is, invest enough resources in keeping your key services in good condition, to avoid a meltdown when it is too late.
+      </p>
+      <p>
+        Last, we have those that should open a conversation around: <b>is keeping supporting these even worth it?</b>
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/business-service-reconsider-value.png" />
-        <span>Completed service health map (numerical score added for clarity).</span>
+        <span>Why are we wasting resources on this?</span>
       </div>
     </article>
 
