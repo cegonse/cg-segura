@@ -28,7 +28,7 @@
 
     <h2>A workshop to ensure the health of your team's legacy services</h2>
     <p class="italic">Posted February _th 2026</p>
-    <p class="italic">Did you enjoy this article? Follow the conversation on <a>LinkedIn</a> and <a>Blusky</a></p>
+    <p class="italic">Did you enjoy this article? Follow the conversation on <a>LinkedIn</a></p>
 
     <!--
     the importance of taking care of our legacy
@@ -560,7 +560,7 @@
           <li><b>Recommend Product to a Friend</b>
             <ul>
               <li>Has very little business value.</li>
-              <li>It's a major source of technical problems.</li>
+              <li>It's a major source of technical headaches for the team.</li>
             </ul>
           </li>
         </ul>
@@ -573,18 +573,78 @@
     <article>
       <h2>Tracing an action plan</h2>
       <p>
-        Asd asd asd.
+        With these results, we have pinpoint which are the critical points across our services that should be fixed
+        to ensure business continuity without ugly surprises.
+      </p>
+      <p>
+        The goal with these workshops is being able to create the plan to get out of this situation. The data we've
+        collected tells us <b>where</b> should we start, but not <b>what</b> to do.
+      </p>
+      <p>
+        The steps you will have to take as a team to fix the problems in your services and product features will be vary greatly
+        depending on the kind of problems you have at hand.
+      </p>
+      <p>
+        To illustrate through an example, we can take the conclusions from the example case study. Let's begin
+        with the <b>purchasing products</b> feature.
+      </p>
+      <p>
+        Going back to the results of the first workshop (service health map), we can trace a plan to ensure the service backing
+        this feature, the <b>billing service</b>, has the expected quality.
+      </p>
+      <p>
+        The service has severe extendability and test coverage issues, plus security problems. If we want to ensure business continuity,
+        a good starting point could be:
+        <ul>
+          <li>Improving its test coverage to avoid regressions when adding new features or fixing bugs.</li>
+          <li>Using the newly improved test coverage, refactor the codebase to facilitate its extendability.</li>
+          <li>Resolve the ongoing security issues, before we get a severe incident in our hands.</li>
+        </ul>
+      </p>
+      <p>
+        We can plan these improvements as part of our iterations, leaving some headroom so we can advance steadily. Doing work that doesn't
+        bring nothing new to the table might raise some eyebrows, but that's why we have the data to back these decisions.
+      </p>
+      <p>
+        The message is that we don't want to improve our software for the sake of doing so: we want to ensure <b>business continuity</b>.
+      </p>
+      <p>
+        Regarding the other two pain-points, the <b>rate products</b> and <b>recommend product to a friend</b> features, we can apply the
+        same kind of principles as explained in the previous section.
+      </p>
+      <p>
+        The <b>ratings service</b> has abysmal quality and a very high failure rate. Either we improve it, or we discard the features that are not
+        that relevant to the business. The key resides in evaluating the tradeoffs from both options.
       </p>
     </article>
 
     <article>
       <h2>Reflecting on the results</h2>
       <p>
-        Asd asd asd.
+        In our particular case, this workshop really helped us understand in what situation we were at and put us in the right mindset to
+        start working on our ongoing issues.
+      </p>
+      <p>
+        At times where there are too many problems on the table, having data neatly laid out helps a lot with creating a clean mental
+        model and making better decisions.
+      </p>
+      <p>
+        Since this was the first run of the workshop, there were many points that were refined as we progressed. What I describe here is the
+        refined result of what we went through.
+      </p>
+      <p>
+        After sharing the workshop with other teams within our organization, they tried it out and had positive results. Adapting it to their
+        needs was key.
+      </p>
+      <p>
+        If you are going through a similar situation in your organization, I hope this serves as inspiration to attempt this workshop with your team
+        and get the ball rolling.
+      </p>
+      <p>
+        And of course, if you try it out and do anything differently, or have any ideas on how to improve it, I would love to hear them.
       </p>
     </article>
-
-        <hr />
+    <hr />
     <article>
       <p>
         If you've made it this far, thank you <b>so much</b> for reading!
