@@ -26,30 +26,107 @@
       <a aria-label="GitHub Profile" href="https://github.com/cegonse"><img src="images/github.webp" alt="GitHub Logo"></a>
     </div>
 
-    <h2>A workshop to raise awareness on legacy services</h2>
+    <h2>A workshop to help your team navigate legacy software</h2>
     <p class="italic">Posted February 16th 2026</p>
     <p class="italic">Did you enjoy this article? Follow the conversation on <a>LinkedIn</a></p>
 
-    <!--
-    the importance of taking care of our legacy
-    setting up an example case
-    service technical health
-    business and product relevance
-    evaluating product/technical health matrix
-    tracing an action plan
-    reflections on the results
-    -->
     <article>
-      <h2>The importance of taking care of our legacy</h2>
+      <h2>The importance of properly maintaining legacy software</h2>
       <p>
-        Asd asd asd.
+        If you have been around software engineering communities for a while, you will know that dealing with legacy
+        software is not the preference for most people in our industry.
+      </p>
+      <p>
+        Working with legacy software usually gets a bad rap. Many engineers associate the word <span class="italic">legacy</span>
+        with incomprehensible codebases, a tangled mess of contributions built over decades.
+      </p>
+      <p>
+        The reality is that in many cases, legacy software is what keeps businesses afloat. Forgotten services, silently processing
+        millions of transactions year over year, generating revenue to support their operations.
+      </p>
+      <p>
+        These isn't the kind of software that attracts most engineers, looking for the newest shiny thing in the scene.
+        But this software is what keeps our modern world turning.
+      </p>
+      <p>
+        As time passes, software starts decaying. Maybe the original team who bootstraped the project isn't around anymore,
+        and institutional knowledge has been lost.
+      </p>
+      <p>
+        Or maybe its based on ancient (for software engineering standards, anything older than a few years) technology, and nobody
+        around knows how to work with it anymore.
+      </p>
+      <p>
+        At the same time, there's little incentive from a business perspective to take legacy software to modern standards. If it keeps working,
+        why waste resources on it? There's always some new product, some new feature that will have higher priority.
+      </p>
+      <p>
+        However, the world doesn't stand still and is continuously evolving. And the software backing our modern world has to adapt
+        to these changes, sometimes very abruptly.
+      </p>
+      <p>
+        What happens when your organization's legacy software is in a state that can't evolve as required? Business continuity gets in danger.
+      </p>
+      <p>
+        From paradigm shifts like the desktop to mobile transition, the adoption of cloud native infrastructure or abrupt regulatory changes
+        as we're experiencing during 2025 and 2026, a lot of things can happen that force you to adapt your legacy software quickly.
+      </p>
+      <p>
+        In one of my previous teams, we were in a position like this. We were in charge of a sizeable number of services and products,
+        suffering from all the common ills of legacy software.
+      </p>
+      <p>
+        We had the task of transforming it all, but with limited time and resources, we wouldn't be able to do it all on time. So the question was:
+        what should we do first? Why this piece of software and not another one?
+      </p>
+      <p>
+        As a way to help us get out of the deadlock we were in, I worked with my team on building this workshop that helped us define what has to be fixed,
+        and what should we do first to ensure we will be able to adapt on time to the business needs.
       </p>
     </article>
 
     <article>
       <h2>Introduction to the workshop</h2>
       <p>
-        Asd asd asd.
+        The objective of this workshop is helping your team:
+        <ul>
+          <li>Understand what are the most pressing issues with your legacy services.</li>
+          <li>Plan what fixes should be done first to ensure business continuity.</li>
+          <li>Share knowledge about legacy systems with the whole team.</li>
+        </ul>
+      </p>
+      <p>
+        The workshop consists of <b>two sessions</b>, taking around <b>two hours</b> each. It's important
+        that all your team is able to assist to the workshop.
+      </p>
+      <p>
+        Preparation work for both sessions can take around other <b>2/3 hours</b> before each session. You can do
+        the prep work by yourself with help from other team member.
+      </p>
+      <p>
+        To get the most out of the workshop, it's best to limit the number of attendees to under <b>10 people</b>.
+        You want to ensure everybody has enough time and space to contribute.
+      </p>
+      <p>
+        The purpose of the two sessions are:
+        <ul>
+          <li><b>Mapping service health</b>
+            <ul>
+              <li>Understanding the technical health of the services maintained by your team.</li>
+              <li>Outcome &rarr; Know in what shape are your services.</li>
+            </ul>
+          </li>
+          <li><b>Mapping business / service relevance</b>
+            <ul>
+              <li>Understand the business relevance of your team's services, and detect pinpoint problems.</li>
+              <li>Outcome &rarr; Know what services are worth fixing from a business point of view.</li>
+            </ul>
+          </li>
+        </ul>
+      </p>
+      <p>
+        By the end of the workshop, you should have a picture of what product features are under threat due to problems
+        in the legacy services backing them, and which should be solved first.
       </p>
     </article>
 
@@ -300,10 +377,10 @@
           <li>
             <b>Security & Up-to-Date</b>: Are its dependencies (including frameworks) up to date? Have security vulnerabilities been detected?
             <ul>
-              <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>)</b> &rarr; Zero critical security vulnerabilities. Dependencies are updated within 2 weeks after release.</li>
-              <li><b>2 (<span style="color: rgb(252, 164, 0)">▣</span>)</b> &rarr; Zero critical security vulnerabilities. Dependencies are updated within 2 weeks after release.</li>
-              <li><b>3 (<span style="color: rgb(255, 88, 88)">▣</span>) </b> &rarr; Active critical security vulnerabilities present. Dependencies are updated within 4 weeks after release.</li>
-              <li><b>4 (<span style="color: rgb(0, 0, 0); -webkit-text-stroke-color: rgb(236, 233, 230); -webkit-text-stroke-width: 0.5px;">▣</span>)</b> &rarr; Active critical security vulnerabilities present. Dependencies have not been updated for more than 4 weeks.</li>
+              <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>)</b> &rarr; Zero critical security vulnerabilities. Dependencies use latest stable versions.</li>
+              <li><b>2 (<span style="color: rgb(252, 164, 0)">▣</span>)</b> &rarr; Zero critical security vulnerabilities. Dependencies use older but still supported stable versions.</li>
+              <li><b>3 (<span style="color: rgb(255, 88, 88)">▣</span>) </b> &rarr; Active critical security vulnerabilities present. Dependencies use older but still supported stable versions.</li>
+              <li><b>4 (<span style="color: rgb(0, 0, 0); -webkit-text-stroke-color: rgb(236, 233, 230); -webkit-text-stroke-width: 0.5px;">▣</span>)</b> &rarr; Active critical security vulnerabilities present. Dependencies use deprecated versions.</li>
             </ul>
           </li>
         </ul>
