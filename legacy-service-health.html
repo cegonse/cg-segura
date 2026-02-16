@@ -27,61 +27,36 @@
     </div>
 
     <h2>A workshop to help your team navigate legacy software</h2>
-    <p class="italic">Posted February 16th 2026</p>
+    <p class="italic">Posted February 17th 2026</p>
     <p class="italic">Did you enjoy this article? Follow the conversation on <a>LinkedIn</a></p>
 
     <article>
       <h2>The importance of properly maintaining legacy software</h2>
       <p>
-        If you have been around software engineering communities for a while, you will know that dealing with legacy
-        software is not the preference for most people in our industry.
+        If you have been around software engineering communities for a while, you will be aware of the reputation of legacy software.
+        Many engineers associate it with fragile codebases, built over years of decisions nobody understands anymore.
       </p>
       <p>
-        Working with legacy software usually gets a bad rap. Many engineers associate the word <span class="italic">legacy</span>
-        with incomprehensible codebases, a tangled mess of contributions built over decades.
+        The reality is that in many cases, legacy software is what keeps businesses afloat. Silently processing
+        millions of transactions year over year, generating revenue and providing value to users.
       </p>
       <p>
-        The reality is that in many cases, legacy software is what keeps businesses afloat. Forgotten services, silently processing
-        millions of transactions year over year, generating revenue to support their operations.
+        As time passes, software starts decaying. Team members come and go, institutional knowledge gets lost and its supporting
+        frameworks get outdated.
+      <p>
+        At the same time, there's little incentive from the business side to modernize it. If it keeps working, why spend precious
+        resources on modernizing it? Because at some point, it stops working.
       </p>
       <p>
-        These isn't the kind of software that attracts most engineers, looking for the newest shiny thing in the scene.
-        But this software is what keeps our modern world turning.
+        In one of my previous teams, we were in this position. We were in charge of many legacy products and services, and
+        we had to modernize it fast.
       </p>
       <p>
-        As time passes, software starts decaying. Maybe the original team who bootstraped the project isn't around anymore,
-        and institutional knowledge has been lost.
+        With our limited time and resources, we wouldn't be able to do it all on time. So the question was: what's prioritary?
       </p>
       <p>
-        Or maybe its based on ancient (for software engineering standards, anything older than a few years) technology, and nobody
-        around knows how to work with it anymore.
-      </p>
-      <p>
-        At the same time, there's little incentive from a business perspective to take legacy software to modern standards. If it keeps working,
-        why waste resources on it? There's always some new product, some new feature that will have higher priority.
-      </p>
-      <p>
-        However, the world doesn't stand still and is continuously evolving. And the software backing our modern world has to adapt
-        to these changes, sometimes very abruptly.
-      </p>
-      <p>
-        What happens when your organization's legacy software is in a state that can't evolve as required? Business continuity gets in danger.
-      </p>
-      <p>
-        From paradigm shifts like the desktop to mobile transition, the adoption of cloud native infrastructure or abrupt regulatory changes
-        as we're experiencing during 2025 and 2026, a lot of things can happen that force you to adapt your legacy software quickly.
-      </p>
-      <p>
-        In one of my previous teams, we were in a position like this. We were in charge of a sizeable number of services and products,
-        suffering from all the common ills of legacy software.
-      </p>
-      <p>
-        We had the task of transforming it all, but with limited time and resources, we wouldn't be able to do it all on time. So the question was:
-        what should we do first? Why this piece of software and not another one?
-      </p>
-      <p>
-        As a way to help us get out of the deadlock we were in, I worked with my team on building this workshop that helped us define what has to be fixed,
-        and what should we do first to ensure we will be able to adapt on time to the business needs.
+        As a way to help us get out of the deadlock we were in, together with my team we built this workshop that helped us define
+        what had to be fixed, and in which order of importance to ensure we will be able to adapt on time to the business needs.
       </p>
     </article>
 
@@ -152,29 +127,25 @@
     <article>
       <h2>Session #1 - Mapping service health</h2>
       <p>
-        This workshop session is designed to help the team reflect about the services they take care of,
-        and evaluate their health. A 2~3 hour slot should suffice for this session, but you will have to
-        prepare the workshop materials beforehand.
+        This session helps the team reflect about the services they take care of, and evaluate their health.
+        A 2~3 hour slot should suffice for this session, but you will have to prepare its materials first.
       </p>
       <p>
-        The team will have to describe their services through <b>metrics</b>, helping them measure their
-        health. These metrics can be both <b>quantitative</b> or <b>qualitative</b>. Depending on your context,
-        some metrics will make more sense than others.
+        The team will have to describe their services through <b>metrics</b>. These metrics can be either <b>quantitative</b>
+        or <b>qualitative</b>.
       </p>
       <p>
-        I recommend preparing the workshop with someone who has been working with these systems for a long time.
-        They will be able to help you define metrics that the team will find easy to relate to when characterizing
-        their services.
+        Preparing the workshop materials with a team member who has deep knowledge about your services helps a lot.
+        They can provide insights to define meaningful metrics to describe them.
       </p>
       <p>
-        These metrics carry an associated scoring, mapping their health from best case to worst case. In our workshop,
-        we used a simple scoring system ranging 1~4, together with a simple semaphoric color code to help us map metrics
-        in a digital whiteboard:
+        Metrics have a score, mapping their health from best case to worst case. We used a simple scoring system ranging 1~4,
+        together with a color code to help us map metrics in a digital whiteboard:
         <ul>
-          <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>) - Ideal</b> &rarr; As good as it can be. Our north-star regarding how we want our services to be.</li>
-          <li><b>2 (<span style="color: rgb(252, 164, 0)">▣</span>) - Acceptable</b> &rarr; Rough around its edges, but perfectly manageable for a production service.</li>
-          <li><b>3 (<span style="color: rgb(255, 88, 88)">▣</span>) - Problematic</b> &rarr; Problems are becoming worrying, and could get worse if maintenance is not expedited.</li>
-          <li><b>4 (<span style="color: rgb(0, 0, 0); -webkit-text-stroke-color: rgb(236, 233, 230); -webkit-text-stroke-width: 0.5px;">▣</span>) - All hope is lost</b> &rarr; A ticking time bomb, we are not ready to react if something unexpected happens.</li>
+          <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>) - Ideal</b> &rarr; As good as it can be.</li>
+          <li><b>2 (<span style="color: rgb(252, 164, 0)">▣</span>) - Acceptable</b> &rarr; Rough around its edges, but perfectly manageable.</li>
+          <li><b>3 (<span style="color: rgb(255, 88, 88)">▣</span>) - Worrying</b> &rarr; Problems are becoming apparent, and could get worse.</li>
+          <li><b>4 (<span style="color: rgb(0, 0, 0); -webkit-text-stroke-color: rgb(236, 233, 230); -webkit-text-stroke-width: 0.5px;">▣</span>) - Danger</b> &rarr; We are not ready to react if something unexpected happens.</li>
         </ul>
       </p>
       <p>
@@ -183,7 +154,7 @@
       </p>
       <p>
         Start by creating a matrix with all the services, and one by one, let the team
-        decide which score makes more sense for each one of the metrics:
+        decide which score makes more sense for each one:
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/empty-matrix.png" />
@@ -194,15 +165,11 @@
         some metrics will be objectively measurable, while others will raise a more heated debate.
       </p>
       <p>
-        This is by design: we want our team to have a healthy discussion about the services we are managing, and give ourselves some time
-        to reflect about our work.
-      </p>
-      <p>
         Assign a score from 1~4 (green to black, or the color palette of your liking), and finally assign the aggregated score for each of
         them. A simple scoring formula that worked well is <span class="inline-code">ceil(avg([scores]))</span>.
       </p>
       <p>
-        This formula pulls scores down, ensuring that scores of services with low ranking metrics get pulled low. This helps to bring attention
+        This formula favours bad scores, ensuring that scores of services with low ranking metrics get relevance. This helps to bring attention
         to services that need it.
       </p>
       <p>
@@ -213,8 +180,8 @@
         <span>All services have been evaluated and assigned a score.</span>
       </div>
       <p>
-        With these results, we have a bird's-eye view of the technical state of our teams services, split by each metric. With this framework
-        in mind, we will have to define which metrics can be used to measure the health our system.
+        With these results, we have a bird's eye view of the technical health of our services, split by each metric. To make it work,
+        we will have to define which metrics can be used to measure the health our system.
       </p>
       <p>
         In the next section, you'll find some example metrics that you can use in your own workshop. And later on,
@@ -293,11 +260,7 @@
       <p>
         Qualitative metrics work great to help your team assess how do they "feel" when working with
         their systems. Discussing metrics without factual data to back them might seem counterproductive,
-        but in some cases trying to express all problems with hard numbers might complicate the debate.
-      </p>
-      <p>
-        The main point when discussing through these metrics is ensuring there's a healthy debate during the
-        workshop, and come to a common understanding of how does it <i>feel</i> to work with these systems.
+        but in some cases trying to express all problems with hard numbers complicates debate.
       </p>
       <p>
         Some qualitative metrics you can use are:
@@ -322,16 +285,16 @@
         </li>
       </ul>
       <p>
-        We could find an objective way of measuring these metrics with hard data. But in many
-        cases the debate created around these topics is much more valuable to understand the general
-        "vibe" around working with these services, than hard numbers by themselves.
+        There always are objective ways of measuring these metrics with hard data. But in many
+        cases the debate around these topics is much more valuable to understand the general
+        "vibe" of working with these services, than hard numbers by themselves.
       </p>
       <p>
         For example, you could assess testing quality quantitatively by measuring the code base's coverage,
-        the number of flaky tests or the time required to execute a full test suite.
+        the presence of flaky tests or the time required to execute a full test suite.
       </p>
       <p>
-        However, if the architecture supporting these tests makes creating new tests or extending existing
+        But if the architecture supporting these tests makes creating new tests or extending existing
         tests a chore, the team will have an easier time expressing this pain point from a feelings
         point of view. Even though from a numbers perspective, everything seems to be okay.
       </p>
@@ -368,10 +331,10 @@
           <li>
             <b>Failure Rate</b>: How often does the system fail? How long does it take to recover?
             <ul>
-              <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>)</b> &rarr; Less than 5 critical failures in a one year period. Upon failure, full recovery took less than 10 minutes.</li>
-              <li><b>2 (<span style="color: rgb(252, 164, 0)">▣</span>)</b> &rarr; ~10 critical failures YoY. When these happened, full recovery took less than 10 minutes.</li>
-              <li><b>3 (<span style="color: rgb(255, 88, 88)">▣</span>) </b> &rarr; ~10 critical failures YoY. When these happened, full recovery took more than 10 minutes.</li>
-              <li><b>4 (<span style="color: rgb(0, 0, 0); -webkit-text-stroke-color: rgb(236, 233, 230); -webkit-text-stroke-width: 0.5px;">▣</span>)</b> &rarr; ~4 critical failures / week. When these happened, full recovery took more than 10 minutes.</li>
+              <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>)</b> &rarr; Less than 5 critical incidents YoY. MTTR under 30 minutes.</li>
+              <li><b>2 (<span style="color: rgb(252, 164, 0)">▣</span>)</b> &rarr; ~10 critical incidents YoY. MTTR under 30 minutes.</li>
+              <li><b>3 (<span style="color: rgb(255, 88, 88)">▣</span>) </b> &rarr; ~10 critical incidents YoY. MTTR over 30 minutes.</li>
+              <li><b>4 (<span style="color: rgb(0, 0, 0); -webkit-text-stroke-color: rgb(236, 233, 230); -webkit-text-stroke-width: 0.5px;">▣</span>)</b> &rarr; ~4 critical incidents / week. MTTR over 30 minutes.</li>
             </ul>
           </li>
           <li>
@@ -389,17 +352,9 @@
         Now that we have a set of metrics to measure the health of our teams services, we can build the service / metric health matrix
         and start filling in the score for each metric.
       </p>
-      <div class="image fit-20">
-        <img src="./images/legacy-article/case-study-empty-matrix.png" />
-        <span>Empty service health map.</span>
-      </div>
-      <p>
-        If we have been diligent keeping track of our work in the available tracking tools, deciding the score for the quantitative metrics
-        should be straightforward.
-      </p>
       <p>
         We can leverage logs, performance metrics, reports from the package manager, security vulnerability analysis tools and post-mortem documentation
-        from previous failures and incidents.
+        from previous failures and incidents, etc...
       </p>
       <p>
         On the other hand, extendability and testing quality metrics will involve a deeper discussion between the developers in the team. How was the
@@ -410,11 +365,7 @@
         <span>Completed service health map (numerical score added for clarity).</span>
       </div>
       <p>
-        After some healthy discussion in the team, metrics for all services have been evaluated and their scores set. The final score has been calculated
-        following the formula introduced earlier.
-      </p>
-      <p>
-        Now, we have a birds-eye level picture of the health of our services. From what we've gathered, our <b>web-app</b> and <b>search service</b> are in a good
+        From what we've gathered, our <b>web-app</b> and <b>search service</b> are in a good
         enough shape, at an acceptable point for a production app.
       </p>
       <p>
@@ -429,21 +380,18 @@
     <article>
       <h2>Session #2 prep - Considering bussiness importance</h2>
       <p>
-        If we only pursued engineering excellence, and were provided with unlimited budget, it would be great to fix all the problems we've found,
-        and leave them in perfect condition.
+        If we only cared about perfection, it would be great to fix all the problems we've found. But with limited time, capacity and rapidly
+        switching objectives, we have to compromise.
       </p>
       <p>
-        In real world software engineering, with limited time, capacity and rapidly switching objectives, we have to compromise.
+        Before starting to plan how to fix the issues we've found, first we had to understand if doing it makes sense from a business perspective.
       </p>
       <p>
-        Before even starting to think about how to fix the issues we've found, first we had to understand if it made sense from a business perspective.
+        To do so, we scheduled a short follow-up session with product and business specialists from our team.
       </p>
       <p>
-        To do so, we scheduled a short follow-up session with product and business specialists from our team, and listed the product features that are
-        backed by our team's services.
-      </p>
-      <p>
-        Then, we sorted all features by <b>business importance</b>, using a numerical scale as we did with the technical services.
+        We listed the product features that are backed by our team's services, and sorted all features by <b>business importance</b>,
+        using a numerical scale as we did with the technical services.
       </p>
       <p>
         Ranging from 1 (<span style="color: rgb(196, 246, 123)">▣</span>), meaning a feature that's very important for the business, to
@@ -482,9 +430,6 @@
     <article>
       <h2>Session #2 - Evaluating technical / business health</h2>
       <p>
-        It's time for the second and final session of the workshop. It will take around 1~2 hours to complete.
-      </p>
-      <p>
         In this session, we will complete link the business relevance of each product feature to services supporting them.
       </p>
       <p>
@@ -510,77 +455,49 @@
       </div>
       <p>
         With this information at our disposal, its time to start taking decisions on what's worth fixing and what's not. We'll focus
-        on looking for features that are:
+        on looking for features that have:
         <ul>
-          <li>In good shape.</li>
-          <li>Ticking time bombs.</li>
-          <li>Costing the business more money than they're worth it.</li>
+          <li>Good health + business relevance.</li>
+          <li>Bad health + business relevance.</li>
+          <li>Bad health + questionable business relevance.</li>
         </ul>
       </p>
       <p>
-        First, we have the best case scenario: features that are very relevant for the business, which are supported by
-        services that are in good shape.
+        First, we have the best case scenario: features that are relevant for the business, which are supported by
+        services that have good health.
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/business-service-all-good.png" />
         <span>No need to worry about these.</span>
       </div>
       <p>
-        This is great! These features are the ones that make our product relevant, and the services backing them are
-        in good condition.
-      </p>
-      <p>
         We can safely ignore these, and just keep up the good work. If there are any new features, unexpected regulatory changes
         or required updates, we will be able to handle them without problems.
       </p>
       <p>
-        Next, we must focus on the <b>danger zone</b>. These services are a ticking bomb in our hands, and we should be looking
-        forward to fixing the issues we've detected as soon as possible.
+        Next, let's focus on the <b>danger zone</b>.
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/business-service-danger-zone.png" />
         <span>We could be in trouble if something goes wrong with these.</span>
       </div>
       <p>
-        These are product features that are <b>very important</b> for the business, but are backed by services that are in <b>bad health</b>.
+        These are product features that are relevant for the business, but are backed by services that are in <b>bad health</b>.
+        We should be looking forward to fixing the issues we've detected as soon as possible
       </p>
       <p>
-        For example, let's imagine a critical business feature that hasn't changed at all in years. Even if it is in bad shape from a
-        technical point of view, why should we worry?
-      </p>
-      <p>
-        The big issue here is that <b>we are in a bad position</b> if we ever see ourselves in the need of applying changes quickly.
-      </p>
-      <p>
-        What happens if there are regulatory changes to be applied in short notice? Or if signing a new life-changing contract depends
-        on updating this feature, and we can't commit to it?
-      </p>
-      <p>
-        The key takeaway here is, invest enough resources in keeping your key services in good condition, to avoid a meltdown when it is too late.
-      </p>
-      <p>
-        In the last group, we have those that should open a conversation around: <b>is keeping support for these features even worth it?</b>
+        In the last group, we have those that should open a conversation around: <b>is supporting these features even worth it?</b>
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/business-service-reconsider-value.png" />
-        <span>Why are we wasting resources on this?</span>
+        <span>Why are we investing resources on this?</span>
       </div>
       <p>
-        These are features that are seldom used, not really relevant for the business, and are backed by services that are in bad shape.
+        These are features that not really relevant for the business, and are backed by services that are in bad shape.
       </p>
       <p>
-        Seeing your team get bogged down by taking care of large numbers of bugs or incidents related to this kind of features might sound familiar.
-      </p>
-      <p>
+        Seeing your team get bogged down with bugs or incidents related to this kind of features might sound familiar.
         In these cases, it might be worth to raise a discussion around the feasibility of directly stop supporting them.
-      </p>
-      <p>
-        Depending on the feature, there could be workarounds to them and users can be redirected to do the same job in more steps or in a different way.
-        Other features might be impossible to replace by workarounds.
-      </p>
-      <p>
-        Sometimes, even if seldom used, these are mandatory in order to fulfil important contracts.
-        Every case is different, but this signals a discussion is worth raising.
       </p>
       <p>
         The key takeway to raise is: what is costing the business more money? Keeping these features alive, or the value generated by them?
@@ -590,8 +507,7 @@
     <article>
       <h2>Session #2 - Example case study</h2>
       <p>
-        After reviewing how to fill the technical / business health map, and how to interpret its results, let's review
-        the example case study and see what we find.
+        Let's review the example case study and see what we find in the second session.
       </p>
       <p>
         Let's assume there are four features backed by the services we enumerated in the first session:
@@ -621,7 +537,7 @@
         <ul>
           <li><b>Purchase Products</b>
             <ul>
-              <li>We have a <b>ticking time bomb</b> in our hands.</li>
+              <li>We have a problem in our hands.</li>
               <li>This is the <b>core</b> feature of our business.</li>
               <li>However, it's backed by the billing service which has <b>severe issues</b>.</li>
             </ul>
@@ -655,16 +571,12 @@
     <article>
       <h2>Tracing an action plan</h2>
       <p>
-        With these results, we have pinpoint which are the critical points across our services that should be fixed
-        to ensure business continuity without ugly surprises.
-      </p>
-      <p>
         The goal with these workshops is being able to create the plan to get out of this situation. The data we've
         collected tells us <b>where</b> should we start, but not <b>what</b> to do.
       </p>
       <p>
         The steps you will have to take as a team to fix the problems in your services and product features will be vary greatly
-        depending on the kind of problems you have at hand.
+        depending on the kind of problems you've found.
       </p>
       <p>
         To illustrate through an example, we can take the conclusions from the example case study. Let's begin
@@ -684,15 +596,12 @@
         </ul>
       </p>
       <p>
-        We can plan these improvements as part of our iterations, leaving some headroom so we can advance steadily. Doing work that doesn't
-        bring nothing new to the table might raise some eyebrows, but that's why we have the data to back these decisions.
-      </p>
-      <p>
-        The message is that we don't want to improve our software for the sake of doing so: we want to ensure <b>business continuity</b>.
+        We can plan these improvements as part of our iterations, leaving some headroom so we can advance steadily. We can use the data discovered
+        during this workshop to negotiate the budget.
       </p>
       <p>
         Regarding the other two pain-points, the <b>rate products</b> and <b>recommend product to a friend</b> features, we can apply the
-        same kind of principles as explained in the previous section.
+        same steps.
       </p>
       <p>
         The <b>ratings service</b> has abysmal quality and a very high failure rate. Either we improve it, or we discard the features that are not
@@ -703,16 +612,12 @@
     <article>
       <h2>Reflecting on the results</h2>
       <p>
-        In our particular case, this workshop really helped us understand in what situation we were at and put us in the right mindset to
+        In our case, this workshop helped us understand in what situation we were at and put us in the right mindset to
         start working on our ongoing issues.
       </p>
       <p>
         At times where there are too many problems on the table, having data neatly laid out helps a lot with creating a clean mental
         model and making better decisions.
-      </p>
-      <p>
-        Since this was the first run of the workshop, there were many points that were refined as we progressed. What I describe here is the
-        refined result of what we went through.
       </p>
       <p>
         After sharing the workshop with other teams within our organization, they tried it out and had positive results. Adapting it to their
