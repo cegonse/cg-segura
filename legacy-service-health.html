@@ -38,69 +38,69 @@
       </p>
       <p>
         The reality is that in many cases, legacy software is what keeps businesses afloat. Silently processing
-        millions of transactions year over year, generating revenue and providing value to users.
+        millions of transactions on a daily basis, generating revenue and providing value to users.
       </p>
       <p>
         As time passes, software starts decaying. Team members come and go, institutional knowledge gets lost and its supporting
-        frameworks get outdated.
+        architecture dillutes.
       <p>
         At the same time, there's little incentive from the business side to modernize it. If it keeps working, why spend precious
-        resources on modernizing it? Because at some point, it stops working.
+        resources on modernizing it? Well, because at some point, it will stop working.
       </p>
       <p>
         In one of my previous teams, we were in this position. We were in charge of many legacy products and services, and
-        we had to modernize it fast.
+        we had to modernize them fast.
       </p>
       <p>
         With our limited time and resources, we wouldn't be able to do it all on time. So the question was: what's prioritary?
       </p>
       <p>
-        As a way to help us get out of the deadlock we were in, together with my team we built this workshop that helped us define
-        what had to be fixed, and in which order of importance to ensure we will be able to adapt on time to the business needs.
+        As a way to help us get out of the deadlock we were in, we built this workshop that helped us define
+        what had to be fixed, and in which order, to ensure we would be able to adapt on time to the business needs.
       </p>
     </article>
 
     <article>
       <h2>Introduction to the workshop</h2>
       <p>
-        The objective of this workshop is helping your team:
+        The objective of this workshop is to help your team:
         <ul>
-          <li>Understand what are the most pressing issues with your legacy services.</li>
+          <li>Understand the most pressing issues with your legacy services are.</li>
           <li>Plan what fixes should be done first to ensure business continuity.</li>
           <li>Share knowledge about legacy systems with the whole team.</li>
         </ul>
       </p>
       <p>
         The workshop consists of <b>two sessions</b>, taking around <b>two hours</b> each. It's important
-        that all your team is able to assist to the workshop.
+        that most of your team members are able to attend the workshop.
       </p>
       <p>
         Preparation work for both sessions can take around other <b>2/3 hours</b> before each session. You can do
-        the prep work by yourself with help from other team member.
+        the prep work by yourself with help from other team members.
       </p>
       <p>
         To get the most out of the workshop, it's best to limit the number of attendees to under <b>10 people</b>.
         You want to ensure everybody has enough time and space to contribute.
       </p>
       <p>
-        The purpose of the two sessions are:
+        The purpose of the two sessions is:
         <ul>
           <li><b>Mapping service health</b>
             <ul>
               <li>Understanding the technical health of the services maintained by your team.</li>
-              <li>Outcome &rarr; Know in what shape are your services.</li>
+              <li>Outcome &rarr; Know what shape are your services in.</li>
             </ul>
           </li>
           <li><b>Mapping business / service relevance</b>
             <ul>
-              <li>Understand the business relevance of your team's services, and detect pinpoint problems.</li>
+              <li>Understand the business relevance of your team's services, and detect problems.</li>
               <li>Outcome &rarr; Know what services are worth fixing from a business point of view.</li>
             </ul>
           </li>
         </ul>
       </p>
       <p>
-        By the end of the workshop, you should have a picture of what product features are under threat due to problems
+        By the end of the workshop, you should have a picture of what product features could be at risk due to problems
         in the legacy services backing them, and which should be solved first.
       </p>
     </article>
@@ -108,7 +108,7 @@
     <article>
       <h2>Setting up an example case study</h2>
       <p>
-        To illustrate how could the workshop be run with a concrete example, let's introduce an imaginary product and its stack.
+        To illustrate how the workshop could be run with a concrete example, let's introduce an imaginary product and its stack.
       </p>
       <p>
         Let's assume we have an e-commerce platform, backed by several in-house services and other off-the-shelf or external SaaS
@@ -119,7 +119,7 @@
         <span>Service stack in our platform.</span>
       </div>
       <p>
-        In this workshop, we will only focus on our <b>in-house services</b>, ignoring off-the-shelf and external parts of the
+        In this workshop, we will focus on <b>in-house services</b>, ignoring off-the-shelf and external components of the
         system.
       </p>
     </article>
@@ -128,7 +128,7 @@
       <h2>Session #1 - Mapping service health</h2>
       <p>
         This session helps the team reflect about the services they take care of, and evaluate their health.
-        A 2~3 hour slot should suffice for this session, but you will have to prepare its materials first.
+        A 2~3 hour slot should suffice for this session, but you will have to prepare it first.
       </p>
       <p>
         The team will have to describe their services through <b>metrics</b>. These metrics can be either <b>quantitative</b>
@@ -150,18 +150,18 @@
       </p>
       <p>
         Once these metrics are ready, we'll set-up a service / health matrix in our digital whiteboard to let the team discuss and
-        assign a score to each one of our services.
+        assign a score to each service.
       </p>
       <p>
         Start by creating a matrix with all the services, and one by one, let the team
-        decide which score makes more sense for each one:
+        decide which score makes more sense for each:
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/empty-matrix.png" />
         <span>Start with all your services, and the metrics you have chosen.</span>
       </div>
       <p>
-        Then, start a discussion for each of the services and start assigning a score to each metric. As we'll see in the next section,
+        Then, start a discussion for each service and start assigning a score to each metric. As we'll see in the next section,
         some metrics will be objectively measurable, while others will raise a more heated debate.
       </p>
       <p>
@@ -169,34 +169,34 @@
         them. A simple scoring formula that worked well is <span class="inline-code">ceil(avg([scores]))</span>.
       </p>
       <p>
-        This formula favours bad scores, ensuring that scores of services with low ranking metrics get relevance. This helps to bring attention
+        This formula highlights bad scores, ensuring that scores of services with poorly scoring metrics get in the spotlight. This helps to bring attention
         to services that need it.
       </p>
       <p>
-        Let's add the scores for the metrics, and calculate the score for each metric:
+        Let's add the scores for the metrics and calculate the score for each metric:
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/filled-matrix.png" />
         <span>All services have been evaluated and assigned a score.</span>
       </div>
       <p>
-        With these results, we have a bird's eye view of the technical health of our services, split by each metric. To make it work,
-        we will have to define which metrics can be used to measure the health our system.
+        With these results, we have a bird's eye view of the technical health of our services, split by metric. To make it work,
+        we will have to define which metrics can be used to measure its health.
       </p>
       <p>
-        In the next section, you'll find some example metrics that you can use in your own workshop. And later on,
-        we'll review the example case study with a set of metrics that could be good candidates for the workshop.
+        In the next section, you'll find some example metrics that you can use in your own workshop. And later,
+        we'll review the example case study with a set of metrics.
       </p>
     </article>
     <article>
       <h2>Quantitative metrics</h2>
       <p>
         Quantitative metrics are those that can be measured from objective data. These can be
-        useful to determine how far are your team's services from the goals set by your organization,
-        upcoming regulatory requirements, etc.
+        useful to determine how far your team's services are from the goals set by your organization,
+        upcoming regulatory requirements, industry standards, etc.
       </p>
       <p>
-        For each metric, you should define which are the measurable points and/or thresholds to set
+        For each metric, you should define the measurable points and/or thresholds to set
         the metric's score. For example, consider a metric with four yes/no questions, where "yes" is
         positive (you want to fulfill all items).
       </p>
@@ -232,14 +232,14 @@
           <ul>
             <li>Are any of our systems using frameworks or libraries out of their maintenance window?</li>
             <li>Are any systems using frameworks that could complicate updating to modern versions if needed? (ex. NET Framework, PHP 5...)</li>
-            <li>Do our systems comply with all applicable regulations, in all applicable jurisdictions?</li>
+            <li>Do our systems comply with all applicable regulations?</li>
           </ul>
         </li>
         <li>
           <b>Scalability</b>
             <ul>
-              <li>Is the team aware of how do our services perform under load?</li>
-              <li>Does the architecture of the systems allow to scale them up when required?</li>
+              <li>Is the team aware of how our services perform under load?</li>
+              <li>Does the architecture of the systems allow scaling them up when required?</li>
               <li>Can the team scale them autonomously, or do we need support or permission from other teams?</li>
               <li>Are there auto-scaling measures in place?</li>
               <li>Do we perform regular load testing on our services?</li>
@@ -258,7 +258,7 @@
     <article>
       <h2>Qualitative metrics</h2>
       <p>
-        Qualitative metrics work great to help your team assess how do they "feel" when working with
+        Qualitative metrics work great to help your team assess how they "feel" when working with
         their systems. Discussing metrics without factual data to back them might seem counterproductive,
         but in some cases trying to express all problems with hard numbers complicates debate.
       </p>
@@ -285,9 +285,9 @@
         </li>
       </ul>
       <p>
-        There always are objective ways of measuring these metrics with hard data. But in many
+        There are always objective ways of measuring these metrics with hard data. But in many
         cases the debate around these topics is much more valuable to understand the general
-        "vibe" of working with these services, than hard numbers by themselves.
+        "vibe" of working with these services than hard numbers by themselves.
       </p>
       <p>
         For example, you could assess testing quality quantitatively by measuring the code base's coverage,
@@ -296,7 +296,7 @@
       <p>
         But if the architecture supporting these tests makes creating new tests or extending existing
         tests a chore, the team will have an easier time expressing this pain point from a feelings
-        point of view. Even though from a numbers perspective, everything seems to be okay.
+        point of view. Even if from a numbers perspective, everything seems to be okay.
       </p>
     </article>
 
@@ -313,7 +313,7 @@
           <li>
             <b>Extendability</b>: How easy is it to extend the service with new features?
             <ul>
-              <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>)</b> &rarr; Extending the service with new functionality is seamless. New features and improvements take minimal time.</li>
+              <li><b>1 (<span style="color: rgb(196, 246, 123)">▣</span>)</b> &rarr; Extending the service with new functionality is seamless. Adding new features and improvements takes minimal time.</li>
               <li><b>2 (<span style="color: rgb(252, 164, 0)">▣</span>)</b> &rarr; Adding new functionalities can get cumbersome without refactoring first.</li>
               <li><b>3 (<span style="color: rgb(255, 88, 88)">▣</span>) </b> &rarr; The codebase has grown without regard to its architecture, and adding new features is time consuming and a potential risk.</li>
               <li><b>4 (<span style="color: rgb(0, 0, 0); -webkit-text-stroke-color: rgb(236, 233, 230); -webkit-text-stroke-width: 0.5px;">▣</span>)</b> &rarr; Adding new features is very time consuming, and requires extensive prior clean up through refactoring.</li>
@@ -349,7 +349,7 @@
         </ul>
       </p>
       <p>
-        Now that we have a set of metrics to measure the health of our teams services, we can build the service / metric health matrix
+        Now that we have a set of metrics to measure the health of our team's services, we can build the service / metric health matrix
         and start filling in the score for each metric.
       </p>
       <p>
@@ -358,7 +358,7 @@
       </p>
       <p>
         On the other hand, extendability and testing quality metrics will involve a deeper discussion between the developers in the team. How was the
-        experience building the latest features in each service? Was it easy, or did we try to avoid it at all costs?
+        experience of building the latest features in each service? Was it easy, or did we try to avoid it at all costs?
       </p>
       <div class="image fit-20">
         <img src="./images/legacy-article/case-study-filled-matrix.png" />
@@ -369,11 +369,11 @@
         enough shape, at an acceptable point for a production app.
       </p>
       <p>
-        However, the <b>billing</b> and <b>ratings</b> service are in trouble. Particularly the <b>ratings service</b> has strong ongoing issues, with a very high failure rate, lurking
+        However, the <b>billing</b> and <b>ratings</b> services are in trouble. The <b>ratings service</b> has strong ongoing issues, with a very high failure rate, lurking
         security issues and no useful test base to help us overcome these problems.
       </p>
       <p>
-        Should we jump in and plan the work to get these services into shape into next iterations? First, we should ask ourselves: <b>is it worth it?</b>
+        Should we jump in and plan the work to get these services into shape during next iterations? First, we should ask ourselves: <b>is it worth it?</b>
       </p>
     </article>
 
@@ -395,7 +395,7 @@
       </p>
       <p>
         Ranging from 1 (<span style="color: rgb(196, 246, 123)">▣</span>), meaning a feature that's very important for the business, to
-        3 (<span style="color: rgb(255, 88, 88)">▣</span>), meaning it's a nice to have but not really a must have for business continuity.
+        3 (<span style="color: rgb(255, 88, 88)">▣</span>), meaning it's just a nice-to-have.
       </p>
       <p>
         To support this classification, we used a variety of metrics our product experts had in hand. Some of them were:
@@ -414,8 +414,8 @@
           </li>
           <li><b>Compliance & Strategical Opportunity</b>
             <ul>
-              <li>Is this feature a regulatory requirement in important markets?</li>
-              <li>Does supporting it keep key users from leaving the platform?</li>
+              <li>Is this feature a regulatory requirement in key markets?</li>
+              <li>Does supporting it keep users from leaving the platform?</li>
               <li>Is it a requirement for an important contract with a major customer?</li>
             </ul>
           </li>
@@ -430,12 +430,12 @@
     <article>
       <h2>Session #2 - Evaluating technical / business health</h2>
       <p>
-        In this session, we will complete link the business relevance of each product feature to services supporting them.
+        In this session, we will complete linking the business relevance of each product feature to the services supporting them.
       </p>
       <p>
         To build this mapping, the steps we follow are:
         <ol>
-          <li>Build a matrix, with all services as rows, and product features as columns.</li>
+          <li>Build a matrix with all services as rows and product features as columns.</li>
           <li>
             Sort both services and features with <b>descending health and relevance</b> (top left corner for best, bottom right corner for worst).
             <ul><li>Use the color key to help visualize health and relevance at a glance.</li></ul>
@@ -454,7 +454,7 @@
         <span>Mapping product features against services.</span>
       </div>
       <p>
-        With this information at our disposal, its time to start taking decisions on what's worth fixing and what's not. We'll focus
+        With this information at our disposal, it's time to start making decisions on what's worth fixing and what's not. We'll focus
         on looking for features that have:
         <ul>
           <li>Good health + business relevance.</li>
@@ -463,7 +463,7 @@
         </ul>
       </p>
       <p>
-        First, we have the best case scenario: features that are relevant for the business, which are supported by
+        First, we have the best-case scenario: features that are relevant for the business, which are supported by
         services that have good health.
       </p>
       <div class="image fit-20">
@@ -471,7 +471,7 @@
         <span>No need to worry about these.</span>
       </div>
       <p>
-        We can safely ignore these, and just keep up the good work. If there are any new features, unexpected regulatory changes
+        We can safely ignore these and just keep up the good work. If there are any new features, unexpected regulatory changes
         or required updates, we will be able to handle them without problems.
       </p>
       <p>
@@ -482,8 +482,8 @@
         <span>We could be in trouble if something goes wrong with these.</span>
       </div>
       <p>
-        These are product features that are relevant for the business, but are backed by services that are in <b>bad health</b>.
-        We should be looking forward to fixing the issues we've detected as soon as possible
+        These are product features that are relevant for the business, but are backed by services that are in <b>poor health</b>.
+        We should be looking forward to fixing the issues we've detected as soon as possible.
       </p>
       <p>
         In the last group, we have those that should open a conversation around: <b>is supporting these features even worth it?</b>
@@ -493,11 +493,11 @@
         <span>Why are we investing resources on this?</span>
       </div>
       <p>
-        These are features that not really relevant for the business, and are backed by services that are in bad shape.
+        These are features that are not really relevant for the business, and are backed by services that are in bad shape.
       </p>
       <p>
         Seeing your team get bogged down with bugs or incidents related to this kind of features might sound familiar.
-        In these cases, it might be worth to raise a discussion around the feasibility of directly stop supporting them.
+        In these cases, raising a discussion around the feasibility of directly stopping support for them might be worth it.
       </p>
       <p>
         The key takeway to raise is: what is costing the business more money? Keeping these features alive, or the value generated by them?
@@ -506,9 +506,6 @@
 
     <article>
       <h2>Session #2 - Example case study</h2>
-      <p>
-        Let's review the example case study and see what we find in the second session.
-      </p>
       <p>
         Let's assume there are four features backed by the services we enumerated in the first session:
         <ul>
@@ -527,10 +524,10 @@
         them.
       </p>
       <p>
-        <b>Rating products</b> is a nice to have feature, many users make use of it and it helps customers navigate the available listings in the platform.
+        <b>Rating products</b> is a nice-to-have feature, many users make use of it and it helps customers navigate the listings on the platform.
       </p>
       <p>
-        Last, <b>recommending products to a friend</b> was an experimental feature and isn't almost at all, besides for a vocal minority of users.
+        Last, <b>recommending products to a friend</b> was an experimental feature and isn't used almost at all, besides for a minority of users.
       </p>
       <p>
         What results can we extract from the map?
@@ -551,8 +548,8 @@
           </li>
           <li><b>Rate Products</b>
             <ul>
-              <li>It's a nice to have feature, but not a business core feature.</li>
-              <li>At the same time, it's backed by a service in terrible state.</li>
+              <li>It's a nice-to-have feature, but not a business core feature.</li>
+              <li>At the same time, it's backed by a service in a terrible shape.</li>
             </ul>
           </li>
           <li><b>Recommend Product to a Friend</b>
@@ -564,22 +561,22 @@
         </ul>
       </p>
       <p>
-        Now we know where we stand, the problems we have in our hands and which should be attended more urgently.
+        Now we know where we stand, the problems we have in our hands and which should be attended urgently.
       </p>
     </article>
 
     <article>
       <h2>Tracing an action plan</h2>
       <p>
-        The goal with these workshops is being able to create the plan to get out of this situation. The data we've
-        collected tells us <b>where</b> should we start, but not <b>what</b> to do.
+        The goal of this workshop is creating a plan to get out of this situation. The data we've
+        collected tells us <b>where</b> we should start, but not <b>what</b> to do.
       </p>
       <p>
-        The steps you will have to take as a team to fix the problems in your services and product features will be vary greatly
+        The steps you will have to take as a team to fix the problems in your services and product features will vary greatly
         depending on the kind of problems you've found.
       </p>
       <p>
-        To illustrate through an example, we can take the conclusions from the example case study. Let's begin
+        To illustrate through an example, take the conclusions from the example case study. Let's begin
         with the <b>purchasing products</b> feature.
       </p>
       <p>
@@ -587,12 +584,12 @@
         this feature, the <b>billing service</b>, has the expected quality.
       </p>
       <p>
-        The service has severe extendability and test coverage issues, plus security problems. If we want to ensure business continuity,
+        The service has severe extendability and test coverage issues, plus security problems. If we want to avoid future problems,
         a good starting point could be:
         <ul>
           <li>Improving its test coverage to avoid regressions when adding new features or fixing bugs.</li>
           <li>Using the newly improved test coverage, refactor the codebase to facilitate its extendability.</li>
-          <li>Resolve the ongoing security issues, before we get a severe incident in our hands.</li>
+          <li>Resolve the ongoing security issues, before we get a severe incident on our hands.</li>
         </ul>
       </p>
       <p>
@@ -605,18 +602,18 @@
       </p>
       <p>
         The <b>ratings service</b> has abysmal quality and a very high failure rate. Either we improve it, or we discard the features that are not
-        that relevant to the business. The key resides in evaluating the tradeoffs from both options.
+        relevant to the business. The key resides in evaluating the tradeoffs from both options.
       </p>
     </article>
 
     <article>
       <h2>Reflecting on the results</h2>
       <p>
-        In our case, this workshop helped us understand in what situation we were at and put us in the right mindset to
+        In our case, this workshop helped us understand where we standed and put us in the right mindset to
         start working on our ongoing issues.
       </p>
       <p>
-        At times where there are too many problems on the table, having data neatly laid out helps a lot with creating a clean mental
+        At times when there are too many problems on the table, having data neatly laid out helps a lot with creating a clean mental
         model and making better decisions.
       </p>
       <p>
