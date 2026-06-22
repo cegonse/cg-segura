@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material Classifier</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      color: #1a1a1a;
+      background: #fafafa;
+      line-height: 1.5;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    h1 { margin: 0; font-size: 1.5rem; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-green { background: #22c55e; }
+    .dot-red { background: #ef4444; }
+
+    /* Drop zone */
+    #drop-zone {
+      border: 2px dashed #94a3b8;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      color: #64748b;
+      transition: border-color 0.15s, background 0.15s;
+      cursor: default;
+      margin-bottom: 1rem;
+    }
+    #drop-zone.dragover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    #drop-zone.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    #drop-zone code {
+      background: #e2e8f0;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    #materials-info {
+      font-size: 0.85rem;
+      color: #16a34a;
+      margin-bottom: 1rem;
+    }
+    #drop-error {
+      font-size: 0.85rem;
+      color: #dc2626;
+      margin-bottom: 1rem;
+    }
+
+    /* Loading */
+    #loading-section {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 0;
+      color: #475569;
+      font-size: 0.9rem;
+    }
+    .spinner {
+      width: 20px; height: 20px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Input */
+    #search-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1.1rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.15s;
+      margin-bottom: 1rem;
+    }
+    #search-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+    #search-input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead th {
+      text-align: left;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 2px solid #cbd5e1;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+    }
+    thead th:last-child { text-align: right; }
+    tbody td {
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    tbody tr:hover { background: #f8fafc; }
+    tbody td:first-child {
+      color: #94a3b8;
+      width: 2.5rem;
+    }
+    tbody td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+    .conf-high { color: #16a34a; font-weight: 600; }
+    .conf-mid  { color: #d97706; font-weight: 600; }
+    .conf-low  { color: #94a3b8; }
+    #no-results {
+      text-align: center;
+      color: #94a3b8;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+    }
+    .warning {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      padding: 1rem;
+      color: #991b1b;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Material Classifier</h1>
+    <span id="webgpu-status" class="badge">
+      <span class="dot" id="status-dot"></span>
+      <span id="status-text">Checking WebGPU...</span>
+    </span>
+  </header>
+
+  <div id="webgpu-warning" class="warning" hidden>
+    WebGPU is not available in this browser. Please use Chrome 113+ or Edge 113+.
+  </div>
+
+  <section id="drop-zone">
+    <p>Drag &amp; drop <code>materials.json</code> here</p>
+  </section>
+  <div id="drop-error" hidden></div>
+  <div id="materials-info" hidden></div>
+
+  <section id="loading-section" hidden>
+    <div class="spinner"></div>
+    <span id="loading-text">Downloading model...</span>
+  </section>
+
+  <section id="input-section" hidden>
+    <input type="text" id="search-input" placeholder="Type a material name or alias..." disabled>
+  </section>
+
+  <section id="results-section" hidden>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Material</th><th>Confidence</th></tr>
+      </thead>
+      <tbody id="results-body"></tbody>
+    </table>
+    <div id="no-results" hidden>No matches found</div>
+  </section>
+
+  <script type="module">
+    import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4';
+
+    // --- State ---
+    let MATERIALS = null;
+    let extractor = null;
+    let nameVecs = null;
+    let debounceTimer = null;
+    let generation = 0;
+
+    // --- DOM refs ---
+    const dropZone = document.getElementById('drop-zone');
+    const dropError = document.getElementById('drop-error');
+    const materialsInfo = document.getElementById('materials-info');
+    const loadingSection = document.getElementById('loading-section');
+    const loadingText = document.getElementById('loading-text');
+    const inputSection = document.getElementById('input-section');
+    const searchInput = document.getElementById('search-input');
+    const resultsSection = document.getElementById('results-section');
+    const resultsBody = document.getElementById('results-body');
+    const noResults = document.getElementById('no-results');
+    const statusDot = document.getElementById('status-dot');
+    const statusText = document.getElementById('status-text');
+    const webgpuWarning = document.getElementById('webgpu-warning');
+
+    // --- WebGPU detection ---
+    let webgpuAvailable = false;
+    if (navigator.gpu) {
+      try {
+        const adapter = await navigator.gpu.requestAdapter();
+        webgpuAvailable = !!adapter;
+      } catch { /* no adapter */ }
+    }
+    statusDot.classList.add(webgpuAvailable ? 'dot-green' : 'dot-red');
+    statusText.textContent = webgpuAvailable ? 'WebGPU ready' : 'No WebGPU';
+    if (!webgpuAvailable) {
+      webgpuWarning.hidden = false;
+      dropZone.classList.add('disabled');
+    }
+
+    // --- Helpers (ported from classify.js) ---
+    const norm = (s) => s.toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+    const cosine = (a, b) => a.reduce((s, v, i) => s + v * b[i], 0);
+
+    function lev(a, b) {
+      const d = Array.from({ length: a.length + 1 }, (_, i) =>
+        Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
+      );
+      for (let i = 1; i <= a.length; i++)
+        for (let j = 1; j <= b.length; j++)
+          d[i][j] = Math.min(
+            d[i - 1][j] + 1,
+            d[i][j - 1] + 1,
+            d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+          );
+      return d[a.length][b.length];
+    }
+
+    const embed = async (texts) => {
+      const out = await extractor(texts, { pooling: 'mean', normalize: true });
+      return out.tolist();
+    };
+
+    // --- Identify (ported from classify.js) ---
+    async function identify(input, topK = 5) {
+      const q = norm(input);
+      const qVec = (await embed([input]))[0];
+
+      const scored = MATERIALS.map((m, i) => {
+        const aliasNorms = m.aliases.map(norm).concat(norm(m.name));
+        let aliasScore = 0;
+        if (aliasNorms.includes(q)) {
+          aliasScore = 1.0;
+        } else {
+          const best = Math.min(...aliasNorms.map(a => {
+            const dist = lev(q, a);
+            return dist / Math.max(q.length, a.length);
+          }));
+          aliasScore = best <= 0.34 ? 1 - best : 0;
+        }
+        const semScore = Math.max(0, cosine(qVec, nameVecs[i]));
+        const combined = Math.max(aliasScore, semScore * 0.6);
+        return { name: m.name, confidence: Math.round(combined * 100) };
+      });
+
+      return scored
+        .filter(c => c.confidence > 5)
+        .sort((a, b) => b.confidence - a.confidence)
+        .slice(0, topK);
+    }
+
+    // --- Model init ---
+    async function initModel() {
+      loadingSection.hidden = false;
+      loadingText.textContent = 'Downloading model...';
+
+      try {
+        extractor = await pipeline(
+          'feature-extraction',
+          'Xenova/all-MiniLM-L6-v2',
+          {
+            device: 'webgpu',
+            dtype: 'fp32',
+            progress_callback: (p) => {
+              if (p.status === 'download' && p.total) {
+                const pct = Math.round((p.loaded / p.total) * 100);
+                loadingText.textContent = `Downloading model... ${pct}%`;
+              } else if (p.status === 'ready') {
+                loadingText.textContent = 'Model loaded, computing embeddings...';
+              }
+            }
+          }
+        );
+
+        loadingText.textContent = 'Computing material embeddings...';
+        nameVecs = await embed(MATERIALS.map(m => m.name));
+
+        loadingSection.hidden = true;
+        inputSection.hidden = false;
+        searchInput.disabled = false;
+        searchInput.focus();
+      } catch (err) {
+        loadingText.textContent = `Error loading model: ${err.message}`;
+        const retry = document.createElement('button');
+        retry.textContent = 'Retry';
+        retry.style.cssText = 'margin-left:0.5rem;padding:0.3rem 0.8rem;cursor:pointer;border:1px solid #cbd5e1;border-radius:4px;background:#fff;';
+        retry.onclick = () => {
+          retry.remove();
+          initModel();
+        };
+        loadingSection.appendChild(retry);
+      }
+    }
+
+    // --- Drop zone ---
+    dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('dragover');
+    });
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (!webgpuAvailable) return;
+
+      dropError.hidden = true;
+      const file = e.dataTransfer.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result);
+          if (!Array.isArray(data) || !data.every(m => typeof m.name === 'string' && Array.isArray(m.aliases))) {
+            throw new Error('Expected a JSON array of { name, aliases } objects');
+          }
+          MATERIALS = data;
+          dropZone.hidden = true;
+          materialsInfo.hidden = false;
+          materialsInfo.textContent = `Loaded ${MATERIALS.length} materials`;
+          initModel();
+        } catch (err) {
+          dropError.hidden = false;
+          dropError.textContent = `Invalid file: ${err.message}`;
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // --- Debounced search ---
+    searchInput.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      const value = searchInput.value.trim();
+
+      if (!value) {
+        resultsSection.hidden = true;
+        resultsBody.innerHTML = '';
+        return;
+      }
+
+      const thisGen = ++generation;
+      debounceTimer = setTimeout(async () => {
+        const results = await identify(value);
+        if (thisGen !== generation) return; // stale
+
+        resultsSection.hidden = false;
+        resultsBody.innerHTML = '';
+
+        if (results.length === 0) {
+          noResults.hidden = false;
+          return;
+        }
+        noResults.hidden = true;
+
+        for (const [i, r] of results.entries()) {
+          const tr = document.createElement('tr');
+          const cls = r.confidence >= 80 ? 'conf-high' : r.confidence >= 40 ? 'conf-mid' : 'conf-low';
+          tr.innerHTML = `<td>${i + 1}</td><td>${r.name}</td><td class="${cls}">${r.confidence}%</td>`;
+          resultsBody.appendChild(tr);
+        }
+      }, 200);
+    });
+  </script>
+</body>
+</html>
