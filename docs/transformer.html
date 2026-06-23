@@ -300,7 +300,7 @@
             device: webgpuAvailable ? 'webgpu' : 'wasm',
             dtype: 'fp32',
             progress_callback: (p) => {
-              if (p.status === 'progress') {
+              if (p.status === 'progress' && p.progress < 100) {
                 const pct = Math.round(p.progress);
                 loadingText.textContent = `Downloading model... ${pct}%`;
               }
