@@ -300,11 +300,14 @@
           if (p.status === 'progress' && p.progress < 100) {
             loadingText.textContent = `Downloading model... ${Math.round(p.progress)}%`;
           }
+          if (p.status === "done") {
+            loadingSection.style.display = 'none';
+          }
         }
       }
     ).then(ext => {
       extractor = ext;
-      loadingSection.hidden = true;
+      loadingSection.style.display = 'none';
     }).catch(err => {
       loadingText.textContent = `Error loading model: ${err.message}`;
     });
