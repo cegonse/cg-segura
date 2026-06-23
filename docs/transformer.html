@@ -286,8 +286,9 @@
         .slice(0, topK);
     }
 
-    // --- Model init ---
-    async function initModel() {
+    // --- Model init (starts immediately) ---
+    let modelReady = false;
+    (async function initModel() {
       loadingSection.hidden = false;
       loadingText.textContent = 'Downloading model...';
 
@@ -302,20 +303,16 @@
               if (p.status === 'progress') {
                 const pct = Math.round(p.progress);
                 loadingText.textContent = `Downloading model... ${pct}%`;
-              } else if (p.status === 'ready') {
-                loadingText.textContent = 'Model loaded, computing embeddings...';
               }
             }
           }
         );
 
-        loadingText.textContent = 'Computing material embeddings...';
-        nameVecs = await embed(MATERIALS.map(m => m.name));
-
+        modelReady = true;
         loadingSection.hidden = true;
-        inputSection.hidden = false;
-        searchInput.disabled = false;
-        searchInput.focus();
+
+        // If materials were already dropped while model was loading, compute embeddings now
+        if (MATERIALS) computeEmbeddings();
       } catch (err) {
         loadingText.textContent = `Error loading model: ${err.message}`;
         const retry = document.createElement('button');
@@ -327,6 +324,13 @@
         };
         loadingSection.appendChild(retry);
       }
+    })();
+
+    async function computeEmbeddings() {
+      nameVecs = await embed(MATERIALS.map(m => m.name));
+      inputSection.hidden = false;
+      searchInput.disabled = false;
+      searchInput.focus();
     }
 
     // --- Drop zone ---
@@ -356,7 +360,7 @@
           dropZone.hidden = true;
           materialsInfo.hidden = false;
           materialsInfo.textContent = `Loaded ${MATERIALS.length} materials`;
-          initModel();
+          if (modelReady) computeEmbeddings();
         } catch (err) {
           dropError.hidden = false;
           dropError.textContent = `Invalid file: ${err.message}`;
