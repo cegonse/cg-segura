@@ -287,49 +287,31 @@
     }
 
     // --- Model init (starts immediately) ---
-    let modelReady = false;
-    (async function initModel() {
-      loadingSection.hidden = false;
-      loadingText.textContent = 'Downloading model...';
+    loadingSection.hidden = false;
+    loadingText.textContent = 'Downloading model...';
 
-      try {
-        extractor = await pipeline(
-          'feature-extraction',
-          'onnx-community/all-MiniLM-L6-v2-ONNX',
-          {
-            device: webgpuAvailable ? 'webgpu' : 'wasm',
-            dtype: 'fp32',
-            progress_callback: (p) => {
-              if (p.status === 'progress') {
-                if (p.progress >= 100) {
-                  loadingSection.hidden = true;
-                } else {
-                  loadingText.textContent = `Downloading model... ${Math.round(p.progress)}%`;
-                }
-              }
-            }
+    const modelPromise = pipeline(
+      'feature-extraction',
+      'onnx-community/all-MiniLM-L6-v2-ONNX',
+      {
+        device: webgpuAvailable ? 'webgpu' : 'wasm',
+        dtype: 'fp32',
+        progress_callback: (p) => {
+          if (p.status === 'progress' && p.progress < 100) {
+            loadingText.textContent = `Downloading model... ${Math.round(p.progress)}%`;
           }
-        );
-
-        modelReady = true;
-        loadingSection.hidden = true;
-
-        // If materials were already dropped while model was loading, compute embeddings now
-        if (MATERIALS) computeEmbeddings();
-      } catch (err) {
-        loadingText.textContent = `Error loading model: ${err.message}`;
-        const retry = document.createElement('button');
-        retry.textContent = 'Retry';
-        retry.style.cssText = 'margin-left:0.5rem;padding:0.3rem 0.8rem;cursor:pointer;border:1px solid #cbd5e1;border-radius:4px;background:#fff;';
-        retry.onclick = () => {
-          retry.remove();
-          initModel();
-        };
-        loadingSection.appendChild(retry);
+        }
       }
-    })();
+    ).then(ext => {
+      extractor = ext;
+      loadingSection.hidden = true;
+    }).catch(err => {
+      loadingText.textContent = `Error loading model: ${err.message}`;
+    });
 
-    async function computeEmbeddings() {
+    async function onMaterialsLoaded() {
+      await modelPromise;
+      if (!extractor) return;
       nameVecs = await embed(MATERIALS.map(m => m.name));
       inputSection.hidden = false;
       searchInput.disabled = false;
@@ -363,7 +345,7 @@
           dropZone.hidden = true;
           materialsInfo.hidden = false;
           materialsInfo.textContent = `Loaded ${MATERIALS.length} materials`;
-          if (modelReady) computeEmbeddings();
+          onMaterialsLoaded();
         } catch (err) {
           dropError.hidden = false;
           dropError.textContent = `Invalid file: ${err.message}`;
@@ -380,4 +362,32 @@
       if (!value) {
         resultsSection.hidden = true;
         resultsBody.innerHTML = '';
-        
+        return;
+      }
+
+      const thisGen = ++generation;
+      debounceTimer = setTimeout(async () => {
+        const results = await identify(value);
+        if (thisGen !== generation) return; // stale
+
+        resultsSection.hidden = false;
+        resultsBody.innerHTML = '';
+
+        if (results.length === 0) {
+          noResults.hidden = false;
+          return;
+        }
+        noResults.hidden = true;
+
+        for (const [i, r] of results.entries()) {
+          const tr = document.createElement('tr');
+          const cls = r.confidence >= 80 ? 'conf-high' : r.confidence >= 40 ? 'conf-mid' : 'conf-low';
+          tr.innerHTML = `<td>${i + 1}</td><td>${r.name}</td><td class="${cls}">${r.confidence}%</td>`;
+          resultsBody.appendChild(tr);
+        }
+      }, 200);
+    });
+  </script>
+</body>
+</html>
+
