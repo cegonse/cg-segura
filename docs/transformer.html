@@ -300,9 +300,12 @@
             device: webgpuAvailable ? 'webgpu' : 'wasm',
             dtype: 'fp32',
             progress_callback: (p) => {
-              if (p.status === 'progress' && p.progress < 100) {
-                const pct = Math.round(p.progress);
-                loadingText.textContent = `Downloading model... ${pct}%`;
+              if (p.status === 'progress') {
+                if (p.progress >= 100) {
+                  loadingSection.hidden = true;
+                } else {
+                  loadingText.textContent = `Downloading model... ${Math.round(p.progress)}%`;
+                }
               }
             }
           }
@@ -377,32 +380,4 @@
       if (!value) {
         resultsSection.hidden = true;
         resultsBody.innerHTML = '';
-        return;
-      }
-
-      const thisGen = ++generation;
-      debounceTimer = setTimeout(async () => {
-        const results = await identify(value);
-        if (thisGen !== generation) return; // stale
-
-        resultsSection.hidden = false;
-        resultsBody.innerHTML = '';
-
-        if (results.length === 0) {
-          noResults.hidden = false;
-          return;
-        }
-        noResults.hidden = true;
-
-        for (const [i, r] of results.entries()) {
-          const tr = document.createElement('tr');
-          const cls = r.confidence >= 80 ? 'conf-high' : r.confidence >= 40 ? 'conf-mid' : 'conf-low';
-          tr.innerHTML = `<td>${i + 1}</td><td>${r.name}</td><td class="${cls}">${r.confidence}%</td>`;
-          resultsBody.appendChild(tr);
-        }
-      }, 200);
-    });
-  </script>
-</body>
-</html>
-
+        
