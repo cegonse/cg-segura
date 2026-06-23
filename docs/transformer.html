@@ -38,6 +38,7 @@
       display: inline-block;
     }
     .dot-green { background: #22c55e; }
+    .dot-yellow { background: #eab308; }
     .dot-red { background: #ef4444; }
 
     /* Drop zone */
@@ -230,12 +231,8 @@
         webgpuAvailable = !!adapter;
       } catch { /* no adapter */ }
     }
-    statusDot.classList.add(webgpuAvailable ? 'dot-green' : 'dot-red');
-    statusText.textContent = webgpuAvailable ? 'WebGPU ready' : 'No WebGPU';
-    if (!webgpuAvailable) {
-      webgpuWarning.hidden = false;
-      dropZone.classList.add('disabled');
-    }
+    statusDot.classList.add(webgpuAvailable ? 'dot-green' : 'dot-yellow');
+    statusText.textContent = webgpuAvailable ? 'WebGPU ready' : 'CPU mode (no WebGPU)';
 
     // --- Helpers (ported from classify.js) ---
     const norm = (s) => s.toUpperCase().replace(/[^A-Z0-9]/g, '');
@@ -297,13 +294,13 @@
       try {
         extractor = await pipeline(
           'feature-extraction',
-          'Xenova/all-MiniLM-L6-v2',
+          'onnx-community/all-MiniLM-L6-v2-ONNX',
           {
-            device: 'webgpu',
+            device: webgpuAvailable ? 'webgpu' : 'wasm',
             dtype: 'fp32',
             progress_callback: (p) => {
-              if (p.status === 'download' && p.total) {
-                const pct = Math.round((p.loaded / p.total) * 100);
+              if (p.status === 'progress') {
+                const pct = Math.round(p.progress);
                 loadingText.textContent = `Downloading model... ${pct}%`;
               } else if (p.status === 'ready') {
                 loadingText.textContent = 'Model loaded, computing embeddings...';
@@ -343,7 +340,6 @@
     dropZone.addEventListener('drop', (e) => {
       e.preventDefault();
       dropZone.classList.remove('dragover');
-      if (!webgpuAvailable) return;
 
       dropError.hidden = true;
       const file = e.dataTransfer.files[0];
@@ -405,3 +401,4 @@
   </script>
 </body>
 </html>
+
