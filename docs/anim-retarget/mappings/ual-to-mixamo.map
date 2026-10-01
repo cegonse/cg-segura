@@ -1,0 +1,28 @@
+# Universal Animation Library (UAL1_Standard_RM.glb, UE5-Mannequin names, verified
+# 2026-10-01 with the real export) onto the Mixamo rig of test_player.glb.
+# `root` is intentionally unmapped: its motion folds into Hips (retargeting.md §6).
+# Fingers (index/middle/ring/pinky/thumb_*) have no Mixamo counterpart and are unmapped.
+pelvis=mixamorig:Hips
+spine_01=mixamorig:Spine
+spine_02=mixamorig:Spine1
+spine_03=mixamorig:Spine2
+neck_01=mixamorig:Neck
+Head=mixamorig:Head
+clavicle_l=mixamorig:LeftShoulder
+upperarm_l=mixamorig:LeftArm
+lowerarm_l=mixamorig:LeftForeArm
+hand_l=mixamorig:LeftHand
+clavicle_r=mixamorig:RightShoulder
+upperarm_r=mixamorig:RightArm
+lowerarm_r=mixamorig:RightForeArm
+hand_r=mixamorig:RightHand
+thigh_l=mixamorig:LeftUpLeg
+calf_l=mixamorig:LeftLeg
+foot_l=mixamorig:LeftFoot
+ball_l=mixamorig:LeftToeBase
+ball_leaf_l=mixamorig:LeftToe_End
+thigh_r=mixamorig:RightUpLeg
+calf_r=mixamorig:RightLeg
+foot_r=mixamorig:RightFoot
+ball_r=mixamorig:RightToeBase
+ball_leaf_r=mixamorig:RightToe_End
